@@ -1,0 +1,28 @@
+{
+  "name": "dispersion",
+  "version": "1.0.0",
+  "description": "Electron based interface for ipfs",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JameyStiling/Dispersion.git"
+  },
+  "keywords": [
+    "electron",
+    "ipfs"
+  ],
+  "author": "Dispersion",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JameyStiling/Dispersion/issues"
+  },
+  "homepage": "https://github.com/JameyStiling/Dispersion#readme",
+  "dependencies": {
+    "electron": "^1.4.2",
+    "jquery": "^3.1.1"
+  }
+}
