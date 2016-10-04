@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Dispersion</title>
+    <link rel="stylesheet" href="style.css" media="screen" title="no title">
+  </head>
+
+  <body>
+    <h1>Add your assests to the Merkle Dag!</h1>
+    <div class="file-drop">
+      <div class="hash-input">
+        <h3>Drag file or directory into this area or enter in the absolute file path below:</h3>
+        <label for="enter-message">Enter your file (abs file path): </label>
+        <input id="hashfile" type="text" size="30">
+        <button id='button' type="button" name="button">Add hash to to IPNS</button>
+      </div>
+      <h2>Your published file/directory link will appear below:</h2>
+      <a id="hashlink">
+      </a>
+    </div>
+  </body>
+  <script>
+    // require other files to run in this process
+    window.$ = window.jQuery = require('./node_modules/jquery/dist/jquery.min.js');
+    require('./renderer.js')
+  </script>
+
+</html>
