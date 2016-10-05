@@ -9,6 +9,7 @@ startDaemon();
 //generate list of store hashes
 hashList();
 
+
 // On click submits inputed file to be hashed.
 $("#ipns-button").on("click", function() {
   alert("Are you ready to put your stuff on the dag?");
