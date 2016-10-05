@@ -6,17 +6,33 @@ const storage = require('electron-json-storage');
 // Starts Daemon for IPFS
 startDaemon();
 
+//generate list of store hashes
+hashList();
 
 // On click submits inputed file to be hashed.
-$("#ipns-button").on("click", function () {
+$("#ipns-button").on("click", function() {
   alert("Are you ready to put your stuff on the dag?");
   addDirectory($('#hashfile').val())
 });
 
 // on click pins hash to local ipfs.
-$("#pin-button").on("click", function () {
-  addPin($('#inputPin').val())
+$("#pin-button").on("click", function() {
+  addPin($('#inputPin').val(), $('#pinDescription').val())
 });
+
+function hashList() {
+  storage.keys(function(error, keys) {
+    if (error) throw error;
+    keys.forEach(function(key) {
+      storage.get(key, function(error, data) {
+        if (key.length === 46) {
+          let keyDiv = `<div>the hash is ${key} and the file is ${data.filename}.</div><div> PinSource is ${data.pinnedBy}.</div><div> Was pinned on ${data.pinDate}</div>`
+          $('#hash-list').append(keyDiv);
+        }
+      })
+    })
+  });
+}
 
 
 //ipfs command functions
@@ -24,10 +40,14 @@ $("#pin-button").on("click", function () {
 
 function addDirectory(filePath) {
   let hashPath = ('ipfs add -r "' + filePath + '"')
-  exec(hashPath, function (error, stdout, stderr) {
+  exec(hashPath, function(error, stdout, stderr) {
     let outArr = stdout.split(' ')
     let hash = outArr[1];
-    storage.set(hash, { filename: filePath }, function (error) {
+    storage.set(hash, {
+      filename: filePath,
+      pinnedBy: 'me',
+      pinDate: new Date()
+    }, function(error) {
       if (error) throw error;
     });
     if (outArr[0] === "added") {
@@ -43,7 +63,7 @@ function addDirectory(filePath) {
 function publishHash(hash) {
   let publishIt = 'ipfs name publish ' + hash;
   console.log(publishIt)
-  exec(publishIt, function (error, stdout, stderr) {
+  exec(publishIt, function(error, stdout, stderr) {
     console.log(stdout)
     let hashed = `http://gateway.ipfs.io/ipns/${stdout.split(' ')[2].slice(0, -1)}`
     console.log(hashed);
@@ -55,12 +75,16 @@ function publishHash(hash) {
 }
 
 //function to add pin to local storage
-function addPin(pinHash) {
+function addPin(pinHash, pinDescription) {
   let pinCommand = 'ipfs pin add ' + pinHash;
-  exec(pinCommand, function (error, stdout, stderr) {
-    console.log(stdout)
-    console.log('successfully pinned')
-    console.log('save as filename of choice?')
+  exec(pinCommand, function(error, stdout, stderr) {
+    storage.set(pinHash, {
+      filename: pinDescription,
+      pinnedBy: 'someone else',
+      pinDate: new Date()
+    }, function(error) {
+      if (error) throw error;
+    });
     if (error !== null) {
       console.log('exec error: ' + error);
     }
@@ -70,7 +94,7 @@ function addPin(pinHash) {
 //function to start daemon
 function startDaemon() {
   let daemonCommand = 'ipfs daemon';
-  exec(daemonCommand, function (error, stdout, stderr) {
+  exec(daemonCommand, function(error, stdout, stderr) {
     if (error !== null) {
       console.log('exec error: ' + error);
     }
