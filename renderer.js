@@ -26,7 +26,7 @@ function hashList() {
     keys.forEach(function(key) {
       storage.get(key, function(error, data) {
         if (key.length === 46) {
-          let keyDiv = `<div>the hash is ${key} and the file is ${data.filename}. PinSource is ${data.pinnedBy}</div>`
+          let keyDiv = `<div>the hash is ${key} and the file is ${data.filename}.</div><div> PinSource is ${data.pinnedBy}.</div><div> Was pinned on ${data.pinDate}</div>`
           $('#hash-list').append(keyDiv);
         }
       })
@@ -45,7 +45,8 @@ function addDirectory(filePath) {
     let hash = outArr[1];
     storage.set(hash, {
       filename: filePath,
-      pinnedBy: 'me'
+      pinnedBy: 'me',
+      pinDate: new Date()
     }, function(error) {
       if (error) throw error;
     });
@@ -79,7 +80,8 @@ function addPin(pinHash, pinDescription) {
   exec(pinCommand, function(error, stdout, stderr) {
     storage.set(pinHash, {
       filename: pinDescription,
-      pinnedBy: 'someone else'
+      pinnedBy: 'someone else',
+      pinDate: new Date()
     }, function(error) {
       if (error) throw error;
     });
