@@ -4,14 +4,14 @@
   <head>
     <meta charset="UTF-8">
     <title>Dispersion</title>
-    <link rel="stylesheet" href="style.css" media="screen" title="no title">
+    <link rel="stylesheet" href="app/style.css" media="screen" title="no title">
   </head>
 
   <body>
-    <h1>Add your assests to the Merkle Dag!</h1>
+    <h1>DISPERSION</h1>
     <div class="getting-started">
-        <a>Getting Started<a>
-     <div> 
+      <a>Getting Started<a>
+     <div>
     <div class="file-drop">
       <div class="hash-input">
         <h3>Drag file or directory into this area or enter in the absolute file path below:</h3>
@@ -25,9 +25,12 @@
       <div class="pin-input">
         <h3>Input hash to be pinned:</h3>
         <input id="inputPin" type="text" size="30">
+        <h3>Pin Description:</h3>
+        <input id="pinDescription" type="text" size="30">
         <button id='pin-button' type="button" name="button">Pin Hash</button>
       </div>
     </div>
+    <div id="hash-list"></div>
   </body>
   <script>
     // require other files to run in this process
