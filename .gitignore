@@ -35,3 +35,9 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+
+#files saved locally from electron apllication by user.
+savedfiles
+
+#Apple files
+.DS_Store  
