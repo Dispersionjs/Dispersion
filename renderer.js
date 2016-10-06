@@ -144,6 +144,30 @@ function unPin(pinHash) {
   })
 }
 
+    //   <div class="save-hash">
+    //     <h3>Input hash to be saved:</h3>
+    //     <input id="save-input" type="text" size="30">
+    //      <h4>Folder:</h4>
+    //     <input id="save-folder" type="text" size="30">
+    //     <button id='save-button' type="button" name="button">Save that hash</button>
+    //   </div>
+    // </div>
+
+function saveToDisk(pinHash, directory) {
+  let pinSaveCommand = `iipfs get --output="${directory}" ${pinHash}`;
+  exec(pinSaveCommand, function(error, stdout, stderr) {
+    storage.remove(pinHash, function(error) {
+      console.log(`${pinHash} removed`)
+      hashList();
+      if (error) throw error;
+    });
+    if (error !== null) {
+      console.log('exec error: ' + error);
+    }
+  })
+}
+
+
 
 //function to start daemon
 function startDaemon() {
