@@ -49,7 +49,11 @@ $("#delete-button").on("click", function() {
 });
 
 $("#save-button").on("click", function() {
-  saveToDisk($('#save-input').val(), $('#save-folder').val())
+  let fileSavePath = $('#save-folder').val();
+  if (fileSavePath === ''){
+    filesavepath = "savedfiles"
+  }
+  saveToDisk($('#save-input').val(), filesavepath)
 });
 
 //the list of all locally pinned hashes
@@ -65,6 +69,16 @@ function hashList() {
           hashList.append(keyDiv);
         }
       })
+    })
+  });
+}
+
+// This function will clear local storage and remove all associated pins.
+function clearPinsFromElectron() {
+  storage.keys(function(error, keys) {
+    if (error) throw error;
+    keys.forEach(function(key) {
+        unPin(key)
     })
   });
 }
@@ -181,6 +195,7 @@ function saveToDisk(pinHash, directory) {
 }
 
 function hasExtension(fileLocation, filename) {
+  console.log(filename,fileLocation)
   if (filename.includes('.')) {
     return "";
   } else {
