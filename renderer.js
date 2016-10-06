@@ -1,9 +1,12 @@
 // required by the index.html file
 // executed in the renderer process for that window.
-var childProcess = require('child_process')
+const childProcess = require('child_process')
 const exec = childProcess.exec;
 const spawn = childProcess.spawn;
 const storage = require('electron-json-storage');
+const fs = require('fs');
+const readChunk = require('read-chunk'); // npm install read-chunk
+const fileType = require('file-type');
 
 // Starts Daemon for IPFS
 startDaemon();
@@ -79,9 +82,12 @@ function addDirectory(filePath, hashType, wrapperFlag) {
     } else {
       hash = outArr[1];
     }
+    //grabs just the filename from the absolute path of the added file
+    let fileLocationArray = filePath.split('/');
+    let file = fileLocationArray[fileLocationArray.length - 1];
     //properties of the added hash to be stored
     let hashObject = {
-      filename: filePath,
+      filename: file,
       pinnedBy: 'me',
       pinDate: new Date()
     };
@@ -151,11 +157,17 @@ function unPin(pinHash) {
 
 function saveToDisk(pinHash, directory) {
   let pinSaveCommand = `ipfs get --output="${directory}" ${pinHash}`;
-  console.log(pinSaveCommand);
+  console.log(pinSaveCommand)
   exec(pinSaveCommand, function(error, stdout, stderr) {
-    console.log(stdout);
-    storage.get(pinHash, function(error) {
-      console.log(pinHash)
+    console.log(stdout)
+    storage.get(pinHash, function(error, data) {
+      let fileLocation = `${directory}/${pinHash}`
+      let filename = data.filename
+      let fileExtension = hasExtension(fileLocation, filename);
+      console.log('fileExtension', fileExtension)
+      fs.rename(fileLocation, `${directory}/${filename}${fileExtension}`, function(err) {
+        if (err) console.log('ERROR: ' + err);
+      });
       if (error) throw error;
     });
     if (error !== null) {
@@ -164,6 +176,14 @@ function saveToDisk(pinHash, directory) {
   })
 }
 
+function hasExtension(fileLocation, filename) {
+  if (filename.includes('.')) {
+    return "";
+  } else {
+    let buffer = readChunk.sync(fileLocation, 0, 262);
+    return `.${fileType(buffer).ext}`;
+  }
+}
 
 
 //function to start daemon
