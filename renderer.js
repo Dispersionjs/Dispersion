@@ -45,6 +45,10 @@ $("#delete-button").on("click", function() {
   unPin($('#delete-pin').val())
 });
 
+$("#save-button").on("click", function() {
+  saveToDisk($('#save-input').val(), $('#save-folder').val())
+});
+
 //the list of all locally pinned hashes
 function hashList() {
   storage.keys(function(error, keys) {
@@ -143,6 +147,23 @@ function unPin(pinHash) {
     }
   })
 }
+
+
+function saveToDisk(pinHash, directory) {
+  let pinSaveCommand = `ipfs get --output="${directory}" ${pinHash}`;
+  console.log(pinSaveCommand);
+  exec(pinSaveCommand, function(error, stdout, stderr) {
+    console.log(stdout);
+    storage.get(pinHash, function(error) {
+      console.log(pinHash)
+      if (error) throw error;
+    });
+    if (error !== null) {
+      console.log('exec error: ' + error);
+    }
+  })
+}
+
 
 
 //function to start daemon
