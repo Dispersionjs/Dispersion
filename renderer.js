@@ -45,6 +45,10 @@ $("#delete-button").on("click", function() {
   unPin($('#delete-pin').val())
 });
 
+$("#save-button").on("click", function() {
+  saveToDisk($('#save-input').val(), $('#save-folder').val())
+});
+
 //the list of all locally pinned hashes
 function hashList() {
   storage.keys(function(error, keys) {
@@ -144,21 +148,14 @@ function unPin(pinHash) {
   })
 }
 
-    //   <div class="save-hash">
-    //     <h3>Input hash to be saved:</h3>
-    //     <input id="save-input" type="text" size="30">
-    //      <h4>Folder:</h4>
-    //     <input id="save-folder" type="text" size="30">
-    //     <button id='save-button' type="button" name="button">Save that hash</button>
-    //   </div>
-    // </div>
 
 function saveToDisk(pinHash, directory) {
-  let pinSaveCommand = `iipfs get --output="${directory}" ${pinHash}`;
+  let pinSaveCommand = `ipfs get --output="${directory}" ${pinHash}`;
+  console.log(pinSaveCommand);
   exec(pinSaveCommand, function(error, stdout, stderr) {
-    storage.remove(pinHash, function(error) {
-      console.log(`${pinHash} removed`)
-      hashList();
+    console.log(stdout);
+    storage.get(pinHash, function(error) {
+      console.log(pinHash)
       if (error) throw error;
     });
     if (error !== null) {
