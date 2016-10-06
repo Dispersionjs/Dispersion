@@ -161,6 +161,10 @@ function saveToDisk(pinHash, directory) {
   exec(pinSaveCommand, function(error, stdout, stderr) {
     console.log(stdout)
     storage.get(pinHash, function(error, data) {
+      if (!data.filename){
+        alert("Please pin before download!");
+        return;
+      }
       let fileLocation = `${directory}/${pinHash}`
       let filename = data.filename
       let fileExtension = hasExtension(fileLocation, filename);
