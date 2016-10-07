@@ -175,11 +175,6 @@ function saveToDisk(pinHash, directory) {
         return;
       }
 
-      //if the hash doesn't have a file property then it is a wrapper
-      if (!data.file) {
-        data.file = 'wrapper'
-      }
-
       //initial location and name of saved hash
       let fileLocation = `${directory}/${pinHash}`
 
@@ -212,7 +207,7 @@ function makeHashObject(hString) {
   var hashArray = hString.split(' ');
   var hashObj = {
     [hashArray[1]]: {
-      "file": hashArray.slice(2).join(' ').trim(),
+      "file": hashArray.slice(2).join(' ').trim() ? hashArray.slice(2).join(' ').trim() : 'wrapper',
       "time": new Date().toUTCString(),
       "url": "https://ipfs.io/ipfs/" + hashArray[1]
     }
