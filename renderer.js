@@ -7,6 +7,8 @@ const storage = require('electron-json-storage');
 const fs = require('fs');
 const readChunk = require('read-chunk'); // npm install read-chunk
 const fileType = require('file-type');
+const https = require('https');
+const request = require('request');
 
 // Starts Daemon for IPFS
 startDaemon();
@@ -17,25 +19,27 @@ hashList();
 // On click submits inputed file to be hashed.
 $("#ipns-button").on("click", function() {
 
-  //checks if ipfs add includes wrapper
-  let radioValue = $("input[name='optradio']:checked").val();
-  //file to be hashed
-  let hashValue = $('#hashfile').val();
-  //commands for adding to ipfs (with or without wrapper)
-  let Command = `ipfs add -r ${hashValue}`;
-  let CommandWrapper = `ipfs add -r ${hashValue} -w`;
+  //file to be hashed. add quotes to ignore possible spaces
+  let hashFile = $('#hashfile').val();
+  if (hashFile.includes('/')) hashFile = `"${hashFile}"`
+    //commands for adding to ipfs (with or without wrapper)
+  let command = `ipfs add -r ${hashFile}`;
 
   //flag indicating if wrapped
   let wrapperFlag;
 
-  //execute ipfs add function
-  if (radioValue === 'wrapper-add') {
-    wrapperFlag = true;
-    addDirectory(hashValue, CommandWrapper, wrapperFlag)
-  } else if (radioValue === 'add') {
+  //check if the input is a file or directory.
+  //If it is a directory, then add a wrapper.
+  if (hashFile.includes('.')) {
     wrapperFlag = false;
-    addDirectory(hashValue, Command, wrapperFlag)
+  } else {
+    wrapperFlag = true;
+    command = `${command} -w`;
   }
+
+  //execute ipfs add function
+  addDirectory(hashFile, command, wrapperFlag)
+
 });
 
 // Clicking button pins hash to local ipfs.
@@ -50,10 +54,14 @@ $("#delete-button").on("click", function() {
 
 $("#save-button").on("click", function() {
   let fileSavePath = $('#save-folder').val();
-  if (fileSavePath === ''){
+  if (fileSavePath === '') {
     filesavepath = "savedfiles"
   }
   saveToDisk($('#save-input').val(), filesavepath)
+});
+
+$("#delete-all").on("click", function() {
+  clearPinsFromElectron()
 });
 
 //the list of all locally pinned hashes
@@ -65,7 +73,7 @@ function hashList() {
     keys.forEach(function(key) {
       storage.get(key, function(error, data) {
         if (key.length === 46) {
-          let keyDiv = `<div>the hash is ${key} and the file is ${data.filename}.</div><div> PinSource is ${data.pinnedBy}.</div><div> Was pinned on ${data.pinDate}</div>`
+          let keyDiv = `<div>the hash is ${key} and the data is ${JSON.stringify(data, null, 2)}`
           hashList.append(keyDiv);
         }
       })
@@ -78,14 +86,18 @@ function clearPinsFromElectron() {
   storage.keys(function(error, keys) {
     if (error) throw error;
     keys.forEach(function(key) {
-        unPin(key)
+      unPin(key)
     })
   });
 }
 
+// function
+
 //function to add new hash to ipfs
 function addDirectory(filePath, hashType, wrapperFlag) {
+  //escape spaces in foldername
   exec(hashType, function(error, stdout, stderr) {
+
     let outArr = stdout.split(' ')
       //hash output from adding new file or directory
     let hash;
@@ -101,14 +113,33 @@ function addDirectory(filePath, hashType, wrapperFlag) {
     let file = fileLocationArray[fileLocationArray.length - 1];
     //properties of the added hash to be stored
     let hashObject = {
-      filename: file,
-      pinnedBy: 'me',
-      pinDate: new Date()
+      "filename": file,
+      "pinnedBy": 'me',
+      "pinDate": new Date(),
+      "url": "http://ipfs.io/ipfs/" + hash
     };
     //store new hash and its properties to Electron App
+    console.log(hash)
     storage.set(hash, hashObject, function(error) {
       if (error) throw error;
     });
+
+    //make requests to the added hash
+    //test requests
+    // let hashArr = stdout.trim().split('\n');
+    // let itemHash;
+    // console.log('hashArr', hashArr)
+    // hashArr.forEach((item, index, array) => {
+    //   itemHash = item.split(' ')[1];
+    //   storage.get(itemHash, hashObject, function(error) {
+    //
+    //     if (error) throw error;
+    //   });
+    //   requestHashObject(hashObject, itemHash);
+    // })
+
+
+    //requestHashObject(hashObject)
     if (outArr[0] === "added") {
       //refresh hash list
       hashList();
@@ -133,24 +164,29 @@ function publishHash(hash) {
   })
 }
 
+
 //function to add pin to local storage
 function addPin(pinHash, pinDescription) {
   let pinCommand = 'ipfs pin add ' + pinHash;
-  let pinProperties = {
-    filename: pinDescription,
-    pinnedBy: 'someone else',
-    pinDate: new Date()
+  let hashObject = {
+    "filename": pinDescription,
+    "pinnedBy": 'someone else',
+    "pinDate": new Date(),
+    "url": "https://ipfs.io/ipfs/" + pinHash
   };
   exec(pinCommand, function(error, stdout, stderr) {
-    //saves pinned hash to Electron App storage
-    storage.set(pinHash, pinProperties, function(error) {
-      hashList();
-      if (error) throw error;
-    });
-    if (error !== null) {
-      console.log('exec error: ' + error);
-    }
-  })
+
+      //saves pinned hash to Electron App storage
+      storage.set(pinHash, hashObject, function(error) {
+        hashList();
+        if (error) throw error;
+      });
+      if (error !== null) {
+        console.log('exec error: ' + error);
+      }
+    })
+    //make requests to the added hash
+    //requestHashObject(hashObject)
 }
 
 // Function  that removes a pin from local storage.
@@ -158,7 +194,6 @@ function unPin(pinHash) {
   let pinRmCommand = 'ipfs pin rm ' + pinHash;
   exec(pinRmCommand, function(error, stdout, stderr) {
     storage.remove(pinHash, function(error) {
-      console.log(`${pinHash} removed`)
       hashList();
       if (error) throw error;
     });
@@ -171,31 +206,25 @@ function unPin(pinHash) {
 
 function saveToDisk(pinHash, directory) {
   let pinSaveCommand = `ipfs get --output="${directory}" ${pinHash}`;
-  console.log(pinSaveCommand)
   exec(pinSaveCommand, function(error, stdout, stderr) {
-    console.log(stdout)
+    if (error !== null) console.log('exec error: ' + error);
     storage.get(pinHash, function(error, data) {
-      if (!data.filename){
+      if (error) throw error;
+      if (!data.filename) {
         alert("Please pin before download!");
         return;
       }
       let fileLocation = `${directory}/${pinHash}`
       let filename = data.filename
       let fileExtension = hasExtension(fileLocation, filename);
-      console.log('fileExtension', fileExtension)
       fs.rename(fileLocation, `${directory}/${filename}${fileExtension}`, function(err) {
         if (err) console.log('ERROR: ' + err);
       });
-      if (error) throw error;
     });
-    if (error !== null) {
-      console.log('exec error: ' + error);
-    }
   })
 }
 
 function hasExtension(fileLocation, filename) {
-  console.log(filename,fileLocation)
   if (filename.includes('.')) {
     return "";
   } else {
@@ -204,6 +233,17 @@ function hasExtension(fileLocation, filename) {
   }
 }
 
+
+//function to request all hashed objects in newly added directory
+function requestHashObject(hashObject) {
+  console.log(hashObject)
+  request(hashObject["url"], (err, response, body) => {
+    if (err) {
+      console.log('error making distribute request to IPFS');
+      console.error(err);
+    }
+  })
+}
 
 //function to start daemon
 function startDaemon() {
