@@ -98,54 +98,20 @@ function addDirectory(filePath, hashType, wrapperFlag) {
   //escape spaces in foldername
   exec(hashType, function(error, stdout, stderr) {
 
-    let outArr = stdout.split(' ')
-      //hash output from adding new file or directory
-    let hash;
-    //check if hash type has a top level wrapper hash
-    if (wrapperFlag) {
-      //grab highest level hash from output string
-      hash = outArr[outArr.length - 2];
-    } else {
-      hash = outArr[1];
-    }
     //grabs just the filename from the absolute path of the added file
     let fileLocationArray = filePath.split('/');
     let file = fileLocationArray[fileLocationArray.length - 1];
-    //properties of the added hash to be stored
-    let hashObject = {
-      "filename": file,
-      "pinnedBy": 'me',
-      "pinDate": new Date(),
-      "url": "http://ipfs.io/ipfs/" + hash
-    };
-    //store new hash and its properties to Electron App
-    console.log(hash)
-    storage.set(hash, hashObject, function(error) {
-      if (error) throw error;
-    });
 
-    //make requests to the added hash
-    //test requests
-    // let hashArr = stdout.trim().split('\n');
-    // let itemHash;
-    // console.log('hashArr', hashArr)
-    // hashArr.forEach((item, index, array) => {
-    //   itemHash = item.split(' ')[1];
-    //   storage.get(itemHash, hashObject, function(error) {
-    //
-    //     if (error) throw error;
-    //   });
-    //   requestHashObject(hashObject, itemHash);
-    // })
+    let hashArray = stdout.trim().split('\n');
+    console.log("hash Array: ", hashArray);
+    hashArray.forEach(function(item){
+      let hashObject = makeHashObject(item);
+      requestHashObject(hashObject);
 
+    })
 
-    //requestHashObject(hashObject)
-    if (outArr[0] === "added") {
       //refresh hash list
       hashList();
-      //publish hash to ipns
-      publishHash(hash);
-    }
     if (error !== null) {
       console.log('exec error: ' + error);
     }
@@ -155,7 +121,9 @@ function addDirectory(filePath, hashType, wrapperFlag) {
 //publishes the hash to the Peer ID ipns
 function publishHash(hash) {
   let publishIt = 'ipfs name publish ' + hash;
+  console.log(publishIt);
   exec(publishIt, function(error, stdout, stderr) {
+    console.log(stdout,hash);
     let hashed = `http://gateway.ipfs.io/ipns/${stdout.split(' ')[2].slice(0, -1)}`
     $('#hashlink').text(hashed);
     if (error !== null) {
@@ -234,15 +202,42 @@ function hasExtension(fileLocation, filename) {
 }
 
 
+
+function makeHashObject(hString) {
+  console.log(hString)
+  var hashArray = hString.split(' ');
+  var hashObj = {
+    [hashArray[1]]: {
+      "file": hashArray.slice(2).join(' ').trim(),
+      "time": new Date().toUTCString(),
+      "url": "https://ipfs.io/ipfs/" + hashArray[1]
+    }
+  }
+  console.log(hashArray);
+  console.log(hashObj[hashArray[1]]);
+   storage.set(hashArray[1], hashObj[hashArray[1]], function(error) {
+      if (error) throw error;
+    });
+  console.log(hashObj);
+  return hashObj;
+}
+
 //function to request all hashed objects in newly added directory
 function requestHashObject(hashObject) {
-  console.log(hashObject)
-  request(hashObject["url"], (err, response, body) => {
-    if (err) {
-      console.log('error making distribute request to IPFS');
-      console.error(err);
+  for (let key in hashObject) {
+    let url = hashObject[key]["url"]
+    for (let i = 0; i < 5; i++) {
+      let name = hashObject[key]["file"];
+      request(url, (err, response, body) => {
+        if (err) {
+          console.log('error making distribute request to IPFS');
+          console.error(err);
+        } else {
+          console.log(response.statusCode)
+        }
+      })
     }
-  })
+  }
 }
 
 //function to start daemon
