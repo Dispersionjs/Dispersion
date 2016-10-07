@@ -199,15 +199,16 @@ function hasExtension(fileLocation, filename) {
   } else {
     let buffer = readChunk.sync(fileLocation, 0, 262);
     console.log('asdfasdfasd')
-      // return `.${fileType(buffer).ext}`;
+    return `.${fileType(buffer).ext}`;
   }
 }
 
 function makeHashObject(hString) {
   var hashArray = hString.split(' ');
+  var file = hashArray.slice(2).join(' ').trim();
   var hashObj = {
     [hashArray[1]]: {
-      "file": hashArray.slice(2).join(' ').trim() ? hashArray.slice(2).join(' ').trim() : 'wrapper',
+      "file": file ? file : 'wrapper',
       "time": new Date().toUTCString(),
       "url": "https://ipfs.io/ipfs/" + hashArray[1]
     }
