@@ -69,22 +69,27 @@ function hashList() {
     if (error) throw error;
     let hashList = $('#hash-list');
     hashList.empty();
+    var promiseArr = [];
     keys.forEach(function(key, index, array) {
-      storage.get(key, function(error, data) {
-        if (/Qm/.test(key)) hashesObj[key] = data
-        console.log(hashesObj)
-        if (key.length === 46) {
-          let keyDiv = `<div>the hash is ${key} and the data is ${JSON.stringify(data, null, 2)}`
-          hashList.append(keyDiv);
-        }
-        if (index === array.length - 1) {
-          fs.writeFile('data.json', JSON.stringify(hashesObj, null, 2), (err) => {
-            if (err) throw err;
-            console.log('It\'s saved!');
-          })
-        }
-      })
+      promiseArr.push(new Promise(function(resolve, reject) {
+        storage.get(key, function(error, data) {
+          if (/Qm/.test(key)) hashesObj[key] = data
+          console.log(hashesObj)
+          if (key.length === 46) {
+            let keyDiv = `<div>the hash is ${key} and the data is ${JSON.stringify(data, null, 2)}`
+            hashList.append(keyDiv);
+          }
+          resolve();
+        })
 
+      }))
+    })
+    Promise.all(promiseArr).then(function(a, b) {
+      fs.writeFile('data.json', JSON.stringify(hashesObj, null, 2), (err) => {
+        if (err) throw err;
+        console.log(hashesObj)
+        console.log('It\'s saved!');
+      })
     })
     console.log(hashesObj)
   });

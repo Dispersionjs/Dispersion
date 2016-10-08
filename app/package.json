@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/JameyStiling/Dispersion#readme",
   "dependencies": {
+    "angular": "^1.5.8",
     "electron": "^1.4.2",
     "electron-json-storage": "^2.0.0",
     "file-type": "^3.8.0",
