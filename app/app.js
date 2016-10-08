@@ -13,20 +13,49 @@
 //       controller: 'DashboardController'
 //     })
 // }
-
 const app = angular.module('myApp', [])
- .controller('DashboardController', function ($scope) {
-   $scope.testvariable = 'long Mc. Dick'
- })
-   //should change watched to object full of videos as keys, for faster lookup time;
-   //augment so watchjs is not needed; use query string on 
-//    $scope.setAsWatched = function (index) {
-//      $scope.newVideo($scope.queue[index].url)
-//      $scope.watched.push($scope.queue[index]._id);
-//      $scope.updateQueue();
-//      jQuery.post('/watched', { data: $scope.watched });
-//    }
-//    $scope.getData = function () {
+  .controller('DashboardController', function($scope, $q) {
+
+    $scope.fileArray;
+
+    $scope.init = function() {
+      return $q(function(resolve, reject) {
+        fs.readFile('data.json', 'utf-8', (err, data) => {
+          var fileArray = []
+          if (err) throw err;
+          data = JSON.parse(data)
+          let keyArray = Object.keys(data);
+          keyArray.forEach(function(item) {
+            fileArray.push({
+              [item]: data[item]
+            })
+          })
+          resolve(fileArray)
+        })
+      })
+    }
+
+    $scope.init().then(function(fileArray) {
+      $scope.fileArray = fileArray
+    })
+
+    $scope.files = function() {
+      $scope.fileArray
+    }
+
+    $scope.loadFile = function(index) {
+
+    }
+  })
+  //should change watched to object full of videos as keys, for faster lookup time;
+  //augment so watchjs is not needed; use query string on
+  //    $scope.setAsWatched = function (index) {
+  //      $scope.newVideo($scope.queue[index].url)
+  //      $scope.watched.push($scope.queue[index]._id);
+  //      $scope.updateQueue();
+  //      jQuery.post('/watched', { data: $scope.watched });
+  //    }
+  //    $scope.getData = function () {
 
 //    }
 //    $scope.updateQueue = function () {
@@ -48,4 +77,5 @@ const app = angular.module('myApp', [])
 //      restrict: "E",
 //      template: "<li>{{fileName}}</li>"
 //    };
+//  });
 //  });
