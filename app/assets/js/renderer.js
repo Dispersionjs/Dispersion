@@ -58,20 +58,35 @@ $("#delete-all").on("click", function() {
   clearPinsFromElectron()
 });
 
+$("#hashList-button").on("click", function() {
+
+});
+
 //the list of all locally pinned hashes
 function hashList() {
+  let hashesObj = {};
   storage.keys(function(error, keys) {
     if (error) throw error;
     let hashList = $('#hash-list');
     hashList.empty();
-    keys.forEach(function(key) {
+    keys.forEach(function(key, index, array) {
       storage.get(key, function(error, data) {
+        if (/Qm/.test(key)) hashesObj[key] = data
+        console.log(hashesObj)
         if (key.length === 46) {
           let keyDiv = `<div>the hash is ${key} and the data is ${JSON.stringify(data, null, 2)}`
           hashList.append(keyDiv);
         }
+        if (index === array.length - 1) {
+          fs.writeFile('data.json', JSON.stringify(hashesObj, null, 2), (err) => {
+            if (err) throw err;
+            console.log('It\'s saved!');
+          })
+        }
       })
+
     })
+    console.log(hashesObj)
   });
 }
 
