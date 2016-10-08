@@ -1,20 +1,50 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <meta charset="UTF-8">
-    <title>Dispersion</title>
-    <!--Import Google Icon Font-->
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="assets/css/materialize.min.css" media="screen,projection" />
-    <link rel="stylesheet" href="assets/css/style.css" media="screen" title="no title">
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <title>Dispersion</title>
+  <!--Import Google Icon Font-->
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 
-  <body>
-    <h1>DISPERSION</h1>
+  <script src="app.js"></script>
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="assets/css/materialize.min.css" media="screen,projection" />
+  <link rel="stylesheet" href="assets/css/style.css" media="screen" title="no title">
+</head>
 
-    <!-- test below link below-->
+<body>
+  <div id='dash-content' ng-app='myApp'>
+    <div ng-controller='DashboardController'>
+      <p>{{testvariable}}</p>
+    </div>
+
+  </div>
+
+
+
+
+
+</body>
+<script>
+    // require other files to run in this process
+    window.$ = window.jQuery = require('./node_modules/jquery/dist/jquery.min.js');
+    require('./assets/js/renderer.js')
+    require('./assets/js/materialize.js')
+  </script>
+
+</html>
+
+
+
+
+
+
+
+<!--<h1>DISPERSION</h1>
+
+  
     <div class="row">
       <div class="col s6">
         <ul class="collection with-header">
@@ -72,17 +102,4 @@
         <button id='save-button' type="button" name="button">Save that hash</button>
       </div>
     </div>
-    <div id="hash-list"></div>
-  </body>
-  <script>
-    // require other files to run in this process
-    window.$ = window.jQuery = require('./node_modules/jquery/dist/jquery.min.js');
-    require('./assets/js/renderer.js')
-    require('./assets/js/materialize.js')
-  </script>
-
-</html>
-./assets/js/materialize.js')
-</script>
-
-</html>
+    <div id="hash-list"></div>-->
