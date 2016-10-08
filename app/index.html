@@ -33,8 +33,14 @@
             <ul class="collection with-header">
               <li class="collection-header">
                 <h4>Hashes</h4></li>
-              <li class="collection-item" ng-repeat='file in fileArray track by $index' ng-click='loadFile($index)'>
-                <div>{{file}}<a href="#!" class="secondary-content"><i class="material-icons">info_outline</i><i class="material-icons">system_update_alt</i><i class="material-icons">delete</i></a></div>
+              <li class="collection-item" ng-repeat='(key, value) in files' ng-click='loadFile($index)'>
+                <div>{{value.item}}
+                  <a href="#!" class="secondary-content"></a>
+                </div>
+                <div>{{value.time}}<a href="#!" class="secondary-content"><i class="material-icons">info_outline</i><i class="material-icons">system_update_alt</i><i class="material-icons">delete</i></a></div>
+                <div>{{value.url}}
+                  <a href="#!" class="secondary-content"></a>
+                </div>
               </li>
             </ul>
           </div>
@@ -65,7 +71,6 @@
 
 
 <!--<h1>DISPERSION</h1>
-
     <div class="row">
       <div class="col s6">
         <ul class="collection with-header">
