@@ -4,50 +4,57 @@
   <head>
     <meta charset="UTF-8">
     <title>Dispersion</title>
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-
-    <script src="app.js"></script>
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="assets/css/materialize.min.css" media="screen,projection" />
     <link rel="stylesheet" href="assets/css/style.css" media="screen" title="no title">
   </head>
 
   <body>
-    <!-- <div id='dash-content' ng-app='myApp'>
-      <div ng-controller='DashboardController'>
-        <p>{{testvariable}}</p>
-      </div>
 
-    </div> -->
+    <!-- Navbar goes here -->
+
+    <nav>
+      <div class="nav-wrapper">
+        <a class="waves-effect waves-light btn">Add</a>
+        <a href="#" class="brand-logo center">Dispersion</a>
+      </div>
+    </nav>
+
+    <div id='dash-content' ng-app='myApp'>
+      <div ng-controller='DashboardController'>
+        <!-- Page Layout here -->
+        <div class="row">
+          <div class="col s4">
+
+          </div>
+          <div class="col s8">
+            <ul class="collection with-header">
+              <li class="collection-header">
+                <h4>Hashes</h4></li>
+              <li class="collection-item" ng-repeat='file in fileArray track by $index' ng-click='loadFile($index)'>
+                <div>{{file}}<a href="#!" class="secondary-content"><i class="material-icons">info_outline</i><i class="material-icons">system_update_alt</i><i class="material-icons">delete</i></a></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
 
 
 
   </body>
-  <!-- Insert this line above script imports  -->
-  <script>
-    if (typeof module === 'object') {
-      window.module = module;
-      module = undefined;
-    }
-  </script>
   <script>
     // require other files to run in this process
     window.$ = window.jQuery = require('./node_modules/jquery/dist/jquery.min.js');
+    var fs = require('fs')
     require('./assets/js/renderer.js')
   </script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
-  <script type="text/javascript">
-    $(".button-collapse").sideNav();
-  </script>
-  <!-- Insert this line after script imports -->
-  <script>
-    if (window.module) module = window.module;
-  </script>
-
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="app.js"></script>
 
 </html>
 
@@ -57,25 +64,24 @@
 
 
 
-<!-- <h1>DISPERSION</h1>
+<!--<h1>DISPERSION</h1>
 
-<div class="row">
-  <div class="col s6">
-    <ul class="collection with-header">
-      <div class="collection-header">
-        <h4>This is pinned on the dag</h4>
+    <div class="row">
+      <div class="col s6">
+        <ul class="collection with-header">
+          <div class="collection-header">
+            <h4>This is pinned on the dag</h4>
+          </div>
+          <li class="collection-item" ng-repeat="filename in filenames">
+            <div>{{filename}}<a href="#!" class="secondary-content"><i class="material-icons">info_outline</i><i class="material-icons">system_update_alt</i><i class="material-icons">delete</i></a></div>
+          </li>
+        </ul>
       </div>
-      <li class="collection-item" ng-repeat="filename in filenames">
-        <div>{{filename}}<a href="#!" class="secondary-content"><i class="material-icons">info_outline</i><i class="material-icons">system_update_alt</i><i class="material-icons">delete</i></a></div>
-      </li>
-    </ul>
-  </div>
-  <div class="col s6">
-  </div>
-</div>
-
-<div class="getting-started">
-  <a>Getting Started<a>
+      <div class="col s6">
+      </div>
+    </div>
+    <div class="getting-started">
+      <a>Getting Started<a>
      <div>
     <div class="file-drop">
       <div class="hash-input">
@@ -84,10 +90,7 @@
         <input id="hashfile" type="text" size="30">
         <button id='ipns-button' type="button" name="button">Add hash to to IPNS</button>
       </div>
-
-
         <button id='hashList-button' type="button" name="button">Save all hash objects</button>
-
       <div class="clear-pins">
         <h3>Delete all added and pinned hashes:</h3>
         <button id='delete-all' type="button" name="button">delete all!</button>
@@ -95,25 +98,25 @@
       <h2>Your published file/directory link will appear below:</h2>
       <a id="hashlink">
       </a>
-  <div class="pin-input">
-    <h3>Input hash to be pinned:</h3>
-    <input id="inputPin" type="text" size="30">
-    <h3>Pin Description:</h3>
-    <input id="pinDescription" type="text" size="30">
-    <button id='pin-button' type="button" name="button">Pin Hash</button>
-  </div>
-  <div class="pin-delete">
-    <h3>Input hash to be deleted:</h3>
-    <input id="delete-pin" type="text" size="30">
-    <button id='delete-button' type="button" name="button">Pin Delete</button>
-  </div>
-  <div class="save-hash">
-    <h3>Input hash to be saved:</h3>
-    <input id="save-input" type="text" size="30">
-    <h4>Folder:</h4>
-    <h6>Default is savedfiles folder in App</h6>
-    <input id="save-folder" type="text" size="30">
-    <button id='save-button' type="button" name="button">Save that hash</button>
-  </div>
-</div>
-<div id="hash-list"></div> -->
+      <div class="pin-input">
+        <h3>Input hash to be pinned:</h3>
+        <input id="inputPin" type="text" size="30">
+        <h3>Pin Description:</h3>
+        <input id="pinDescription" type="text" size="30">
+        <button id='pin-button' type="button" name="button">Pin Hash</button>
+      </div>
+      <div class="pin-delete">
+        <h3>Input hash to be deleted:</h3>
+        <input id="delete-pin" type="text" size="30">
+        <button id='delete-button' type="button" name="button">Pin Delete</button>
+      </div>
+      <div class="save-hash">
+        <h3>Input hash to be saved:</h3>
+        <input id="save-input" type="text" size="30">
+        <h4>Folder:</h4>
+        <h6>Default is savedfiles folder in App</h6>
+        <input id="save-folder" type="text" size="30">
+        <button id='save-button' type="button" name="button">Save that hash</button>
+      </div>
+    </div>
+    <div id="hash-list"></div>-->
