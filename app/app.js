@@ -17,6 +17,7 @@ const app = angular.module('myApp', [])
   .controller('DashboardController', function($scope, $q) {
 
     $scope.fileArray;
+    $scope.files;
 
     $scope.init = function() {
       return $q(function(resolve, reject) {
@@ -36,11 +37,20 @@ const app = angular.module('myApp', [])
     }
 
     $scope.init().then(function(fileArray) {
-      $scope.fileArray = fileArray
+      $scope.fileArray = fileArray;
+      $scope.files = $scope.fileget();
     })
 
-    $scope.files = function() {
-      $scope.fileArray
+    $scope.fileget = function() {
+      let arr = [];
+      $scope.fileArray.forEach(function(item, index) {
+        arr.push({
+          item: item[Object.keys(item)].file,
+          time: item[Object.keys(item)].time,
+          url: item[Object.keys(item)].url
+        })
+      })
+      return arr;
     }
 
     $scope.loadFile = function(index) {
