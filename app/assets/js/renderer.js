@@ -14,7 +14,7 @@ const request = require('request');
 startDaemon();
 
 //generate list of store hashes when app is started
-hashList();
+// hashList();
 
 // On click submits inputed file to be hashed.
 $("#ipns-button").on("click", function() {

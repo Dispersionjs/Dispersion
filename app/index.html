@@ -13,36 +13,47 @@
 
   <body>
 
-    <!-- Navbar goes here -->
-
-    <nav>
-      <div class="nav-wrapper">
-        <a class="waves-effect waves-light btn">Add</a>
-        <a href="#" class="brand-logo center">Dispersion</a>
-      </div>
-    </nav>
-
     <div id='dash-content' ng-app='myApp'>
+      <!-- top-bar directive -->
+      <top-bar></top-bar>
       <div ng-controller='DashboardController'>
         <!-- Page Layout here -->
         <div class="row">
-          <div class="col s4">
+          <div class="col s12">
+            <div class="collection with-header">
+              <div class="collection-header">
+                <h4>Hashes</h4>
+              </div>
+              <ul class="collection-item" ng-repeat='(key, value) in files track by $index'>
+                <span>{{value.item}}<span>
+              <div class="sel-box">
+                <span  id="{{'select' + $index}}" ng-click='showInfo($index)'>Select</span>
+                <ul class='toc-odd level-1' id="{{'sel-option' + $index}}">
+                  <li><a href="1">{{value.time}}</a></li>
+                  <li><a href="3">{{value.url}}</a></li>
+                </ul>
+            </div>
+            <!--<li>
 
-          </div>
-          <div class="col s8">
-            <ul class="collection with-header">
-              <li class="collection-header">
-                <h4>Hashes</h4></li>
-              <li class="collection-item" ng-repeat='(key, value) in files' ng-click='loadFile($index)'>
-                <div>{{value.item}}
-                  <a href="#!" class="secondary-content"></a>
-                </div>
-                <div>{{value.time}}<a href="#!" class="secondary-content"><i class="material-icons">info_outline</i><i class="material-icons">system_update_alt</i><i class="material-icons">delete</i></a></div>
-                <div>{{value.url}}
-                  <a href="#!" class="secondary-content"></a>
-                </div>
-              </li>
+
+
+                <!--<a href="#!" class="secondary-content">-->
+            <!--<i class="material-icons">info_outline</i>
+                  <i class="material-icons">system_update_alt</i>
+                  <i class="material-icons">delete</i>-->
+            <!--</a>-->
+
+
+
+
+            <!--<li>
+                {{value}}
+                <!--<a href="#!" class="secondary-content"></a>-->
+            <!--</li>-->
+
+
             </ul>
+
           </div>
         </div>
       </div>
@@ -50,7 +61,21 @@
 
 
 
+    <!--<li>
+                <a href="#!" class="secondary-content"></a>
+              </li>
 
+              <li>{{value.time}}
+                <a href="#!" class="secondary-content">
+                  <i class="material-icons">info_outline</i>
+                  <i class="material-icons">system_update_alt</i>
+                  <i class="material-icons">delete</i>
+                </a>
+              </li>
+
+              <li>{{value.url}}
+                <a href="#!" class="secondary-content"></a>
+              </li>-->
 
   </body>
   <script>
@@ -60,6 +85,11 @@
     require('./assets/js/renderer.js')
   </script>
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.js"></script>-->
+  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="components/directives/directives.js"></script>
+  <script src="components/factories/hashFactory.js"></script>
   <script src="app.js"></script>
 
 </html>
