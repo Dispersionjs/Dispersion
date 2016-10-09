@@ -1,0 +1,82 @@
+
+
+ul li {
+	cursor: pointer;
+	-webkit-transition: padding .05s linear;
+	transition: padding .05s linear;
+}
+ul li.drop {
+	position: relative;
+}
+ul > li {
+	display: inline-block;
+}
+ul li a {
+	line-height: 80px;
+	padding: 0 20px;
+	height: 80px;
+	color: #777;
+	-webkit-transition: all .3s ease-out;
+	transition: all .3s ease-out;
+}
+ul li a:hover {
+	color: #eee;
+}
+
+.dropOut .triangle {
+	width: 0;
+	height: 0;
+	position: absolute;
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+	border-bottom: 8px solid #000;
+	top: -8px;
+	left: 50%;
+	margin-left: -8px;
+}
+.dropdownContain {
+	width: 160px;
+	position: absolute;
+	z-index: 2;
+	left: 50%;
+	margin-left: -80px; /* half of width */
+	top: -400px;
+}
+.dropOut {
+	width: 160px;
+	background: white;
+	float: left;
+	position: relative;
+	margin-top: 0px;
+	opacity: 0;
+	border-radius: 4px;
+	box-shadow: 0 1px 6px rgba(37, 126, 176, 0.15);
+	-webkit-transition: all .3s ease-out;
+	transition: all .3s ease-out;
+}
+
+.dropOut ul {
+	float: left;
+	padding: 10px 0;
+}
+.dropOut ul li {
+	text-align: left;
+	float: left;
+	width: 125px;
+	padding: 12px 0 10px 15px;
+	margin: 0px 10px;
+	color: #777;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-transition: background .3s ease-out;
+	transition: background .3s ease-out;
+}
+
+.dropOut ul .mat:hover {
+	background: #f6f6f6;
+}
+
+/*ul li:hover a { color: rgb(74, 122, 194); }
+ul li:hover .dropdownContain { top: 65px; }
+ul li:hover .underline { border-bottom-color: #777; }*/
+ul li:hover .dropOut { opacity: 1; margin-top: 8px; }
