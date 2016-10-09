@@ -27,15 +27,33 @@ module.factory('HashFactory', function($q) {
 
   fileget = function(fileArray) {
     let arr = [];
+    let type;
     fileArray.forEach(function(item, index) {
+      //finds file type
+      type = testFileType(item);
       arr.push({
         item: item[Object.keys(item)].file,
         time: item[Object.keys(item)].time,
-        url: item[Object.keys(item)].url
+        url: item[Object.keys(item)].url,
+        fileType: type
       })
     })
     return arr;
   }
+
+  function testFileType(item) {
+    let fileName = item[Object.keys(item)].file
+    if (fileName.includes('.jpg') || fileName.includes('.png')) {
+      return 'image';
+    } else if (!fileName.includes('.')) {
+      return 'folder';
+    } else if (fileName.includes('.xl')) {
+      return 'excel';
+    } else if (fileName.includes('.pdf') || fileName.includes('.txt') || fileName.includes('.doc')) {
+      return 'doc';
+    }
+  }
+
   return init()
 
 });;

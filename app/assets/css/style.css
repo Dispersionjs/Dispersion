@@ -27,3 +27,11 @@ a{
     padding:5px 10px;
     border-bottom:1px solid #999;
 }
+
+.title {
+  font-weight: bold;
+}
+
+.btn-ad {
+  margin-left: 10px;
+}
