@@ -1,5 +1,4 @@
-{
-  "QmV9tSDx9UiPeWExXEeH6aoDvmihvx6jD5eLb4jbTaKGps": {
+{ "QmV9tSDx9UiPeWExXEeH6aoDvmihvx6jD5eLb4jbTaKGps": {
     "file": "test Folder/ipfs-p2p-file-system.pdf",
     "time": "Sat, 08 Oct 2016 03:33:45 GMT",
     "url": "https://ipfs.io/ipfs/QmV9tSDx9UiPeWExXEeH6aoDvmihvx6jD5eLb4jbTaKGps"
@@ -34,4 +33,4 @@
     "time": "Sat, 08 Oct 2016 03:33:45 GMT",
     "url": "https://ipfs.io/ipfs/QmfZtpSr6JhuB8TJJpepCpky9gytWBteDLuXWmzbXyNbxp"
   }
-}
+  }
