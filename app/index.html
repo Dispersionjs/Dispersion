@@ -14,9 +14,9 @@
   <body>
 
     <div id='dash-content' ng-app='myApp'>
-      <!-- top-bar directive -->
-      <top-bar></top-bar>
       <div ng-controller='DashboardController'>
+        <top-bar></top-bar>
+        <hash-form></hash-form>
         <!-- Page Layout here -->
         <div class="row">
           <div class="col s12">
@@ -106,9 +106,8 @@
   <script>
     // require other files to run in this process
     window.$ = window.jQuery = require('./node_modules/jquery/dist/jquery.min.js');
-    var fs = require('fs')
-    require('./assets/js/renderer.js')
   </script>
+  <script src="./assets/js/renderer.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.js"></script>-->
   <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>-->
