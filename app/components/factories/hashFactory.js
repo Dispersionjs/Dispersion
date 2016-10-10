@@ -7,7 +7,9 @@ var module = angular
 
 module.factory('HashFactory', function($q) {
   // let files = 0;
-  let init = function() {
+
+  return {
+  init: function() { 
     return $q(function(resolve, reject) {
       fs.readFile('data.json', 'utf-8', (err, data) => {
         var fileArray = []
@@ -22,10 +24,11 @@ module.factory('HashFactory', function($q) {
         resolve(fileArray)
       })
     })
-  }
+  },
 
+  
 
-  fileget = function(fileArray) {
+  fileget: function(fileArray) {
     let arr = [];
     let type;
     fileArray.forEach(function(item, index) {
@@ -42,9 +45,11 @@ module.factory('HashFactory', function($q) {
     return arr;
   }
 
+
+  }
   function testFileType(item) {
     let fileName = item[Object.keys(item)].file
-    if (fileName.includes('.jpg') || fileName.includes('.png')) {
+    if (fileName.includes('.jpg') || fileName.includes('.png')||fileName.includes('.JPG') || fileName.includes('.PNG') ||fileName.includes('.jpeg')) {
       return 'image';
     } else if (!fileName.includes('.')) {
       return 'folder';
@@ -54,7 +59,4 @@ module.factory('HashFactory', function($q) {
       return 'doc';
     }
   }
-
-  return init()
-
 });
