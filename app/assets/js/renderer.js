@@ -18,8 +18,7 @@ hashList();
 
 // On click submits inputed file to be hashed.
 function submitFile(filepath) {
-  console.log(filepath)
-    //file to be hashed. add quotes to ignore possible spaces
+  //file to be hashed. add quotes to ignore possible spaces
   let hashFile = filepath
   if (hashFile.includes('/')) hashFile = `"${hashFile}"`;
 
@@ -39,11 +38,6 @@ function submitFile(filepath) {
 $("#pin-button").on("click", function() {
   addPin($('#inputPin').val(), $('#pinDescription').val())
 });
-
-// Clicking button deletes hash.
-// $("#delete-button").on("click", function() {
-//   unPin($('#delete-pin').val())
-// });
 
 //Save file to folder
 $("#save-button").on("click", function() {
@@ -164,7 +158,7 @@ function addPin(pinHash, pinDescription) {
 
 // Function  that removes a pin from local storage.
 function unPin(pinHash) {
-  console.log("Pin Hash: "+ pinHash);
+  console.log("Pin Hash: " + pinHash);
   let pinRmCommand = 'ipfs pin rm ' + pinHash;
   exec(pinRmCommand, function(error, stdout, stderr) {
     storage.remove(pinHash, function(error) {
@@ -210,8 +204,6 @@ function saveToDisk(pinHash, directory) {
 }
 
 function hasExtension(fileLocation, filename) {
-  console.log('fileLocation', fileLocation)
-  console.log('filename', filename)
   if (filename.includes('.')) {
     return "";
   } else {
@@ -262,14 +254,14 @@ function startDaemon() {
     let dataString = data.toString();
     let result = /Daemon is ready/.test(dataString);
     if (result) {
-      alert('the daemon is running')
+      console.log('the daemon is running')
     }
   });
   daemonCommand.stderr.on('data', function(data) {
     let dataString = data.toString();
     let result = /daemon is running/.test(dataString);
     if (result) {
-      alert('Warning: Daemon already is running in a seperate process! Closing this application will not kill your IPFS Daemon.')
+      console.log('Warning: Daemon already is running in a seperate process! Closing this application will not kill your IPFS Daemon.')
     }
   })
 }
@@ -281,6 +273,7 @@ document.ondragover = document.ondrop = (ev) => {
 
 document.body.ondrop = (ev) => {
   console.log(ev.dataTransfer.files[0].path)
-  $('#hashfile').val(ev.dataTransfer.files[0].path);
+  $('#hash-input').val(ev.dataTransfer.files[0].path);
   ev.preventDefault()
+  $('#hash-input').trigger('input');
 }

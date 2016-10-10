@@ -6,6 +6,19 @@ h1 {
 .sel-box{
     position:relative;
 }
+
+h1 {
+  color: #fff;
+  margin:0;
+  padding-top: 8px;
+  padding-bottom: 8px
+}
+
+.add-icon {
+  font-size: 55px;
+  cursor: pointer;
+}
+
 a{
     text-decoration:none;
 }
@@ -30,6 +43,7 @@ a{
 
 .title {
   font-weight: bold;
+  color:#039be5;
 }
 
 .btn-ad {
