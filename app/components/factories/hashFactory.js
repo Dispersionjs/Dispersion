@@ -35,7 +35,8 @@ module.factory('HashFactory', function($q) {
         item: item[Object.keys(item)].file,
         time: item[Object.keys(item)].time,
         url: item[Object.keys(item)].url,
-        fileType: type
+        fileType: type,
+        hash: Object.keys(item)[0]
       })
     })
     return arr;
@@ -56,4 +57,4 @@ module.factory('HashFactory', function($q) {
 
   return init()
 
-});;
+});

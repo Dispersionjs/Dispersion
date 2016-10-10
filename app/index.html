@@ -16,7 +16,6 @@
     <div id='dash-content' ng-app='myApp'>
       <div ng-controller='DashboardController'>
         <top-bar></top-bar>
-        <hash-form></hash-form>
         <!-- Page Layout here -->
         <div class="row">
           <div class="col s12">
@@ -34,7 +33,7 @@
                 <div href="#!" class="secondary-content">
                   <a href='#!'> <i class="material-icons">info_outline</i></a>
                   <a href='#!'> <i class="material-icons">system_update_alt</i></a>
-                  <a href='#!'> <i class="material-icons">delete</i></a>
+                  <a href='#!' ng-click='deleteHash(value.hash)'> <i class="material-icons">delete</i></a>
                 </div>
               </li>
             </ul>
