@@ -17,10 +17,10 @@ startDaemon();
 // hashList();
 
 // On click submits inputed file to be hashed.
-$("#ipns-button").on("click", function() {
-
-  //file to be hashed. add quotes to ignore possible spaces
-  let hashFile = $('#hashfile').val();
+function submitFile(filepath) {
+  console.log(filepath)
+    //file to be hashed. add quotes to ignore possible spaces
+  let hashFile = filepath
   if (hashFile.includes('/')) hashFile = `"${hashFile}"`;
 
   // recursively hashes directory or file and adds to ipfs
@@ -33,7 +33,7 @@ $("#ipns-button").on("click", function() {
 
   //hashes and adds file or directory to local ipfs node
   addDirectory(hashFile, command)
-});
+}
 
 // Clicking button pins outside hash to the local ipfs node.
 $("#pin-button").on("click", function() {
