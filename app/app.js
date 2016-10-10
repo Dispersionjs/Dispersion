@@ -1,8 +1,7 @@
 const app = angular.module('myApp', ['directives', 'HashFactory'])
   .controller('DashboardController', function($scope, $q, HashFactory) {
 
-    console.log(hashList)
-      //gets all of the users pinned hashes
+    //gets all of the users pinned hashes
     $scope.files;
     HashFactory.then(function(fileArray) {
       $scope.files = fileget(fileArray);
@@ -21,6 +20,12 @@ const app = angular.module('myApp', ['directives', 'HashFactory'])
         $scope.files = fileget(fileArray);
       });
     }
+
+    $scope.deleteHash = function(hash) {
+      console.log(hash)
+    }
+
+
   })
 
 // http://jsfiddle.net/Tpf7E/22/

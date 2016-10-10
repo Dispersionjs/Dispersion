@@ -35,3 +35,14 @@ a{
 .btn-ad {
   margin-left: 10px;
 }
+
+#hash-input {
+  font-size: 32px;
+  padding-left: 65px;
+}
+
+#hash-input:hover {
+  cursor: pointer
+  font-size: 32px;
+  padding-left: 65px;
+}
