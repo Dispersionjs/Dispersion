@@ -1,67 +1,17 @@
 {
-  "QmXF9LEi7keEriTr1m5dTrU7pNPE6qransj77hZmqz7MDq": {
-    "file": "wrapper",
-    "time": "Mon, 10 Oct 2016 15:44:34 GMT",
-    "url": "https://ipfs.io/ipfs/QmXF9LEi7keEriTr1m5dTrU7pNPE6qransj77hZmqz7MDq"
+  "QmRHuKfHdVGtdLyJxpazf2dVd4GqNjgQbE7aAjiDEAd1tR": {
+    "file": "10291171_905954169473806_8991181629461464801_n.jpg",
+    "time": "Mon, 10 Oct 2016 20:26:59 GMT",
+    "url": "https://ipfs.io/ipfs/QmRHuKfHdVGtdLyJxpazf2dVd4GqNjgQbE7aAjiDEAd1tR"
   },
-  "QmYLN3rwwN9VkdU77h4uxbuREDSk2aVJmtNsaqytXaB1SC": {
-    "file": "hashtxttest",
-    "time": "Mon, 10 Oct 2016 15:44:34 GMT",
-    "url": "https://ipfs.io/ipfs/QmYLN3rwwN9VkdU77h4uxbuREDSk2aVJmtNsaqytXaB1SC"
+  "QmaC8Mu1ycE2NhfHSarDoW7CXCrdcKnDiDLsiumk79XLrz": {
+    "file": "Merkel.jpg",
+    "time": "Mon, 10 Oct 2016 20:34:12 GMT",
+    "url": "https://ipfs.io/ipfs/QmaC8Mu1ycE2NhfHSarDoW7CXCrdcKnDiDLsiumk79XLrz"
   },
-  "QmR4oNbEKupjmCymY5B9rhDB8osdsjYwdajnibThqDoyhP": {
-    "file": "hashstuff/hithere.png",
-    "time": "Mon, 10 Oct 2016 04:28:19 GMT",
-    "url": "https://ipfs.io/ipfs/QmR4oNbEKupjmCymY5B9rhDB8osdsjYwdajnibThqDoyhP"
-  },
-  "QmV9tSDx9UiPeWExXEeH6aoDvmihvx6jD5eLb4jbTaKGps": {
-    "file": "test Folder/ipfs-p2p-file-system.pdf",
-    "time": "Sat, 08 Oct 2016 03:33:45 GMT",
-    "url": "https://ipfs.io/ipfs/QmV9tSDx9UiPeWExXEeH6aoDvmihvx6jD5eLb4jbTaKGps"
-  },
-  "QmWZGgMoD5DK7gPCajnDnBttzeBC76MbUKcbxyvrrwyRdn": {
-    "file": "oie_2232632KHoNWQhG.jpg",
-    "time": "Sat, 08 Oct 2016 05:01:55 GMT",
-    "url": "https://ipfs.io/ipfs/QmWZGgMoD5DK7gPCajnDnBttzeBC76MbUKcbxyvrrwyRdn"
-  },
-  "QmaXTyipi1bVZDspWe5NEKNqWWSNTkjMv2ccz5KZzLHWn5": {
-    "file": "test Folder/Standup.jpg",
-    "time": "Sat, 08 Oct 2016 03:33:45 GMT",
-    "url": "https://ipfs.io/ipfs/QmaXTyipi1bVZDspWe5NEKNqWWSNTkjMv2ccz5KZzLHWn5"
-  },
-  "QmdmMPkNcckAZwKzZNgj9juHxGVvGy5bJo1CTTrpu52Ui6": {
-    "file": "mixer-312128_640.png",
-    "time": "Mon, 10 Oct 2016 04:22:07 GMT",
-    "url": "https://ipfs.io/ipfs/QmdmMPkNcckAZwKzZNgj9juHxGVvGy5bJo1CTTrpu52Ui6"
-  },
-  "QmbaAgGbBcAnHujNdfKGfLLPANEv4FKJBGjBZ6NE1V2hC4": {
-    "file": "hashstuff",
-    "time": "Mon, 10 Oct 2016 04:28:19 GMT",
-    "url": "https://ipfs.io/ipfs/QmbaAgGbBcAnHujNdfKGfLLPANEv4FKJBGjBZ6NE1V2hC4"
-  },
-  "Qme9kPNBkkm8G37MuKwfd9PJAQAU1RswSoFCDw4de1t9DK": {
-    "file": "hashtxttest/index.txt",
-    "time": "Mon, 10 Oct 2016 15:44:34 GMT",
-    "url": "https://ipfs.io/ipfs/Qme9kPNBkkm8G37MuKwfd9PJAQAU1RswSoFCDw4de1t9DK"
-  },
-  "QmbPyKUkrdJ1GvpS4KAT3cKmXKGf8dj4BWSpG3jH5Jk5zj": {
-    "file": "wrapper",
-    "time": "Sat, 08 Oct 2016 03:33:45 GMT",
-    "url": "https://ipfs.io/ipfs/QmbPyKUkrdJ1GvpS4KAT3cKmXKGf8dj4BWSpG3jH5Jk5zj"
-  },
-  "QmdXE2PiASTXeSwNwDHT7j4x6h7bdkpX2n1a6QdURwEAy8": {
-    "file": "demo-image.jpg",
-    "time": "Sat, 08 Oct 2016 03:13:39 GMT",
-    "url": "https://ipfs.io/ipfs/QmdXE2PiASTXeSwNwDHT7j4x6h7bdkpX2n1a6QdURwEAy8"
-  },
-  "QmdvGCBKkLsiVigR3N4rjrWeJiHo9NcZQD67ybUNF3w5nQ": {
-    "file": "wrapper",
-    "time": "Mon, 10 Oct 2016 04:28:19 GMT",
-    "url": "https://ipfs.io/ipfs/QmdvGCBKkLsiVigR3N4rjrWeJiHo9NcZQD67ybUNF3w5nQ"
-  },
-  "QmfZtpSr6JhuB8TJJpepCpky9gytWBteDLuXWmzbXyNbxp": {
-    "file": "test Folder",
-    "time": "Sat, 08 Oct 2016 03:33:45 GMT",
-    "url": "https://ipfs.io/ipfs/QmfZtpSr6JhuB8TJJpepCpky9gytWBteDLuXWmzbXyNbxp"
+  "QmbyNmx4uWiSjf3oPUXJLBJzRroMeTqgsPopkWLpf9j33C": {
+    "file": "cat-oxygen-mask.jpg",
+    "time": "Mon, 10 Oct 2016 20:29:00 GMT",
+    "url": "https://ipfs.io/ipfs/QmbyNmx4uWiSjf3oPUXJLBJzRroMeTqgsPopkWLpf9j33C"
   }
 }

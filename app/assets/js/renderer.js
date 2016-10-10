@@ -14,7 +14,7 @@ const request = require('request');
 startDaemon();
 
 //generate list of store hashes when app is started
-// hashList();
+hashList();
 
 // On click submits inputed file to be hashed.
 function submitFile(filepath) {
@@ -41,9 +41,9 @@ $("#pin-button").on("click", function() {
 });
 
 // Clicking button deletes hash.
-$("#delete-button").on("click", function() {
-  unPin($('#delete-pin').val())
-});
+// $("#delete-button").on("click", function() {
+//   unPin($('#delete-pin').val())
+// });
 
 //Save file to folder
 $("#save-button").on("click", function() {
@@ -91,7 +91,7 @@ function hashList() {
     })
   });
 }
-
+//clearPinsFromElectron();
 /** This function will clear local storage and remove all associated pins.**/
 function clearPinsFromElectron() {
   storage.keys(function(error, keys) {
@@ -164,6 +164,7 @@ function addPin(pinHash, pinDescription) {
 
 // Function  that removes a pin from local storage.
 function unPin(pinHash) {
+  console.log("Pin Hash: "+ pinHash);
   let pinRmCommand = 'ipfs pin rm ' + pinHash;
   exec(pinRmCommand, function(error, stdout, stderr) {
     storage.remove(pinHash, function(error) {
