@@ -43,4 +43,4 @@ savedfiles
 .DS_Store
 
 #local hash storage
-data.json
+*data.json
