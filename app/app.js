@@ -19,6 +19,7 @@ const app = angular.module('myApp', ['directives', 'HashFactory'])
 
     $scope.deleteHash = function (hash) {
       unPin(hash);
+      $scope.files = HashFactory.getFiles($scope)
       window.location.reload()
     }
   });

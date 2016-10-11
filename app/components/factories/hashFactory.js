@@ -26,7 +26,7 @@ module.factory('HashFactory', function ($q) {
         })
 
         $q.all(promiseArr).then(() => {
-          console.log(fileArray)
+          console.log("All data from LOCAL STORAGE", fileArray)
           $scope.files = fileget(fileArray)
         })
       })
