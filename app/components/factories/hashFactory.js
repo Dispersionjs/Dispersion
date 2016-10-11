@@ -1,50 +1,56 @@
-/**
- * HashFactory reads a json file with all of the users pinned hashes
- */
-
 var module = angular
   .module('HashFactory', [])
 
-module.service('HashFactory', function($q) {
+module.factory('HashFactory', function($q) {
   // let files = 0;
 
   return {
-    init: function() {
-      return $q(function(resolve, reject) {
-        fs.readFile('data.json', 'utf-8', (err, data) => {
-          var fileArray = []
-          if (err) throw err;
-          data = JSON.parse(data)
-          let keyArray = Object.keys(data);
-          keyArray.forEach(function(item) {
-            fileArray.push({
-              [item]: data[item]
-            })
-          })
-          resolve(fileArray)
-        })
-      })
-    },
+    getFiles: function($scope) {
+      storage.keys(function(error, keys) {
+        if (error) throw error;
+        // console.log('storage.keys', keys)
 
-    fileget: function(fileArray) {
-      let arr = [];
-      let type;
-      fileArray.forEach(function(item, index) {
-        //finds file type
-        type = testFileType(item);
-        arr.push({
-          item: item[Object.keys(item)].file,
-          time: item[Object.keys(item)].time,
-          url: item[Object.keys(item)].url,
-          fileType: type,
-          hash: Object.keys(item)[0]
+        var promiseArr = [];
+        var fileArray = [];
+
+        //make promise array
+        keys.forEach((key, index, array) => {
+          promiseArr.push(
+            $q((resolve, reject) => {
+              storage.get(key, (error, data) => {
+                // console.log("storage.get key from promise array", key)
+                if (/Qm/.test(key)) {
+                  fileArray.push({
+                    [key]: data
+                  })
+                }
+                resolve();
+              })
+            }))
         })
+
+        return $q.all(promiseArr)
       })
-      return arr;
     }
   }
 
-  //helper funciton for determining file types
+  function fileget(fileArray) {
+    let arr = [];
+    let type;
+    fileArray.forEach(function(item, index) {
+      //finds file type
+      type = testFileType(item);
+      arr.push({
+        item: item[Object.keys(item)].file,
+        time: item[Object.keys(item)].time,
+        url: item[Object.keys(item)].url,
+        fileType: type,
+        hash: Object.keys(item)[0]
+      })
+    })
+    return arr;
+  };
+
   function testFileType(item) {
     let fileName = item[Object.keys(item)].file
     if (fileName.includes('.jpg') || fileName.includes('.png') || fileName.includes('.JPG') || fileName.includes('.PNG') || fileName.includes('.jpeg')) {
@@ -57,5 +63,4 @@ module.service('HashFactory', function($q) {
       return 'doc';
     }
   }
-
 });
