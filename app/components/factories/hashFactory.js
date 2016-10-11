@@ -2,13 +2,10 @@ var module = angular
   .module('HashFactory', [])
 
 module.factory('HashFactory', function($q) {
-  // let files = 0;
-
   return {
-    getFiles: function($scope) {
+    loadFilesFromStorage: function($scope) {
       storage.keys(function(error, keys) {
         if (error) throw error;
-        // console.log('storage.keys', keys)
 
         var promiseArr = [];
         var fileArray = [];
@@ -18,7 +15,6 @@ module.factory('HashFactory', function($q) {
           promiseArr.push(
             $q((resolve, reject) => {
               storage.get(key, (error, data) => {
-                // console.log("storage.get key from promise array", key)
                 if (/Qm/.test(key)) {
                   fileArray.push({
                     [key]: data
@@ -29,7 +25,10 @@ module.factory('HashFactory', function($q) {
             }))
         })
 
-        return $q.all(promiseArr)
+        $q.all(promiseArr).then(() => {
+          console.log("All data from LOCAL STORAGE", fileArray)
+          $scope.files = fileget(fileArray)
+        })
       })
     }
   }
