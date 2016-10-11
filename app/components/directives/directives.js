@@ -5,7 +5,7 @@ angular.module('directives', [])
     restrict: 'E',
     transclude: true,
     controller: 'DashboardController',
-    scope: {},
+    scope: false,
     templateUrl: 'components/partials/topbar.html',
     replace: true
   };
