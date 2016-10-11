@@ -1,10 +1,10 @@
 const app = angular.module('myApp', ['directives', 'HashFactory'])
-  .controller('DashboardController', function ($scope, $q, HashFactory) {
+  .controller('DashboardController', function ($scope, $q, $timeout, HashFactory) {
     
     $scope.newFile;
 
     //gets all of the users pinned hashes
-    HashFactory.getFiles($scope)
+   HashFactory.loadFilesFromStorage($scope);
 
     //shows additional info about pinned file
     $scope.showInfo = function (index) {
@@ -14,12 +14,15 @@ const app = angular.module('myApp', ['directives', 'HashFactory'])
     //function in renderer.js that adds file or directory to local ipfs node
     $scope.addHash = function () {
       submitFile($scope.newFile);
-      $scope.files = HashFactory.getFiles($scope)
+      $timeout(() => {
+        $scope.files = HashFactory.loadFilesFromStorage($scope)
+      }, 1000)
+      
     }
 
     $scope.deleteHash = function (hash) {
       unPin(hash);
-      $scope.files = HashFactory.getFiles($scope)
+      $scope.files = HashFactory.loadFilesFromStorage($scope)
       window.location.reload()
     }
   });

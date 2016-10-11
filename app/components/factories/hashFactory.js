@@ -3,14 +3,13 @@ var module = angular
 
 module.factory('HashFactory', function ($q) {
   return {
-    getFiles: function ($scope) {
-      var promiseArr = [];
-      var fileArray = [];
-
+    loadFilesFromStorage: function ($scope) {
       storage.keys(function (error, keys) {
         if (error) throw error;
 
-      
+        var promiseArr = [];
+        var fileArray = [];
+
         //make promise array          
         keys.forEach((key, index, array) => {
           promiseArr.push(
@@ -24,14 +23,11 @@ module.factory('HashFactory', function ($q) {
             }))
         })
 
-        
-
-        $q.all(promiseArr).then(() => {
+       $q.all(promiseArr).then(() => {
           console.log("All data from LOCAL STORAGE", fileArray)
-          $scope.files = fileget(fileArray)
+           $scope.files = fileget(fileArray)
         })
       })
-      
     }
   }
 
