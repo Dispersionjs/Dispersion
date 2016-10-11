@@ -1,74 +1,89 @@
 const app = angular.module('myApp', ['directives', 'HashFactory'])
-  .controller('DashboardController', function($scope, $q, $timeout, HashFactory) {
+  .controller('DashboardController', function ($scope, $q, $timeout, HashFactory) {
 
     //gets all of the users pinned hashes
-    HashFactory.init().then(function(fileArray) {
-      $scope.files = HashFactory.fileget(fileArray);
-    });
+    $scope.files = getFiles()
 
     //shows additional info about pinned file
-    $scope.showInfo = function(index) {
+    $scope.showInfo = function (index) {
       $(`#sel-option${index}`).show();
     }
 
-    $scope.newFile;
-    $scope.addHash = function() {
-      //function in renderer.js that adds file or directory to local ipfs node
-      submitFile($scope.newFile);
 
-      $timeout(function() {
-        console.log("just entered", $scope.files);
-        HashFactory.init().then(function(fileArray) {
-          console.log(fileArray)
-          $scope.files = HashFactory.fileget(fileArray);
-          window.location.reload()
-        })
-      }, 1000);
+    $scope.newFile;
+    //function in renderer.js that adds file or directory to local ipfs node
+    $scope.addHash = function () {
+
+      //Add new file to IPFS and
+      submitFile($scope.newFile);
+      $scope.files = HashFactory.getFiles()
     }
 
-    $scope.deleteHash = function(hash) {
+    $scope.deleteHash = function (hash) {
       unPin(hash);
       window.location.reload()
     }
 
-  })
 
 
-//   function submitFile(filepath) {
-//   //file to be hashed. add quotes to ignore possible spaces
-//   let hashFile = filepath
-//   if (hashFile.includes('/')) hashFile = `"${hashFile}"`;
+    function getFiles() {
+      storage.keys(function (error, keys) {
+        if (error) throw error;
+        console.log('storage.keys', keys)
 
-//   // recursively hashes directory or file and adds to ipfs
-//   let command = `ipfs add -r ${hashFile}`;
+        var promiseArr = [];
+        var fileArray = [];
 
-//   //If it is a directory, then add a wrapper hash.
-//   if (!hashFile.includes('.')) {
-//     command = `${command} -w`;
-//   }
-//   //hashes and adds file or directory to local ipfs node
-//   addDirectory(hashFile, command)
-// }
-// /////***********************
-// function addDirectory(filePath, hashType) {
-//   //escape spaces in foldername
-//   exec(hashType, function(error, stdout, stderr) {
+        //make promise array          
+        keys.forEach((key, index, array) => {
+          promiseArr.push(
+            $q((resolve, reject) => {
+              storage.get(key, (error, data) => {
+                console.log("storage.get key from promise array", key)
+                if (/Qm/.test(key)) {
+                  fileArray.push({ [key]: data })
+                }
+                resolve();
+              })
+            }))
+        })
+        $q.all(promiseArr).then(function () {
+          $scope.files = fileget(fileArray);
+        })
+      })
+    }
 
-//     //grabs just the filename from the absolute path of the added file
-//     let fileLocationArray = filePath.split('/');
-//     let file = fileLocationArray[fileLocationArray.length - 1];
-//     let hashArray = stdout.trim().split('\n');
 
-//     hashArray.forEach(function(item) {
-//       let hashObject = makeHashObject(item);
-//       requestHashObject(hashObject);
+    function fileget(fileArray) {
+      let arr = [];
+      let type;
+      fileArray.forEach(function (item, index) {
+        //finds file type
+        type = testFileType(item);
+        arr.push({
+          item: item[Object.keys(item)].file,
+          time: item[Object.keys(item)].time,
+          url: item[Object.keys(item)].url,
+          fileType: type,
+          hash: Object.keys(item)[0]
+        })
+      })
+      return arr;
+    }
 
-//     })
 
-//     //refresh hash list
-//     hashList();
-//     if (error !== null) {
-//       console.log('exec error: ' + error);
-//     }
-//   })
-// }
+  function testFileType(item) {
+    let fileName = item[Object.keys(item)].file
+    if (fileName.includes('.jpg') || fileName.includes('.png') || fileName.includes('.JPG') || fileName.includes('.PNG') || fileName.includes('.jpeg')) {
+      return 'image';
+    } else if (!fileName.includes('.')) {
+      return 'folder';
+    } else if (fileName.includes('.xl')) {
+      return 'excel';
+    } else if (fileName.includes('.pdf') || fileName.includes('.txt') || fileName.includes('.doc')) {
+      return 'doc';
+    }
+  }    
+
+
+})

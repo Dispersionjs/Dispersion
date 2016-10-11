@@ -5,31 +5,47 @@
 var module = angular
   .module('HashFactory', [])
 
-module.service('HashFactory', function($q) {
+module.factory('HashFactory', function ($q) {
   // let files = 0;
 
   return {
-    init: function() {
-      return $q(function(resolve, reject) {
-        fs.readFile('data.json', 'utf-8', (err, data) => {
-          var fileArray = []
-          if (err) throw err;
-          data = JSON.parse(data)
-          let keyArray = Object.keys(data);
-          keyArray.forEach(function(item) {
-            fileArray.push({
-              [item]: data[item]
-            })
-          })
-          resolve(fileArray)
+    getFiles: function () {
+      storage.keys(function (error, keys) {
+        if (error) throw error;
+        console.log('storage.keys', keys)
+
+        var promiseArr = [];
+        var fileArray = [];
+
+        //make promise array          
+        keys.forEach((key, index, array) => {
+          promiseArr.push(
+            $q((resolve, reject) => {
+              storage.get(key, (error, data) => {
+                console.log("storage.get key from promise array", key)
+                if (/Qm/.test(key)) {
+                  fileArray.push({ [key]: data })
+                }  
+                resolve(fileArray);
+              })
+            }))
         })
+        
+        return $q.all(promiseArr)
+        // return $promiseArr
+        //   .then(() => {
+        //   console.log("THIS IS THE REFEACTORED", fileArray)
+        //   // return fileget(fileArray);
+        // })
       })
     },
 
-    fileget: function(fileArray) {
+
+
+    fileget: function (fileArray) {
       let arr = [];
       let type;
-      fileArray.forEach(function(item, index) {
+      fileArray.forEach(function (item, index) {
         //finds file type
         type = testFileType(item);
         arr.push({
@@ -42,9 +58,10 @@ module.service('HashFactory', function($q) {
       })
       return arr;
     }
+
   }
 
-  //helper funciton for determining file types
+
   function testFileType(item) {
     let fileName = item[Object.keys(item)].file
     if (fileName.includes('.jpg') || fileName.includes('.png') || fileName.includes('.JPG') || fileName.includes('.PNG') || fileName.includes('.jpeg')) {
@@ -57,5 +74,4 @@ module.service('HashFactory', function($q) {
       return 'doc';
     }
   }
-
 });

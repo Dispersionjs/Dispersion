@@ -14,7 +14,7 @@ const request = require('request');
 startDaemon();
 
 //generate list of store hashes when app is started
-hashList();
+// hashList();
 
 // On click submits inputed file to be hashed.
 function submitFile(filepath) {
@@ -33,57 +33,62 @@ function submitFile(filepath) {
   addDirectory(hashFile, command)
 }
 
-// Clicking button pins outside hash to the local ipfs node.
-$("#pin-button").on("click", function() {
-  addPin($('#inputPin').val(), $('#pinDescription').val())
-});
+// // Clicking button pins outside hash to the local ipfs node.
+// $("#pin-button").on("click", function() {
+//   addPin($('#inputPin').val(), $('#pinDescription').val())
+// });
 
-//Save file to folder
-$("#save-button").on("click", function() {
-  let fileSavePath = $('#save-folder').val();
-  if (fileSavePath === '') {
-    filesavepath = "savedfiles"
-  }
-  saveToDisk($('#save-input').val(), filesavepath)
-});
+// //Save file to folder
+// $("#save-button").on("click", function() {
+//   let fileSavePath = $('#save-folder').val();
+//   if (fileSavePath === '') {
+//     filesavepath = "savedfiles"
+//   }
+//   saveToDisk($('#save-input').val(), filesavepath)
+// });
 
-$("#delete-all").on("click", function() {
-  clearPinsFromElectron()
-});
+// $("#delete-all").on("click", function() {
+//   clearPinsFromElectron()
+// });
 
-$("#hashList-button").on("click", function() {
+// $("#hashList-button").on("click", function() {
 
-});
+// });
 
-//the list of all locally pinned hashes
+//set the list of all locally pinned hashes
 function hashList() {
   let hashesObj = {};
-  storage.keys(function(error, keys) {
+
+  storage.keys(function (error, keys) {
+    console.log('storage.keys', keys)
     if (error) throw error;
-    let hashList = $('#hash-list');
-    hashList.empty();
     var promiseArr = [];
     keys.forEach(function(key, index, array) {
       promiseArr.push(new Promise(function(resolve, reject) {
         storage.get(key, function(error, data) {
           if (/Qm/.test(key)) hashesObj[key] = data
-          if (key.length === 46) {
-            let keyDiv = `<div>the hash is ${key} and the data is ${JSON.stringify(data, null, 2)}`
-            hashList.append(keyDiv);
-          }
           resolve();
         })
-
       }))
     })
-    Promise.all(promiseArr).then(function(a, b) {
+
+    // storage.set("full-hash-list", JSON.stringify(hashesObj, null, 2), (err) => {
+    //     if (err) throw err;
+    //     console.log('It\'s saved om storage set!', hashesObj);
+    //   })
+    Promise.all(promiseArr).then(function (a, b) {
+      // storage.set("full-hash-list", JSON.stringify(hashesObj, null, 2), (err) => {
+      //   if (err) throw err;
+      //   console.log('It\'s saved om storage set!', hashesObj);
+      // })
       fs.writeFile('data.json', JSON.stringify(hashesObj, null, 2), (err) => {
         if (err) throw err;
-        console.log('It\'s saved!');
+        console.log('It\'s saved in writefile!', hashesObj);
       })
     })
   });
 }
+
 //clearPinsFromElectron();
 /** This function will clear local storage and remove all associated pins.**/
 function clearPinsFromElectron() {
