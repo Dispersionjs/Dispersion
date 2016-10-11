@@ -29,7 +29,6 @@ function submitFile(filepath) {
   if (!hashFile.includes('.')) {
     command = `${command} -w`;
   }
-
   //hashes and adds file or directory to local ipfs node
   addDirectory(hashFile, command)
 }
