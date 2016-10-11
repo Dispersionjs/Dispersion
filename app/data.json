@@ -1,57 +1,47 @@
 {
-  "QmPMh1B5dAL9jtgfgxMNPaszzfBUgMZQxXwhVYTU3xBrkG": {
-    "file": "Screen Shot 2016-10-05 at 1.52.53 PM.png",
-    "time": "Mon, 10 Oct 2016 20:58:10 GMT",
-    "url": "https://ipfs.io/ipfs/QmPMh1B5dAL9jtgfgxMNPaszzfBUgMZQxXwhVYTU3xBrkG"
-  },
   "QmRNVnDm2Tc4xF4RChTnZymDKCctggAF1N7y3KEXQJrWRh": {
     "file": "blockchain.rtf",
-    "time": "Mon, 10 Oct 2016 20:55:06 GMT",
+    "time": "Tue, 11 Oct 2016 18:25:04 GMT",
     "url": "https://ipfs.io/ipfs/QmRNVnDm2Tc4xF4RChTnZymDKCctggAF1N7y3KEXQJrWRh"
   },
-  "QmRrsup9DPpkDzoCMkzmDPnjXjQ1MbxZAt5RkhK3sa3pcJ": {
-    "file": "Screen Shot 2016-10-01 at 10.09.37 PM.png",
-    "time": "Mon, 10 Oct 2016 21:05:30 GMT",
-    "url": "https://ipfs.io/ipfs/QmRrsup9DPpkDzoCMkzmDPnjXjQ1MbxZAt5RkhK3sa3pcJ"
+  "QmTzwAxdKb6HmiyXC4bgM45cBqYTn3cdUiCgGtkTU4bLf9": {
+    "file": "Screen Shot 2016-09-29 at 12.32.13 PM.png",
+    "time": "Tue, 11 Oct 2016 18:25:27 GMT",
+    "url": "https://ipfs.io/ipfs/QmTzwAxdKb6HmiyXC4bgM45cBqYTn3cdUiCgGtkTU4bLf9"
   },
-  "QmV9tSDx9UiPeWExXEeH6aoDvmihvx6jD5eLb4jbTaKGps": {
-    "file": "ipfs-p2p-file-system.pdf",
-    "time": "Mon, 10 Oct 2016 20:50:00 GMT",
-    "url": "https://ipfs.io/ipfs/QmV9tSDx9UiPeWExXEeH6aoDvmihvx6jD5eLb4jbTaKGps"
-  },
-  "QmVNEawucJjbmiUV37poMtrKvr3hTUgaZxRUTqeerpy2fr": {
-    "file": "Screen Shot 2016-10-05 at 1.52.25 PM.png",
-    "time": "Mon, 10 Oct 2016 20:58:51 GMT",
-    "url": "https://ipfs.io/ipfs/QmVNEawucJjbmiUV37poMtrKvr3hTUgaZxRUTqeerpy2fr"
-  },
-  "QmW1P55AzVT7GFw5dpsfkjUWU76JUGf5Pyc8sSmHLg3Uds": {
-    "file": "Bitcoin for the Befuddled (gnv64) - Unknown.azw",
-    "time": "Tue, 11 Oct 2016 02:45:31 GMT",
-    "url": "https://ipfs.io/ipfs/QmW1P55AzVT7GFw5dpsfkjUWU76JUGf5Pyc8sSmHLg3Uds"
+  "QmUuzwJzEasmJuz73JiUZpNHU9rAwvdxwsjM6SMN285gtJ": {
+    "file": "Screen Shot 2016-10-03 at 8.58.43 AM.png",
+    "time": "Tue, 11 Oct 2016 18:24:39 GMT",
+    "url": "https://ipfs.io/ipfs/QmUuzwJzEasmJuz73JiUZpNHU9rAwvdxwsjM6SMN285gtJ"
   },
   "QmWXzt3s1ovBE5aEBsnDes8rCJ3fbB2qPt3E76h1GYNqDM": {
     "file": "jumper.png",
-    "time": "Tue, 11 Oct 2016 03:28:33 GMT",
+    "time": "Tue, 11 Oct 2016 18:27:29 GMT",
     "url": "https://ipfs.io/ipfs/QmWXzt3s1ovBE5aEBsnDes8rCJ3fbB2qPt3E76h1GYNqDM"
   },
-  "QmYGFKdZdYWw7AwbdHB1p9ZAqy3gBuajGnLTVAEiiaRo3U": {
-    "file": "Node is for webserver environment..png",
-    "time": "Tue, 11 Oct 2016 02:45:10 GMT",
-    "url": "https://ipfs.io/ipfs/QmYGFKdZdYWw7AwbdHB1p9ZAqy3gBuajGnLTVAEiiaRo3U"
+  "Qma1Mt4acWezvPhcPT1FFJVrmBo3WtwGBd3xgRvUaU86Ru": {
+    "file": "simplest-redux-example-master/node_modules/babel-register/node_modules/core-js/client/shim.js",
+    "time": "Tue, 11 Oct 2016 07:04:48 GMT",
+    "url": "https://ipfs.io/ipfs/Qma1Mt4acWezvPhcPT1FFJVrmBo3WtwGBd3xgRvUaU86Ru"
+  },
+  "Qma4aQuMM7EM76tNrQ3Wd5ksLRcnyA17c8yeP4EvYuyMTV": {
+    "file": "simplest-redux-example-master/node_modules/babel-register/node_modules/core-js/library/fn/reflect/has-own-metadata.js",
+    "time": "Tue, 11 Oct 2016 07:04:49 GMT",
+    "url": "https://ipfs.io/ipfs/Qma4aQuMM7EM76tNrQ3Wd5ksLRcnyA17c8yeP4EvYuyMTV"
+  },
+  "Qma4rupGR7Qi72JYLkQbuHTVSGFFJhrCqr1j2KUqaaTVpJ": {
+    "file": "simplest-redux-example-master/node_modules/babel-plugin-transform-es2015-duplicate-keys/package.json",
+    "time": "Tue, 11 Oct 2016 07:04:48 GMT",
+    "url": "https://ipfs.io/ipfs/Qma4rupGR7Qi72JYLkQbuHTVSGFFJhrCqr1j2KUqaaTVpJ"
   },
   "Qma7j5imj381VqPWQxKh7aF4Y3iQWD99yKhJwwJMNg4DY8": {
-    "file": "Screen Shot 2016-09-28 at 11.59.21 PM.png",
-    "time": "Mon, 10 Oct 2016 20:54:10 GMT",
+    "file": "DOM.png",
+    "time": "Tue, 11 Oct 2016 17:29:03 GMT",
     "url": "https://ipfs.io/ipfs/Qma7j5imj381VqPWQxKh7aF4Y3iQWD99yKhJwwJMNg4DY8"
-  },
-  "QmaPBhs9xeBQnKsXLRwQ8aFHeSwba2HchHUTxdRa6t58CB": {
-    "file": "JQUERY ALWAYS RETURN ARRAY use val().png",
-    "time": "Mon, 10 Oct 2016 20:52:05 GMT",
-    "url": "https://ipfs.io/ipfs/QmaPBhs9xeBQnKsXLRwQ8aFHeSwba2HchHUTxdRa6t58CB"
   },
   "QmcaevVypSBPxpuytEYv6eu1sBg8NBvJZuaGZvwUGJ7PAM": {
     "file": "Editor_ Dispersion.htm",
-    "time": "Tue, 11 Oct 2016 04:05:39 GMT",
+    "time": "Tue, 11 Oct 2016 18:25:42 GMT",
     "url": "https://ipfs.io/ipfs/QmcaevVypSBPxpuytEYv6eu1sBg8NBvJZuaGZvwUGJ7PAM"
   }
 }

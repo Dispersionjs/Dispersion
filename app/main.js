@@ -23,7 +23,6 @@ function createWindow() {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
-
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
     // Dereference the window object, usually you would store windows
@@ -32,12 +31,15 @@ function createWindow() {
     mainWindow = null
   })
 }
+// app.clearCache(callback)
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow)
-
+console.log(app.getPath('userData'))
+// app.getPath(('userData') + '/Cache')
 // Quit when all windows are closed.
 app.on('window-all-closed', function() {
   // On OS X it is common for applications and their menu bar
@@ -51,6 +53,6 @@ app.on('activate', function() {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
-    createWindow()
+createWindow()
   }
 })
