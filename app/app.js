@@ -1,28 +1,33 @@
 const app = angular.module('myApp', ['directives', 'HashFactory'])
-  .controller('DashboardController', function ($scope, $q, $timeout, HashFactory) {
-    
-    $scope.newFile;
 
-    //gets all of the users pinned hashes
-   HashFactory.loadFilesFromStorage($scope);
+.controller('DashboardController', function($scope, $q, $timeout, HashFactory) {
+  //start local Daemon
+  Dispersion.startDaemon()
+  $scope.newFile;
 
-    //shows additional info about pinned file
-    $scope.showInfo = function (index) {
-      $(`#sel-option${index}`).show();
-    }
+  //gets all of the users pinned hashes
+  HashFactory.loadFilesFromStorage($scope);
 
-    //function in renderer.js that adds file or directory to local ipfs node
-    $scope.addHash = function () {
-      submitFile($scope.newFile);
-      $timeout(() => {
-        $scope.files = HashFactory.loadFilesFromStorage($scope)
-      }, 1000)
-      
-    }
+  //shows additional info about pinned file
+  $scope.showInfo = function(index) {
+    $(`#sel-option${index}`).show();
+  }
 
-    $scope.deleteHash = function (hash) {
-      unPin(hash);
+  //function in renderer.js that adds file or directory to local ipfs node
+  $scope.addHash = function() {
+
+    Dispersion.submitFile($scope.newFile);
+
+    $timeout(() => {
       $scope.files = HashFactory.loadFilesFromStorage($scope)
-      window.location.reload()
-    }
-  });
+    }, 1000)
+
+  }
+
+  $scope.deleteHash = function(hash) {
+    Dispersion.unPin(hash);
+    $scope.files = HashFactory.loadFilesFromStorage($scope)
+    window.location.reload()
+  }
+
+});
