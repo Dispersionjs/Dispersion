@@ -16,14 +16,9 @@ const app = angular.module('myApp', ['directives', 'HashFactory'])
       //function in renderer.js that adds file or directory to local ipfs node
       submitFile($scope.newFile);
 
-      $timeout(function() {
-        console.log("just entered", $scope.files);
-        HashFactory.init().then(function(fileArray) {
-          console.log(fileArray)
-          $scope.files = HashFactory.fileget(fileArray);
-          window.location.reload()
-        })
-      }, 1000);
+      HashFactory.init().then(function(fileArray) {
+        $scope.files = HashFactory.fileget(fileArray);
+      })
     }
 
     $scope.deleteHash = function(hash) {
