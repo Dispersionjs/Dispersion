@@ -6,8 +6,6 @@ A desktop application that allows users to save files on their IPFS local node.
 
 Please install IPFS before using Dispersion. You can download IPFS from the following link: https://ipfs.io/docs/install/
 
-Use the following command to download dispersion:
-
 
 Installation
 ------------
