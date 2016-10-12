@@ -200,38 +200,7 @@ const request = require('request');
     }
     return Dispersion;
   }
-
-  // Starts Daemon for IPFS when app is started
-  //startDaemon();
-
-  //generate list of store hashes when app is started
-  // hashList();
-
-  // // Clicking button pins outside hash to the local ipfs node.
-  // $("#pin-button").on("click", function() {
-  //   addPin($('#inputPin').val(), $('#pinDescription').val())
-  // });
-
-  // //Save file to folder
-  // $("#save-button").on("click", function() {
-  //   let fileSavePath = $('#save-folder').val();
-  //   if (fileSavePath === '') {
-  //     filesavepath = "savedfiles"
-  //   }
-  //   saveToDisk($('#save-input').val(), filesavepath)
-  // });
-
-  // $("#delete-all").on("click", function() {
-  //   clearPinsFromElectron()
-  // });
-
-  // $("#hashList-button").on("click", function() {
-
-  // });
-
-  //set the list of all locally pinned hashes
-
-
+  
   //clearPinsFromElectron();
   /** This function will clear local storage and remove all associated pins.**/
 
