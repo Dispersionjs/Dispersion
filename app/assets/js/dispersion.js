@@ -175,12 +175,6 @@ const username = require('username');
     return Dispersion;
   }
 
-  // // Clicking button pins outside hash to the local ipfs node.
-  // $("#pin-button").on("click", function() {
-  //   addPin($('#inputPin').val(), $('#pinDescription').val())
-  // });
-
-  //Drag and drop to add pathname to Electron app
   document.ondragover = document.ondrop = (ev) => {
     ev.preventDefault()
   }
