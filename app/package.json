@@ -6,13 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron . --enable-logging",
-
     "clean": "rm -rf ./dist",
     "clean:osx": "rm -rf ./dist/osx",
-
-    "pack":"npm run clean:osx && electron-packager . \"EA Todo\" --out=dist/osx --platform=darwin --arch=x64 --version=0.36.2 --icon=assets/osx/logo.icns --ignore=dist --ignore=assets --ignore=builder.json --ignore=bower.json --ignore=README.md --ignore=.gitignore --ignore=preview.png",
-
-    "build":  "npm run pack:osx && electron-builder \"dist/osx/EA Todo-darwin-x64/EA Todo.app\" --platform=osx --out=\"dist/osx\" --config=builder.json"
+    "pack": "npm run clean:osx && electron-packager . \"EA Todo\" --out=dist/osx --platform=darwin --arch=x64 --version=0.36.2 --icon=assets/osx/logo.icns --ignore=dist --ignore=assets --ignore=builder.json --ignore=bower.json --ignore=README.md --ignore=.gitignore --ignore=preview.png",
+    "build": "npm run pack:osx && electron-builder \"dist/osx/EA Todo-darwin-x64/EA Todo.app\" --platform=osx --out=\"dist/osx\" --config=builder.json"
   },
   "repository": {
     "type": "git",
@@ -40,7 +37,7 @@
     "jquery": "^3.1.1",
     "mime": "^1.3.4",
     "read-chunk": "^2.0.0",
-    "request": "^2.75.0"
+    "request": "^2.75.0",
+    "username": "^2.2.2"
   }
-  
 }
