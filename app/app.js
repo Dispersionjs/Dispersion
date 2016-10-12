@@ -3,6 +3,12 @@ const app = angular.module('myApp', ['directives', 'HashFactory'])
 .controller('DashboardController', function($scope, $q, $timeout, HashFactory) {
   //start local Daemon
   Dispersion.startDaemon()
+
+  //get Username of local user. Used for file saving
+  username().then(username => {
+    $scope.username = username;
+  });
+
   $scope.newFile;
 
   //gets all of the users pinned hashes
@@ -27,7 +33,10 @@ const app = angular.module('myApp', ['directives', 'HashFactory'])
   $scope.deleteHash = function(hash) {
     Dispersion.unPin(hash);
     $scope.files = HashFactory.loadFilesFromStorage($scope)
-    window.location.reload()
+  }
+
+  $scope.saveToDisk = function(hash, username) {
+    Dispersion.saveToDisk(hash, username);
   }
 
 });
