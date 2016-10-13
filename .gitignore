@@ -44,3 +44,6 @@ savedfiles
 
 #local hash storage
 *data.json
+
+#from build
+app/appe-darwin-x64/
