@@ -52,7 +52,10 @@ const app = angular.module('myApp', ['directives', 'HashFactory'])
     })
     console.log("Instant Log: " + $scope.publishArray);
 
-
+    $scope.publisher = function (hash) {
+      console.log(hash)
+      Dispersion.publishHash(hash)
+    }
 
 
 
