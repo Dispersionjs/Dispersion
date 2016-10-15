@@ -50,6 +50,7 @@ const run = require('subcomandante');
                 "url": "https://ipfs.io/ipfs/" + hashArray[1]
               }
             }
+            console.log("Arr ",hashArray, "HashObj:", hashObj);
             //store in local storage
           storage.set(hashArray[1], hashObj[hashArray[1]], function(error) {
             if (error) throw error;
@@ -93,7 +94,7 @@ const run = require('subcomandante');
       exec(publishIt, function(error, stdout, stderr) {
         console.log(stdout, hash);
         let hashed = `http://gateway.ipfs.io/ipns/${stdout.split(' ')[2].slice(0, -1)}`
-        $('#hashlink').text(hashed);
+        //$('#hashlink').text(hashed);
         if (error !== null) {
           console.log('exec error: ' + error);
         }
