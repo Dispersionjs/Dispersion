@@ -10,6 +10,8 @@ const fileType = require('file-type');
 const https = require('https');
 const request = require('request');
 const username = require('username');
+const ipfsd = require('ipfsd-ctl');
+const run = require('subcomandante');
 
 (function(window) {
 
@@ -141,7 +143,6 @@ const username = require('username');
           //determine and set file extension for saving
           if (!filename.includes('.')) {
             let buffer = readChunk.sync(fileLocation, 0, 262);
-            console.log('asdfasdfasd')
             fileExtension = `.${fileType(buffer).ext}`;
           } else {
             fileExtension = ''
@@ -165,12 +166,26 @@ const username = require('username');
         }
       });
       daemonCommand.stderr.on('data', function(data) {
-        let dataString = data.toString();
-        let result = /daemon is running/.test(dataString);
-        if (result) {
-          console.log('Warning: Daemon already is running in a seperate process! Closing this application will not kill your IPFS Daemon.')
-        }
-      })
+          let dataString = data.toString();
+          let result = /daemon is running/.test(dataString);
+          if (result) {
+            console.log('Warning: Daemon already is running in a seperate process! Closing this application will not kill your IPFS Daemon.')
+          }
+        })
+        // ipfsd.local(function(err, node) {
+        //   if (err) throw err
+        //
+        //   console.log(node)
+        //   node.startDaemon(function(err, ipfsNode) {
+        //     console.log(ipfsNode)
+        //     console.log(ipfsNode.id)
+        //     run(['ipfs', 'add', '/Users/jastiling/Downloads/demo-image.jpg'], {
+        //       waitPid: 1919
+        //     })
+        //     if (err) throw err
+        //   })
+        // })
+
     }
     return Dispersion;
   }
@@ -192,4 +207,4 @@ const username = require('username');
   } else {
     console.log("Dispersion already defined.");
   }
-})(window);
+})(window);;
