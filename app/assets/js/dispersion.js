@@ -10,10 +10,10 @@ const fileType = require('file-type');
 const https = require('https');
 const request = require('request');
 const username = require('username');
-const ipfsd = require('ipfsd-ctl');
-const run = require('subcomandante');
+const IpfsDaemon = require('ipfs-daemon');
+// Get data directories
 
-(function(window) {
+(function (window) {
 
   //Dispersion Library Definition
   function define_Dispersion_Library() {
@@ -21,7 +21,7 @@ const run = require('subcomandante');
     var Dispersion = {};
 
     // On click submits inputed file to be hashed.
-    Dispersion.submitFile = function(filepath) {
+    Dispersion.submitFile = function (filepath) {
 
       //file or directory to be hashed.
       let hashFile = filepath
@@ -33,26 +33,26 @@ const run = require('subcomandante');
         command = `${command} -w`;
       }
 
-      exec(command, function(error, stdout, stderr) {
+      exec(command, function (error, stdout, stderr) {
         //grabs just the filename from the absolute path of the added file
         let fileLocationArray = hashFile.split('/');
         let file = fileLocationArray[fileLocationArray.length - 1];
         //separate hashes from folder into an array
         let hashArray = stdout.trim().split('\n');
         //iterates over the individual hashes and stores in local storage
-        hashArray.forEach(function(hString) {
+        hashArray.forEach(function (hString) {
           var hashArray = hString.split(' ');
           var file = hashArray.slice(2).join(' ').trim();
           var hashObj = {
-              [hashArray[1]]: {
-                "file": file ? file : 'wrapper',
-                "time": new Date().toUTCString(),
-                "url": "https://ipfs.io/ipfs/" + hashArray[1]
-              }
+            [hashArray[1]]: {
+              "file": file ? file : 'wrapper',
+              "time": new Date().toUTCString(),
+              "url": "https://ipfs.io/ipfs/" + hashArray[1]
             }
-            console.log("Arr ",hashArray, "HashObj:", hashObj);
-            //store in local storage
-          storage.set(hashArray[1], hashObj[hashArray[1]], function(error) {
+          }
+          console.log("Arr ", hashArray, "HashObj:", hashObj);
+          //store in local storage
+          storage.set(hashArray[1], hashObj[hashArray[1]], function (error) {
             if (error) throw error;
           });
           //requests each hash url 5 times
@@ -75,10 +75,10 @@ const run = require('subcomandante');
     }
 
     //Removes the pinned object from local storage.
-    Dispersion.unPin = function(pinHash) {
+    Dispersion.unPin = function (pinHash) {
       let pinRmCommand = 'ipfs pin rm ' + pinHash;
-      exec(pinRmCommand, function(error, stdout, stderr) {
-        storage.remove(pinHash, function(error) {
+      exec(pinRmCommand, function (error, stdout, stderr) {
+        storage.remove(pinHash, function (error) {
           if (error) throw error;
         });
         if (error !== null) {
@@ -88,10 +88,10 @@ const run = require('subcomandante');
     }
 
     //publishes the hash to the Peer ID ipns
-    Dispersion.publishHash = function(hash) {
+    Dispersion.publishHash = function (hash) {
       let publishIt = 'ipfs name publish ' + hash;
       console.log(publishIt);
-      exec(publishIt, function(error, stdout, stderr) {
+      exec(publishIt, function (error, stdout, stderr) {
         console.log(stdout, hash);
         let hashed = `http://gateway.ipfs.io/ipns/${stdout.split(' ')[2].slice(0, -1)}`
         //$('#hashlink').text(hashed);
@@ -102,7 +102,7 @@ const run = require('subcomandante');
     }
 
     //function to add pin to local storage
-    Dispersion.addPin = function(pinHash, pinDescription) {
+    Dispersion.addPin = function (pinHash, pinDescription) {
       let pinCommand = 'ipfs pin add ' + pinHash;
       let hashObject = {
         "file": pinDescription,
@@ -110,9 +110,9 @@ const run = require('subcomandante');
         "pinDate": new Date(),
         "url": "https://ipfs.io/ipfs/" + pinHash
       };
-      exec(pinCommand, function(error, stdout, stderr) {
+      exec(pinCommand, function (error, stdout, stderr) {
         //saves pinned hash to Electron App storage
-        storage.set(pinHash, hashObject, function(error) {
+        storage.set(pinHash, hashObject, function (error) {
           if (error) throw error;
         });
         if (error !== null) {
@@ -122,14 +122,14 @@ const run = require('subcomandante');
     }
 
     //save selected hash to local computer's desktop
-    Dispersion.saveToDisk = function(pinHash, username) {
+    Dispersion.saveToDisk = function (pinHash, username) {
       //set save-to directory to a file on user's desktop
       let directory = `/Users/${username}/Desktop/ipfs`
       let pinSaveCommand = `ipfs get --output="${directory}" ${pinHash}`;
-      exec(pinSaveCommand, function(error, stdout, stderr) {
+      exec(pinSaveCommand, function (error, stdout, stderr) {
         if (error !== null) console.log('exec error: ' + error);
         //get data from hash for file save
-        storage.get(pinHash, function(error, data) {
+        storage.get(pinHash, function (error, data) {
           if (error) throw error;
           //check if the hash has already been pinned.
           if (Object.keys(data).length === 0) {
@@ -138,7 +138,7 @@ const run = require('subcomandante');
           }
           //initial location and name of saved hash. Default to Desktop
           let fileLocation = `${directory}/${pinHash}`
-            //filename of hash
+          //filename of hash
           let filename = data.file
           let fileExtension;
           //determine and set file extension for saving
@@ -149,7 +149,7 @@ const run = require('subcomandante');
             fileExtension = ''
           }
           //rename file based on filename and extension
-          fs.rename(fileLocation, `"${directory}/${filename}${fileExtension}"`, function(err) {
+          fs.rename(fileLocation, `"${directory}/${filename}${fileExtension}"`, function (err) {
             if (err) console.log('ERROR: ' + err);
           });
         });
@@ -157,35 +157,58 @@ const run = require('subcomandante');
     }
 
     //function to start daemon
-    Dispersion.startDaemon = function() {
-      let daemonCommand = spawn('ipfs', ['daemon']);
-      daemonCommand.stdout.on('data', function(data) {
-        let dataString = data.toString();
-        let result = /Daemon is ready/.test(dataString);
-        if (result) {
-          console.log('the daemon is running')
+    Dispersion.startDaemon = function () {
+      // let daemonCommand = spawn('ipfs', ['daemon']);
+      // daemonCommand.stdout.on('data', function(data) {
+      //   let dataString = data.toString();
+      //   let result = /Daemon is ready/.test(dataString);
+      //   if (result) {
+      //     console.log('the daemon is running')
+      //   }
+      // });
+      // daemonCommand.stderr.on('data', function(data) {
+      //     let dataString = data.toString();
+      //     let result = /daemon is running/.test(dataString);
+      //     if (result) {
+      //       console.log('Warning: Daemon already is running in a seperate process! Closing this application will not kill your IPFS Daemon.')
+      //     }
+      //   })
+
+
+      const daemonOptions = {
+        AppDataDir: '/tmp/ipfs-daemon', // Local data diretory
+        IpfsDataDir: '/Users/' + process.env.USER + '/.ipfs/datastore/', // Location of IPFS data repository
+        Addresses: {
+          API: '/ip4/127.0.0.1/tcp/5001',
+          Swarm: ['/ip4/0.0.0.0/tcp/4001'],
+          Gateway: '/ip4/127.0.0.1/tcp/8080'
         }
-      });
-      daemonCommand.stderr.on('data', function(data) {
-          let dataString = data.toString();
-          let result = /daemon is running/.test(dataString);
-          if (result) {
-            console.log('Warning: Daemon already is running in a seperate process! Closing this application will not kill your IPFS Daemon.')
-          }
+      }
+            IpfsDaemon(daemonOptions)
+        .then((res) => {
+           console.log(res.ipfs)
+           console.log(res.Addresses)
+          const ipfsDaemon = res.daemon
+        const gatewayAddr = res.Addresses.Gateway
+        console.log(ipfsDaemon)
         })
-        // ipfsd.local(function(err, node) {
-        //   if (err) throw err
-        //
-        //   console.log(node)
-        //   node.startDaemon(function(err, ipfsNode) {
-        //     console.log(ipfsNode)
-        //     console.log(ipfsNode.id)
-        //     run(['ipfs', 'add', '/Users/jastiling/Downloads/demo-image.jpg'], {
-        //       waitPid: 1919
-        //     })
-        //     if (err) throw err
-        //   })
-        // })
+        .catch((err) => console.error(err))
+
+
+
+      // ipfsd.local(function(err, node) {
+      //   if (err) throw err
+      //
+      //   console.log(node)
+      //   node.startDaemon(function(err, ipfsNode) {
+      //     console.log(ipfsNode)
+      //     console.log(ipfsNode.id)
+      //     run(['ipfs', 'add', '/Users/jastiling/Downloads/demo-image.jpg'], {
+      //       waitPid: 1919
+      //     })
+      //     if (err) throw err
+      //   })
+      // })
 
     }
     return Dispersion;
@@ -203,7 +226,7 @@ const run = require('subcomandante');
   }
 
   //define globally if it doesn't already exist
-  if (typeof(Dispersion) === 'undefined') {
+  if (typeof (Dispersion) === 'undefined') {
     window.Dispersion = define_Dispersion_Library();
   } else {
     console.log("Dispersion already defined.");
