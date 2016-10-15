@@ -2,77 +2,78 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
-  <title>Dispersion</title>
-  <!--Import Google Icon Font-->
-  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <!--Import materialize.css-->
-  <link type="text/css" rel="stylesheet" href="assets/css/materialize.min.css" media="screen,projection" />
-  <link rel="stylesheet" href="assets/css/style.css" media="screen" title="no title">
+	<meta charset="UTF-8">
+	<title>Dispersion</title>
+	<!--Import Google Icon Font-->
+	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!--Import materialize.css-->
+	<link type="text/css" rel="stylesheet" href="assets/css/materialize.min.css" media="screen,projection" />
+	<link rel="stylesheet" href="assets/css/style.css" media="screen" title="no title">
 </head>
 
 <body>
-  <div class="light-blue darken-1">
-    <h1 class="center brand-logo">Dispersion</h1>
-  </div>
-  <div id='dash-content' ng-app='myApp'>
-    <div ng-controller='DashboardController'>
+	<div class="light-blue darken-1">
+		<h1 class="center brand-logo">Dispersion</h1>
+	</div>
+	<div id='dash-content' ng-app='myApp'>
+		<div ng-controller='DashboardController'>
 
-      <div class="row">
+			<div class="row">
 
-        <div class="col s2"></div>
-        <div class="col s10">
-          <top-bar></top-bar>
-          <ul class="collection">
-            <li class="collection-item avatar" ng-repeat='(key, value) in files track by $index'>
-              <i ng-if="value.fileType === 'folder'" class="material-icons circle">folder</i>
-              <img ng-if="value.fileType === 'image'" src="{{value.url}}" alt="" class="circle">
-              <i ng-if="value.fileType === 'doc'" class="material-icons circle">description</i>
-              <i ng-if="value.fileType === 'excel'" class="material-icons circle green">insert_chart</i>
-              <i ng-if="value.fileType === 'video'" class="material-icons circle red">play_arrow</i>
-              <span class="title">{{value.item}}</span>
-              <p>{{value.time}} <br> {{value.url}}
-              </p>
-              <div href="#!" class="secondary-content">
-                <a href='#!'> <i class="material-icons">info_outline</i></a>
-                <a href='#!' ng-click='saveToDisk(value.hash,username)'> <i class="material-icons">system_update_alt</i></a>
-                <a href='#!' ng-click='deleteHash(value.hash)'> <i class="material-icons">delete</i></a>
-              </div>
-            </li>
-          </ul>
-          </ul>
-        </div>
-      </div>
-
-
-
-      <div class="row">
-        <div class="col s2">
-        </div>
-        <div class="col s10">
-          <div class="publish-collection" ng-repeat="(key,value) in publishObject">
-            <div class="activator card">
-              <div class="card-image waves-effect waves-block waves-light">
-                <img  src="images/office.jpg">
-              </div>
-              <div class="card-content">
-                <span class="card-title activator grey-text text-darken-4">{{value.file}}<i class="material-icons right">more_vert</i></span>
-                <p><a href="{{value.url}}">{{value.url}}</a></p>
-              </div>
-              <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4">{{value.file}}<i class="material-icons right">close</i></span>
-                <p>{{value.time}}</p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
+				<div class="col s12">
+					<top-bar></top-bar>
+					<ul class="collection">
+						<li class="collection-item avatar" ng-repeat='(key, value) in files track by $index'>
+							<i ng-if="value.fileType === 'folder'" class="material-icons circle">folder</i>
+							<img ng-if="value.fileType === 'image'" src="{{value.url}}" alt="" class="circle">
+							<i ng-if="value.fileType === 'doc'" class="material-icons circle">description</i>
+							<i ng-if="value.fileType === 'excel'" class="material-icons circle green">insert_chart</i>
+							<i ng-if="value.fileType === 'video'" class="material-icons circle red">play_arrow</i>
+							<span class="title">{{value.item}}</span>
+							<p>{{value.time}} <br> {{value.url}}
+							</p>
+							<div href="#!" class="secondary-content">
+								<a href='#!'> <i class="material-icons">info_outline</i></a>
+								<a href='#!' ng-click='saveToDisk(value.hash,username)'> <i class="material-icons">system_update_alt</i></a>
+								<a href='#!' ng-click='deleteHash(value.hash)'> <i class="material-icons">delete</i></a>
+							</div>
+						</li>
+					</ul>
+					</ul>
+				</div>
+			</div>
 
 
 
-    </div>
-  </div>
+			<div class="row">
+				<div class="col s12">
+
+					<div class="publish-collection" >
+							
+							<div class="card horizontal" ng-repeat="(key,value) in publishObject">
+								<div class="card-image">
+									<img src="http://lorempixel.com/100/190/nature/6">
+								</div>
+								<div class="card-stacked">
+									<div class="card-content">
+                    <h5 class="header">{{value.file}}</h5>
+										<p>{{value.time}}</p>
+									</div>
+									<div class="card-action">
+										<a href="{{value.url}}">{{value.url}}</a>
+									</div>
+								</div>
+							</div>
+						
+
+					</div>
+				</div>
+
+
+
+			</div>
+		</div>
+	</div>
 </body>
 <script>
     // require other files to run in this process
