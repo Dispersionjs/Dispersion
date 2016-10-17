@@ -1,4 +1,4 @@
-const app = angular.module('myApp', ['directives', 'HashFactory'])
+const app = angular.module('myApp', ['directives','projectDirective', 'HashFactory'])
 
   .controller('DashboardController', function ($scope, $q, $timeout, HashFactory) {
     //start local Daemon
@@ -36,11 +36,6 @@ const app = angular.module('myApp', ['directives', 'HashFactory'])
     }
 
 
-    $scope.addProject = function () {
-      Dispersion.addProject($scope.projectDir);
-    }
-
-
     /*********************************************************/
     var publishObjectPromise = new Promise(function (resolve, reject) {
       storage.get('publishStorage', function (error, data) {
@@ -48,18 +43,25 @@ const app = angular.module('myApp', ['directives', 'HashFactory'])
         else resolve(data);
       })
     });
-
     publishObjectPromise.then(function(data){
-      console.log(data);
+      console.log('publishStorage data on open: ', data);
       $scope.publishObject = data;
     })
-    console.log("Instant Log: " + $scope.publishArray);
-
     $scope.publisher = function (hash) {
-      console.log(hash)
       Dispersion.publishHash(hash)
     }
 
+  //Add project from local file system to electron app system
+    $scope.addProject = function () {
+      fse.mkdirsSync('/Users/ygoldobin/Desktop/longMcProjects', (err) => {
+        if (err) console.error(err);
+        else { console.log('made directory at') }
+      });
+      console.log(process.env);
+      console.log(path.resolve(__dirname, '..'));
+      // fse.copy($scope.projectDir, )
+      console.log('foldder to add to LocalStorageFolder', $scope.projectDir)
+    }
 
 
 

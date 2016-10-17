@@ -11,6 +11,8 @@ const https = require('https');
 const request = require('request');
 const username = require('username');
 const fse = require('fs-extra');
+const path = require('path');
+
 
 
 (function(window) {
@@ -18,10 +20,7 @@ const fse = require('fs-extra');
   //Dispersion Library Definition
   function define_Dispersion_Library() {
     var Dispersion = {};
-    
-    Dispersion.addProject = function(projectDir) {
-      console.log('foldder to add to LocalStorageFolder', projectDir)
-    }
+
 
     // On click submits inputed file to be hashed.
     Dispersion.submitFile = function(filepath) {
