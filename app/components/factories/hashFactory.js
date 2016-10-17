@@ -1,10 +1,10 @@
 var module = angular
   .module('HashFactory', [])
 
-module.factory('HashFactory', function($q) {
+module.factory('HashFactory', function ($q) {
   return {
-    loadFilesFromStorage: function($scope) {
-      storage.keys(function(error, keys) {
+    loadFilesFromStorage: function ($scope) {
+      storage.keys(function (error, keys) {
         if (error) throw error;
 
         var promiseArr = [];
@@ -30,13 +30,44 @@ module.factory('HashFactory', function($q) {
           $scope.files = fileget(fileArray)
         })
       })
+    },
+
+    addToPublish: function (value) {
+      let getPublishData = function () {
+        let getPromise = new Promise(function (resolve, reject) {
+          storage.get('published', function (error, data) {
+            if (error) throw error;
+            resolve(data)
+          })
+        })
+        return getPromise;
+      }
+
+      let setPublishData = function (data) {
+        let publishObject = data;
+        //add to publishObject
+        data[value.item] = [{ 'date': value.time, 'hash': value.hash, 'publish': false, 'category': value.fileType }];
+        let setPromise = new Promise(function (resolve, reject) {
+          storage.set('published', data, function (error) {
+            if (error) throw error;
+            resolve();
+          });
+        });
+        return setPromise;
+      }
+
+      return (
+        getPublishData().then(function (data) {
+          return setPublishData(data)
+        })
+      )
     }
   }
 
   function fileget(fileArray) {
     let arr = [];
     let type;
-    fileArray.forEach(function(item, index) {
+    fileArray.forEach(function (item, index) {
       //finds file type
       type = testFileType(item);
       arr.push({

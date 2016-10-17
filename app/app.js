@@ -1,4 +1,4 @@
-const app = angular.module('myApp', ['directives', 'HashFactory','PublishService'])
+const app = angular.module('myApp', ['topbarDirective', 'publishDirective', 'HashFactory', 'PublishService'])
 
   .controller('DashboardController', function ($scope, $q, $timeout, HashFactory) {
     //start local Daemon
@@ -35,6 +35,12 @@ const app = angular.module('myApp', ['directives', 'HashFactory','PublishService
       Dispersion.saveToDisk(hash, username);
     }
 
+    $scope.addToPublish = function (value) {
+      console.log(HashFactory.addToPublish(value))
+      HashFactory.addToPublish(value).then(function () {
+      console.log('new project has been published')
+    }); 
+    }
 
 
 
@@ -46,7 +52,7 @@ const app = angular.module('myApp', ['directives', 'HashFactory','PublishService
       })
     });
 
-    publishObjectPromise.then(function(data){
+    publishObjectPromise.then(function (data) {
       console.log(data);
       $scope.publishObject = data;
     })
@@ -74,10 +80,11 @@ const app = angular.module('myApp', ['directives', 'HashFactory','PublishService
     // })
 
   })
-  
-  .controller('PublishController', function ($scope, $q, $timeout, HashFactory) {
 
-
-
-  })
-  ;
+  .controller('PublishController', function ($scope, PublishService) {
+    console.log('asd',PublishService.loadPublished())
+    PublishService.loadPublished().then(function (resolve) {
+      $scope.publishedFiles = resolve;
+      console.log('resolve', resolve)
+    })
+  });
