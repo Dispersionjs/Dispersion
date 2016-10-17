@@ -36,6 +36,9 @@ const app = angular.module('myApp', ['directives', 'HashFactory'])
     }
 
 
+    $scope.addProject = function () {
+      Dispersion.addProject($scope.projectDir);
+    }
 
 
     /*********************************************************/

@@ -47,6 +47,10 @@
 
 			<div class="row">
 				<div class="col s12">
+					
+					  <input id="project-input" type="text" ng-model="projectDir" required>
+        		<label ng-click='addProject()'><i class="material-icons add-icon" style="font-size: 55px;">library_add</i></label>
+
 
 					<div class="publish-collection">
 
@@ -87,7 +91,6 @@
     // require other files to run in this process
     window.$ = window.jQuery = require('./node_modules/jquery/dist/jquery.min.js');
   </script>
-<script src="./assets/js/filefunctions.js"></script>
 <script src="./assets/js/dispersion.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="components/directives/directives.js"></script>

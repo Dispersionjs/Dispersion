@@ -10,15 +10,21 @@ const fileType = require('file-type');
 const https = require('https');
 const request = require('request');
 const username = require('username');
+const fse = require('fs-extra');
+
 
 (function(window) {
 
   //Dispersion Library Definition
   function define_Dispersion_Library() {
     var Dispersion = {};
+    
+    Dispersion.addProject = function(projectDir) {
+      console.log('foldder to add to LocalStorageFolder', projectDir)
+    }
+
     // On click submits inputed file to be hashed.
     Dispersion.submitFile = function(filepath) {
-
       //file or directory to be hashed.
       let hashFile = filepath
       if (hashFile.includes('/')) hashFile = `"${hashFile}"`;
@@ -28,6 +34,7 @@ const username = require('username');
       if (!hashFile.includes('.')) {
         command = `${command} -w`;
       }
+      
 
       exec(command, function(error, stdout, stderr) {
         //grabs just the filename from the absolute path of the added file

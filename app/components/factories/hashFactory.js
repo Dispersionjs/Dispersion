@@ -6,7 +6,6 @@ module.factory('HashFactory', function($q) {
     loadFilesFromStorage: function($scope) {
       storage.keys(function(error, keys) {
         if (error) throw error;
-
         var promiseArr = [];
         var fileArray = [];
 
