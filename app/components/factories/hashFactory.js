@@ -46,7 +46,7 @@ module.factory('HashFactory', function ($q) {
       let setPublishData = function (data) {
         let publishObject = data;
         //add to publishObject
-        data[value.item] = [{ 'date': value.time, 'hash': value.hash, 'publish': false, 'category': value.fileType }];
+        data[value.item] = [{ 'date': value.time, 'hash': value.hash, 'publish': false, 'changed': value.fileType, 'url': value.url }];
         let setPromise = new Promise(function (resolve, reject) {
           storage.set('published', data, function (error) {
             if (error) throw error;
@@ -63,6 +63,9 @@ module.factory('HashFactory', function ($q) {
       )
     }
   }
+
+
+  
 
   function fileget(fileArray) {
     let arr = [];

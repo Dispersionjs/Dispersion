@@ -1,9 +1,17 @@
 const app = angular.module('myApp', ['topbarDirective', 'publishDirective', 'HashFactory', 'PublishService'])
 
+ .controller('MainController',function ($scope, PublishService) {
+   //load publish object when switching to publish page
+    $scope.publishpage = function () {
+    PublishService.loadPublished().then(function (resolve) {
+      $scope.publishedFiles = resolve;
+      console.log('resolve', resolve)
+    })
+    }
+ })
   .controller('DashboardController', function ($scope, $q, $timeout, HashFactory) {
     //start local Daemon
     Dispersion.startDaemon()
-
     //get Username of local user. Used for file saving
     username().then(username => {
       $scope.username = username;
@@ -38,8 +46,8 @@ const app = angular.module('myApp', ['topbarDirective', 'publishDirective', 'Has
     $scope.addToPublish = function (value) {
       console.log(HashFactory.addToPublish(value))
       HashFactory.addToPublish(value).then(function () {
-      console.log('new project has been published')
-    }); 
+        console.log('new project has been published')
+      });
     }
 
 
@@ -82,9 +90,5 @@ const app = angular.module('myApp', ['topbarDirective', 'publishDirective', 'Has
   })
 
   .controller('PublishController', function ($scope, PublishService) {
-    console.log('asd',PublishService.loadPublished())
-    PublishService.loadPublished().then(function (resolve) {
-      $scope.publishedFiles = resolve;
-      console.log('resolve', resolve)
-    })
-  });
+
+  })
