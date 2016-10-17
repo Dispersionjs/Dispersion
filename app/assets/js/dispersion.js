@@ -15,9 +15,7 @@ const username = require('username');
 
   //Dispersion Library Definition
   function define_Dispersion_Library() {
-
     var Dispersion = {};
-
     // On click submits inputed file to be hashed.
     Dispersion.submitFile = function(filepath) {
 
