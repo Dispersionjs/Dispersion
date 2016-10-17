@@ -48,23 +48,31 @@
 			<div class="row">
 				<div class="col s12">
 
-					<div class="publish-collection" >
-							
-							<div class="card horizontal" ng-repeat="(key,value) in publishObject">
-								<div class="card-image">
-									<img src="http://lorempixel.com/100/190/nature/6">
+					<div class="publish-collection">
+
+						<div class="card horizontal" ng-repeat="(key,value) in publishObject">
+							<div class="card-image">
+								<img src="http://lorempixel.com/100/190/nature/6">
+							</div>
+							<div class="card-stacked">
+								<div class="card-content">
+
+									
+                  
+									<h5 class="header">{{value.file}}</h5>
+									<p>{{value.time}}</p>
 								</div>
-								<div class="card-stacked">
-									<div class="card-content">
-                    <h5 class="header">{{value.file}}</h5>
-										<p>{{value.time}}</p>
-									</div>
-									<div class="card-action">
-										<a href="{{value.url}}">{{value.url}}</a>
-									</div>
+								<div class="card-action">
+									<a href="{{value.url}}">{{value.url}}</a>
+
+                  	<a class="btn-floating btn-large red" ng-click="publisher(key)">
+											<i class="large material-icons">add</i>
+										</a>
+                    
 								</div>
 							</div>
-						
+						</div>
+
 
 					</div>
 				</div>

@@ -10,7 +10,6 @@ const fileType = require('file-type');
 const https = require('https');
 const request = require('request');
 const username = require('username');
-const IpfsDaemon = require('ipfs-daemon');
 // Get data directories
 
 (function (window) {
@@ -158,58 +157,21 @@ const IpfsDaemon = require('ipfs-daemon');
 
     //function to start daemon
     Dispersion.startDaemon = function () {
-      // let daemonCommand = spawn('ipfs', ['daemon']);
-      // daemonCommand.stdout.on('data', function(data) {
-      //   let dataString = data.toString();
-      //   let result = /Daemon is ready/.test(dataString);
-      //   if (result) {
-      //     console.log('the daemon is running')
-      //   }
-      // });
-      // daemonCommand.stderr.on('data', function(data) {
-      //     let dataString = data.toString();
-      //     let result = /daemon is running/.test(dataString);
-      //     if (result) {
-      //       console.log('Warning: Daemon already is running in a seperate process! Closing this application will not kill your IPFS Daemon.')
-      //     }
-      //   })
-
-
-      const daemonOptions = {
-        AppDataDir: '/tmp/ipfs-daemon', // Local data diretory
-        IpfsDataDir: '/Users/' + process.env.USER + '/.ipfs/datastore/', // Location of IPFS data repository
-        Addresses: {
-          API: '/ip4/127.0.0.1/tcp/5001',
-          Swarm: ['/ip4/0.0.0.0/tcp/4001'],
-          Gateway: '/ip4/127.0.0.1/tcp/8080'
+      let daemonCommand = spawn('ipfs', ['daemon']);
+      daemonCommand.stdout.on('data', function(data) {
+        let dataString = data.toString();
+        let result = /Daemon is ready/.test(dataString);
+        if (result) {
+          console.log('the daemon is running')
         }
-      }
-            IpfsDaemon(daemonOptions)
-        .then((res) => {
-           console.log(res.ipfs)
-           console.log(res.Addresses)
-          const ipfsDaemon = res.daemon
-        const gatewayAddr = res.Addresses.Gateway
-        console.log(ipfsDaemon)
+      });
+      daemonCommand.stderr.on('data', function(data) {
+          let dataString = data.toString();
+          let result = /daemon is running/.test(dataString);
+          if (result) {
+            console.log('Warning: Daemon already is running in a seperate process! Closing this application will not kill your IPFS Daemon.')
+          }
         })
-        .catch((err) => console.error(err))
-
-
-
-      // ipfsd.local(function(err, node) {
-      //   if (err) throw err
-      //
-      //   console.log(node)
-      //   node.startDaemon(function(err, ipfsNode) {
-      //     console.log(ipfsNode)
-      //     console.log(ipfsNode.id)
-      //     run(['ipfs', 'add', '/Users/jastiling/Downloads/demo-image.jpg'], {
-      //       waitPid: 1919
-      //     })
-      //     if (err) throw err
-      //   })
-      // })
-
     }
     return Dispersion;
   }
