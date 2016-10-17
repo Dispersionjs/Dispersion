@@ -1,4 +1,4 @@
-const app = angular.module('myApp', ['directives', 'HashFactory'])
+const app = angular.module('myApp', ['directives', 'HashFactory','PublishService'])
 
   .controller('DashboardController', function ($scope, $q, $timeout, HashFactory) {
     //start local Daemon
@@ -73,4 +73,11 @@ const app = angular.module('myApp', ['directives', 'HashFactory'])
     // console.log("storage saved")
     // })
 
-  });
+  })
+  
+  .controller('PublishController', function ($scope, $q, $timeout, HashFactory) {
+
+
+
+  })
+  ;
