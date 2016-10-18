@@ -185,11 +185,17 @@ const path = require('path');
   }
 
   document.body.ondrop = (ev) => {
-    console.log(ev.dataTransfer.files[0].path)
+    console.log('hi ', ev.dataTransfer.files[0].path)
     $('#hash-input').val(ev.dataTransfer.files[0].path);
     ev.preventDefault()
     $('#hash-input').trigger('input');
+    // $('#project-input').trigger('input');
   }
+
+
+
+      
+
 
   //define globally if it doesn't already exist
   if (typeof(Dispersion) === 'undefined') {
@@ -198,3 +204,4 @@ const path = require('path');
     console.log("Dispersion already defined.");
   }
 })(window);
+

@@ -53,17 +53,23 @@ const app = angular.module('myApp', ['directives','projectDirective', 'HashFacto
 
   //Add project from local file system to electron app system
     $scope.addProject = function () {
-      fse.mkdirsSync('/Users/ygoldobin/Desktop/longMcProjects', (err) => {
-        if (err) console.error(err);
-        else { console.log('made directory at') }
+      //Make folder for projects if it doesn't exist'
+            console.log('prohj folder dir', path.resolve(__dirname + `/../projectFolder`))
+      fse.mkdirsSync(path.resolve(__dirname + `/../projectFolder`), (err) => {
+        if (err) return console.error(err);
+        else { console.log('made directory at', __dirname)}
       });
-      console.log(process.env);
-      console.log(path.resolve(__dirname, '..'));
-      // fse.copy($scope.projectDir, )
-      console.log('foldder to add to LocalStorageFolder', $scope.projectDir)
+
+      /**TODO: Currently when you copy a directory with fse it will copy the contents of the directory
+       *but not the folder name. In a hacky way I rebuild the foldername. Could be better"**/      
+      let folderDepthArr = $scope.projectDir.split('/'); 
+      let folderName = '/' + folderDepthArr[folderDepthArr.length-1]
+
+      fse.copy($scope.projectDir, path.resolve(__dirname + `/../projectFolder` + folderName), (err) => {
+        if (err) return console.error(err);
+        console.log('copied folder')
+      })
     }
-
-
 
     //UNCOMMENT FOR INITIAL DUMMY DATA
     // var dummyData = {"QmbyNmx4uWiSjf3oPUXJLBJzRroMeTqgsPopkWLpf9j33C": {"file":"upload/cats/cat-oxygen-mask.jpg",

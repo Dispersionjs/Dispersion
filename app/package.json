@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron . --enable-logging",
+    "start": "electron .",
     "clean": "rm -rf ./dist",
     "clean:osx": "rm -rf ./dist/osx",
     "pack": "npm run clean:osx && electron-packager . \"EA Todo\" --out=dist/osx --platform=darwin --arch=x64 --version=0.36.2 --icon=assets/osx/logo.icns --ignore=dist --ignore=assets --ignore=builder.json --ignore=bower.json --ignore=README.md --ignore=.gitignore --ignore=preview.png",
