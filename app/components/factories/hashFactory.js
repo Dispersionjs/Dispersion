@@ -1,7 +1,7 @@
 var module = angular
   .module('HashFactory', [])
 
-module.factory('HashFactory', function ($q) {
+module.service('HashFactory', function ($q) {
   return {
     loadFilesFromStorage: function ($scope) {
       storage.keys(function (error, keys) {
@@ -46,7 +46,9 @@ module.factory('HashFactory', function ($q) {
       let setPublishData = function (data) {
         let publishObject = data;
         //add to publishObject
-        data[value.item] = [{ 'date': value.time, 'hash': value.hash, 'publish': false, 'changed': value.fileType, 'url': value.url }];
+        console.log(data)
+        data[value.item] = [{ 'date': value.time, 'hash': value.hash, 'publish': false, 'changed': value.fileType, 'url': value.url, 'files': value.files }];
+        console.log(data)
         let setPromise = new Promise(function (resolve, reject) {
           storage.set('published', data, function (error) {
             if (error) throw error;
@@ -64,9 +66,6 @@ module.factory('HashFactory', function ($q) {
     }
   }
 
-
-  
-
   function fileget(fileArray) {
     let arr = [];
     let type;
@@ -78,7 +77,8 @@ module.factory('HashFactory', function ($q) {
         time: item[Object.keys(item)].time,
         url: item[Object.keys(item)].url,
         fileType: type,
-        hash: Object.keys(item)[0]
+        hash: Object.keys(item)[0],
+        files: item[Object.keys(item)].files,
       })
     })
     return arr;

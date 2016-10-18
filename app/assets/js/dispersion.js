@@ -27,43 +27,47 @@ const username = require('username');
       if (hashFile.includes('/')) hashFile = `"${hashFile}"`;
       // recursively hashes directory or file and adds to ipfs
       let command = `ipfs add -r ${hashFile}`;
-      //If it is a directory, then add a wrapper hash.
-      if (!hashFile.includes('.')) {
-        command = `${command} -w`;
-      }
 
       exec(command, function (error, stdout, stderr) {
         //grabs just the filename from the absolute path of the added file
         let fileLocationArray = hashFile.split('/');
-        let file = fileLocationArray[fileLocationArray.length - 1];
+        let name = fileLocationArray[fileLocationArray.length - 1];
         //separate hashes from folder into an array
         let hashArray = stdout.trim().split('\n');
-        //iterates over the individual hashes and stores in local storage
-        hashArray.forEach(function (hString) {
-          var hashArray = hString.split(' ');
-          var file = hashArray.slice(2).join(' ').trim();
-          var hashObj = {
-            [hashArray[1]]: {
-              "file": file ? file : 'wrapper',
-              "time": new Date().toUTCString(),
-              "url": "https://ipfs.io/ipfs/" + hashArray[1]
+        let topHash = hashArray[hashArray.length - 1].split(' ');
+        let file = topHash[2]
+        let hashObj = {
+          "file": file,
+          "time": new Date().toUTCString(),
+          "url": "https://ipfs.io/ipfs/" + top[1],
+          'files': []
+        }
+        //iterates over the individual hashes, makes requests to them, and stores top level hash in local storage
+        hashArray.forEach(function (hString, index) {
+          let tempArray = hString.split(' ');
+          var requestObj = {
+            [tempArray[1]]: {
+              "url": "https://ipfs.io/ipfs/" + tempArray[1]  
             }
           }
-          console.log("Arr ", hashArray, "HashObj:", hashObj);
-          //store in local storage
-          storage.set(hashArray[1], hashObj[hashArray[1]], function (error) {
+         //grabs the inner file paths and pushes into file array
+          if (index < hashArray.length-1) {
+            hashObj.files.push(`/${tempArray[2].split('/').slice(1).join('/')}`)
+          }
+          //store top hash in local storage
+          storage.set(topHash[1], hashObj, function (error) {
             if (error) throw error;
           });
           //requests each hash url 5 times
-          for (let key in hashObj) {
-            let url = hashObj[key]["url"]
+          for (let key in requestObj) {
+            let url = requestObj[key]["url"]
             for (let i = 0; i < 5; i++) {
-              let name = hashObj[key]["file"];
               request(url, (err, response, body) => {
                 if (err) {
                   console.log('error making distribute request to IPFS');
                   console.error(err);
                 } else {
+                  console.log(url)
                   console.log(response.statusCode)
                 }
               })
@@ -158,20 +162,20 @@ const username = require('username');
     //function to start daemon
     Dispersion.startDaemon = function () {
       let daemonCommand = spawn('ipfs', ['daemon']);
-      daemonCommand.stdout.on('data', function(data) {
+      daemonCommand.stdout.on('data', function (data) {
         let dataString = data.toString();
         let result = /Daemon is ready/.test(dataString);
         if (result) {
           console.log('the daemon is running')
         }
       });
-      daemonCommand.stderr.on('data', function(data) {
-          let dataString = data.toString();
-          let result = /daemon is running/.test(dataString);
-          if (result) {
-            console.log('Warning: Daemon already is running in a seperate process! Closing this application will not kill your IPFS Daemon.')
-          }
-        })
+      daemonCommand.stderr.on('data', function (data) {
+        let dataString = data.toString();
+        let result = /daemon is running/.test(dataString);
+        if (result) {
+          console.log('Warning: Daemon already is running in a seperate process! Closing this application will not kill your IPFS Daemon.')
+        }
+      })
     }
     return Dispersion;
   }
