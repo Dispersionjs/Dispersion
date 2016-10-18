@@ -6,7 +6,6 @@ module.service('HashFactory', function ($q) {
     loadFilesFromStorage: function ($scope) {
       storage.keys(function (error, keys) {
         if (error) throw error;
-
         var promiseArr = [];
         var fileArray = [];
 
@@ -86,6 +85,7 @@ module.service('HashFactory', function ($q) {
 
   function testFileType(item) {
     let fileName = item[Object.keys(item)].file
+    console.log(item)
     if (fileName.includes('.jpg') || fileName.includes('.png') || fileName.includes('.JPG') || fileName.includes('.PNG') || fileName.includes('.jpeg')) {
       return 'image';
     } else if (!fileName.includes('.')) {

@@ -10,14 +10,16 @@ const fileType = require('file-type');
 const https = require('https');
 const request = require('request');
 const username = require('username');
-// Get data directories
+const fse = require('fs-extra');
+const path = require('path');
+
 
 (function (window) {
 
   //Dispersion Library Definition
   function define_Dispersion_Library() {
-
     var Dispersion = {};
+
 
     // On click submits inputed file to be hashed.
     Dispersion.submitFile = function (filepath) {
@@ -27,6 +29,11 @@ const username = require('username');
       if (hashFile.includes('/')) hashFile = `"${hashFile}"`;
       // recursively hashes directory or file and adds to ipfs
       let command = `ipfs add -r ${hashFile}`;
+      //If it is a directory, then add a wrapper hash.
+      if (!hashFile.includes('.')) {
+        command = `${command} -w`;
+      }
+    
 
       exec(command, function (error, stdout, stderr) {
         //grabs just the filename from the absolute path of the added file
@@ -185,11 +192,17 @@ const username = require('username');
   }
 
   document.body.ondrop = (ev) => {
-    console.log(ev.dataTransfer.files[0].path)
+    console.log('hi ', ev.dataTransfer.files[0].path)
     $('#hash-input').val(ev.dataTransfer.files[0].path);
     ev.preventDefault()
     $('#hash-input').trigger('input');
+    // $('#project-input').trigger('input');
   }
+
+
+
+      
+
 
   //define globally if it doesn't already exist
   if (typeof (Dispersion) === 'undefined') {
@@ -197,4 +210,5 @@ const username = require('username');
   } else {
     console.log("Dispersion already defined.");
   }
-})(window);;
+
+})(window);
