@@ -1,4 +1,4 @@
-const app = angular.module('myApp', ['directives', 'HashFactory'])
+const app = angular.module('myApp', ['directives','projectDirective', 'HashFactory'])
 
   .controller('DashboardController', function ($scope, $q, $timeout, HashFactory) {
     //start local Daemon
@@ -36,8 +36,6 @@ const app = angular.module('myApp', ['directives', 'HashFactory'])
     }
 
 
-
-
     /*********************************************************/
     var publishObjectPromise = new Promise(function (resolve, reject) {
       storage.get('publishStorage', function (error, data) {
@@ -45,20 +43,33 @@ const app = angular.module('myApp', ['directives', 'HashFactory'])
         else resolve(data);
       })
     });
-
     publishObjectPromise.then(function(data){
-      console.log(data);
+      console.log('publishStorage data on open: ', data);
       $scope.publishObject = data;
     })
-    console.log("Instant Log: " + $scope.publishArray);
-
     $scope.publisher = function (hash) {
-      console.log(hash)
       Dispersion.publishHash(hash)
     }
 
+  //Add project from local file system to electron app system
+    $scope.addProject = function () {
+      //Make folder for projects if it doesn't exist'
+            console.log('prohj folder dir', path.resolve(__dirname + `/../projectFolder`))
+      fse.mkdirsSync(path.resolve(__dirname + `/../projectFolder`), (err) => {
+        if (err) return console.error(err);
+        else { console.log('made directory at', __dirname)}
+      });
 
+      /**TODO: Currently when you copy a directory with fse it will copy the contents of the directory
+       *but not the folder name. In a hacky way I rebuild the foldername. Could be better"**/      
+      let folderDepthArr = $scope.projectDir.split('/'); 
+      let folderName = '/' + folderDepthArr[folderDepthArr.length-1]
 
+      fse.copy($scope.projectDir, path.resolve(__dirname + `/../projectFolder` + folderName), (err) => {
+        if (err) return console.error(err);
+        console.log('copied folder')
+      })
+    }
 
     //UNCOMMENT FOR INITIAL DUMMY DATA
     // var dummyData = {"QmbyNmx4uWiSjf3oPUXJLBJzRroMeTqgsPopkWLpf9j33C": {"file":"upload/cats/cat-oxygen-mask.jpg",
