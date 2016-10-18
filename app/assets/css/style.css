@@ -60,3 +60,10 @@ a{
   font-size: 32px;
   padding-left: 65px;
 }
+
+.card .card-action {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

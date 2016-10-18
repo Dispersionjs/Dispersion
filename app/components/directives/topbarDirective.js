@@ -1,4 +1,4 @@
-angular.module('directives', [])
+angular.module('topbarDirective', [])
 
 .directive('topBar', function() {
   return {
