@@ -10,17 +10,20 @@ const fileType = require('file-type');
 const https = require('https');
 const request = require('request');
 const username = require('username');
+const fse = require('fs-extra');
+const path = require('path');
+
+
 
 (function(window) {
 
   //Dispersion Library Definition
   function define_Dispersion_Library() {
-
     var Dispersion = {};
+
 
     // On click submits inputed file to be hashed.
     Dispersion.submitFile = function(filepath) {
-
       //file or directory to be hashed.
       let hashFile = filepath
       if (hashFile.includes('/')) hashFile = `"${hashFile}"`;
@@ -30,6 +33,7 @@ const username = require('username');
       if (!hashFile.includes('.')) {
         command = `${command} -w`;
       }
+      
 
       exec(command, function(error, stdout, stderr) {
         //grabs just the filename from the absolute path of the added file
@@ -181,11 +185,17 @@ const username = require('username');
   }
 
   document.body.ondrop = (ev) => {
-    console.log(ev.dataTransfer.files[0].path)
+    console.log('hi ', ev.dataTransfer.files[0].path)
     $('#hash-input').val(ev.dataTransfer.files[0].path);
     ev.preventDefault()
     $('#hash-input').trigger('input');
+    // $('#project-input').trigger('input');
   }
+
+
+
+      
+
 
   //define globally if it doesn't already exist
   if (typeof(Dispersion) === 'undefined') {
@@ -194,3 +204,4 @@ const username = require('username');
     console.log("Dispersion already defined.");
   }
 })(window);
+

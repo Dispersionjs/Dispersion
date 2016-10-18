@@ -50,13 +50,13 @@ a{
   margin-left: 10px;
 }
 
-#hash-input {
+#hash-input, #project-input {
   font-size: 32px;
   padding-left: 65px;
 }
 
 #hash-input:hover {
-  cursor: pointer
+  cursor: pointer;
   font-size: 32px;
   padding-left: 65px;
 }
