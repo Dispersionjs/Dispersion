@@ -29,11 +29,6 @@ const path = require('path');
       if (hashFile.includes('/')) hashFile = `"${hashFile}"`;
       // recursively hashes directory or file and adds to ipfs
       let command = `ipfs add -r ${hashFile}`;
-      //If it is a directory, then add a wrapper hash.
-      if (!hashFile.includes('.')) {
-        command = `${command} -w`;
-      }
-    
 
       exec(command, function (error, stdout, stderr) {
         //grabs just the filename from the absolute path of the added file
@@ -46,7 +41,7 @@ const path = require('path');
         let hashObj = {
           "file": file,
           "time": new Date().toUTCString(),
-          "url": "https://ipfs.io/ipfs/" + top[1],
+          "url": "https://ipfs.io/ipfs/" + topHash[1],
           'files': []
         }
         //iterates over the individual hashes, makes requests to them, and stores top level hash in local storage
