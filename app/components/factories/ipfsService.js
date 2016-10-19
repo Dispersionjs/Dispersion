@@ -165,7 +165,7 @@ function ipfsService($q) {
   return {
     init: startDaemon,
     addFile: submitFile,
-    save: saveToDisk,
+    saveToDisk: saveToDisk,
     pin: addPin,
     unPin: unPin,
     publish: publishHash,

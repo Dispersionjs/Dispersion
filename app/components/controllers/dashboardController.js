@@ -27,7 +27,7 @@ function DashboardController($scope, $q, $timeout, HashFactory, PublishService, 
 
   $scope.addHash = function () {
     dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] }, function (addFiles) {
-      Dispersion.submitFile(addFiles[0]);
+      IpfsService.addFile(addFiles[0]);
       $timeout(() => {
         $scope.files = HashFactory.loadFilesFromStorage($scope)
       }, 1000)
@@ -35,12 +35,12 @@ function DashboardController($scope, $q, $timeout, HashFactory, PublishService, 
   }
 
   $scope.deleteHash = function (hash) {
-    Dispersion.unPin(hash);
+    IpfsService.unPin(hash);
     $scope.files = HashFactory.loadFilesFromStorage($scope)
   }
 
   $scope.saveToDisk = function (hash, username) {
-    Dispersion.saveToDisk(hash, username);
+    IpfsService.saveToDisk(hash, username);
   }
 
   $scope.addToPublish = function (value) {
@@ -79,7 +79,7 @@ function DashboardController($scope, $q, $timeout, HashFactory, PublishService, 
 
   $scope.publisher = function (hash) {
     console.log(hash)
-    Dispersion.publishHash(hash)
+    IpfsService.publish(hash)
   }
 
   // FileFactory.init();  
