@@ -11,4 +11,5 @@ function mainController(PublishService) {
   PublishService.init()
   self.publishpage = function () {
   }
+  
 }
