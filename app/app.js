@@ -9,4 +9,7 @@ angular.module('myApp', [
   'IpfsService',
   'FilesController',
   'PublishController'])
+  .config(['$sceProvider', function ($sceProvider) {
+   $sceProvider.enabled(false);
+ }])
 

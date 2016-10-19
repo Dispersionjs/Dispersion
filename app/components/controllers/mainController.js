@@ -13,4 +13,5 @@ function mainController(PublishService, FileFactory, IpfsService) {
   FileFactory.init();  
   self.publishpage = function () {
   }
+  
 }
