@@ -7,6 +7,6 @@ angular.module('myApp', [
   'MainController',
   'FileFactory',
   'IpfsService',
-  'DashboardController',
+  'AddFilesController',
   'PublishController'])
 
