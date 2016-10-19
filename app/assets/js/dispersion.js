@@ -41,7 +41,7 @@ const path = require('path');
         let hashObj = {
           "file": file,
           "time": new Date().toUTCString(),
-          "url": "https://ipfs.io/ipfs/" + top[1],
+          "url": "https://ipfs.io/ipfs/" + topHash[1],
           'files': []
         }
         //iterates over the individual hashes, makes requests to them, and stores top level hash in local storage
