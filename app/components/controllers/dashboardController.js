@@ -14,8 +14,7 @@ function DashboardController($scope, $q, $timeout, HashFactory, PublishService) 
   username().then(username => {
     $scope.username = username;
   });
-  $scope.newFile;
-
+  $scope.files;
   //gets all of the users pinned hashes
   HashFactory.loadFilesFromStorage($scope);
 
@@ -24,12 +23,13 @@ function DashboardController($scope, $q, $timeout, HashFactory, PublishService) 
     $(`#sel-option${index}`).show();
   }
 
-  //function in renderer.js that adds file or directory to local ipfs node
   $scope.addHash = function () {
-    Dispersion.submitFile($scope.newFile);
-    $timeout(() => {
-      $scope.files = HashFactory.loadFilesFromStorage($scope)
-    }, 1000)
+    dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] }, function (addFiles) {
+      Dispersion.submitFile(addFiles[0]);
+      $timeout(() => {
+        $scope.files = HashFactory.loadFilesFromStorage($scope)
+      }, 1000)
+    });
   }
 
   $scope.deleteHash = function (hash) {

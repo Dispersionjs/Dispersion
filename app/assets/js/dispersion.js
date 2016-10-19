@@ -12,7 +12,7 @@ const request = require('request');
 const username = require('username');
 const fse = require('fs-extra');
 const path = require('path');
-
+const {dialog} = require('electron').remote;
 
 (function (window) {
 
@@ -23,7 +23,6 @@ const path = require('path');
 
     // On click submits inputed file to be hashed.
     Dispersion.submitFile = function (filepath) {
-
       //file or directory to be hashed.
       let hashFile = filepath
       if (hashFile.includes('/')) hashFile = `"${hashFile}"`;
