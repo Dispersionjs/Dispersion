@@ -7,4 +7,7 @@ angular.module('myApp', [
   'MainController',
   'DashboardController',
   'PublishController'])
+  .config(['$sceProvider', function ($sceProvider) {
+   $sceProvider.enabled(false);
+ }])
 
