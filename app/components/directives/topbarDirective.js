@@ -4,7 +4,7 @@ angular.module('topbarDirective', [])
   return {
     restrict: 'E',
     transclude: true,
-    controller: 'DashboardController',
+    controller: 'FilesController',
     scope: false,
     templateUrl: 'components/partials/topbar.html',
     replace: true

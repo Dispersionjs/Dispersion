@@ -5,7 +5,9 @@ angular.module('myApp', [
   'HashFactory',
   'PublishService',
   'MainController',
-  'DashboardController',
+  'FileFactory',
+  'IpfsService',
+  'FilesController',
   'PublishController'])
   .config(['$sceProvider', function ($sceProvider) {
    $sceProvider.enabled(false);

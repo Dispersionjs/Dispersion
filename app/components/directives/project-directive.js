@@ -4,7 +4,7 @@ angular.module('projectDirective', [])
  return {
    restrict: 'E',
    transclude: true,
-   controller: 'DashboardController',
+   controller: 'FilesController',
    scope: false,
    templateUrl: 'components/partials/project-add-bar.html',
    replace: true

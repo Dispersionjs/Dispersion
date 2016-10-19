@@ -14,8 +14,8 @@ const fse = require('fs-extra');
 const path = require('path');
 const {dialog} = require('electron').remote;
 
-(function (window) {
 
+(function (window) {
   //Dispersion Library Definition
   function define_Dispersion_Library() {
     var Dispersion = {};
@@ -23,6 +23,7 @@ const {dialog} = require('electron').remote;
 
     // On click submits inputed file to be hashed.
     Dispersion.submitFile = function (filepath) {
+
       //file or directory to be hashed.
       let hashFile = filepath
       if (hashFile.includes('/')) hashFile = `"${hashFile}"`;
