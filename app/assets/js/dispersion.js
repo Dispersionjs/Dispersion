@@ -12,6 +12,8 @@ const request = require('request');
 const username = require('username');
 const fse = require('fs-extra');
 const path = require('path');
+const {dialog} = require('electron').remote;
+
 
 (function (window) {
   //Dispersion Library Definition
