@@ -5,6 +5,7 @@ module.factory('FileFactory', ['$q', fileService]);
 
 function fileService($q) {
   //Add "projectFolder" to local app folder
+  //Return promise
   function initProjectFolder() {
     fse.mkdirsSync(path.resolve(__dirname + `/../projectFolder`), (err) => {
       if (err) return console.error(err);
@@ -14,6 +15,8 @@ function fileService($q) {
   function copyProjectToAppStorage() {
     /**TODO: Currently when you copy a directory with fse it will copy the contents of the directory
     *but not the folder name. In a hacky way I rebuild the foldername. Could be better"**/
+
+    /**TODO: Change scope Reference in project-add-bar. Instead keep path as reference in mainController*/
     let folderDepthArr = $scope.projectDir.split('/');
     let folderName = '/' + folderDepthArr[folderDepthArr.length - 1]
     fse.copy($scope.projectDir, path.resolve(__dirname + `/../projectFolder` + folderName), (err) => {

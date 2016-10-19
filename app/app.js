@@ -5,6 +5,8 @@ angular.module('myApp', [
   'HashFactory',
   'PublishService',
   'MainController',
+  'FileFactory',
+  'IpfsService',
   'DashboardController',
   'PublishController'])
 

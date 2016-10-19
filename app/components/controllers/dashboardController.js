@@ -5,16 +5,18 @@
 angular
   .module('DashboardController', [])
   //passing $scope and UserFactory as dependencies to controller
-  .controller('DashboardController', ['$scope', '$q', '$timeout', 'HashFactory', 'PublishService', DashboardController]);
+  .controller('DashboardController', ['$scope', '$q', '$timeout', 'HashFactory', 'PublishService', 'FileFactory', 'IpfsService', DashboardController]);
 
-function DashboardController($scope, $q, $timeout, HashFactory, PublishService) {
+function DashboardController($scope, $q, $timeout, HashFactory, PublishService, FileFactory, IpfsService) {
   //start local Daemon
-  Dispersion.startDaemon()
+  
+  // Dispersion.startDaemon()
   //get Username of local user. Used for file saving
   username().then(username => {
     $scope.username = username;
   });
   $scope.newFile;
+
 
   //gets all of the users pinned hashes
   HashFactory.loadFilesFromStorage($scope);
@@ -80,24 +82,8 @@ function DashboardController($scope, $q, $timeout, HashFactory, PublishService) 
     Dispersion.publishHash(hash)
   }
 
+  // FileFactory.init();  
   //Add project from local file system to electron app system
-  $scope.addProject = function () {
-    //Make folder for projects if it doesn't exist'
-    console.log('prohj folder dir', path.resolve(__dirname + `/../projectFolder`))
-    fse.mkdirsSync(path.resolve(__dirname + `/../projectFolder`), (err) => {
-      if (err) return console.error(err);
-      else { console.log('made directory at', __dirname) }
-    });
-
-    /**TODO: Currently when you copy a directory with fse it will copy the contents of the directory
-     *but not the folder name. In a hacky way I rebuild the foldername. Could be better"**/
-    let folderDepthArr = $scope.projectDir.split('/');
-    let folderName = '/' + folderDepthArr[folderDepthArr.length - 1]
-
-    fse.copy($scope.projectDir, path.resolve(__dirname + `/../projectFolder` + folderName), (err) => {
-      if (err) return console.error(err);
-      console.log('copied folder')
-    })
-  }
+  // $scope.addProject = FileFactory.copyProject();
 
 }
