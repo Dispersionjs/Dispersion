@@ -37,7 +37,7 @@ const path = require('path');
         //separate hashes from folder into an array
         let hashArray = stdout.trim().split('\n');
         let topHash = hashArray[hashArray.length - 1].split(' ');
-        let file = topHash[2]
+        let file = topHash.slice(2).join(' ');
         let hashObj = {
           "file": file,
           "time": new Date().toUTCString(),
@@ -49,11 +49,11 @@ const path = require('path');
           let tempArray = hString.split(' ');
           var requestObj = {
             [tempArray[1]]: {
-              "url": "https://ipfs.io/ipfs/" + tempArray[1]  
+              "url": "https://ipfs.io/ipfs/" + tempArray[1]
             }
           }
-         //grabs the inner file paths and pushes into file array
-          if (index < hashArray.length-1) {
+          //grabs the inner file paths and pushes into file array
+          if (index < hashArray.length - 1) {
             hashObj.files.push(`/${tempArray[2].split('/').slice(1).join('/')}`)
           }
           //store top hash in local storage
@@ -61,6 +61,8 @@ const path = require('path');
             if (error) throw error;
           });
           //requests each hash url 5 times
+
+          //good functionality to abstract into its own function 
           for (let key in requestObj) {
             let url = requestObj[key]["url"]
             for (let i = 0; i < 5; i++) {
@@ -196,7 +198,7 @@ const path = require('path');
 
 
 
-      
+
 
 
   //define globally if it doesn't already exist
