@@ -63,3 +63,58 @@ a{
     justify-content: space-between;
 }
 
+
+
+
+
+.preload {
+  margin: 0;
+  position: absolute;
+  overflow: hidden;
+  z-index: 999;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  background: #ff8300;
+  background: linear-gradient(to top left, #ffff66 -40%, #ff8300);
+}
+
+.container {
+      position: absolute;
+      top:0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 350px;
+      height: 350px;
+      margin: auto;
+}
+
+.part {
+  width: 350px;
+  position: absolute;
+}
+
+.svgpath {
+  fill: rgba(145,220,90,0);
+  stroke: #ff8300;
+  stroke-width: 1.8px;
+  stroke-dasharray: 1000;
+  stroke-linecap: round;
+  z-index: 2;
+}
+
+.svgbg {
+  fill: rgba(255,255,255,0.2);
+  z-index: 1;
+ }
+
+#playload {
+  animation: dash 2.5s reverse ease-in-out infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 2000;
+  }
+}

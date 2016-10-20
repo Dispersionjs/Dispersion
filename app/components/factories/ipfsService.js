@@ -1,10 +1,12 @@
 var module = angular
   .module('IpfsService', [])
 
-module.factory('IpfsService', ['$q', ipfsService]);
+module.factory('IpfsService', ['$q', '$interval', ipfsService]);
 
-function ipfsService($q) {
-
+function ipfsService($q, $interval) {
+  let daemonLoadedStatus = () => daemonLoaded;
+  let daemonLoaded = false;
+  
   function startDaemon() {
     let daemonCommand = spawn('ipfs', ['daemon']);
     daemonCommand.stdout.on('data', function (data) {
@@ -12,6 +14,7 @@ function ipfsService($q) {
       let result = /Daemon is ready/.test(dataString);
       if (result) {
         console.log('the daemon is running')
+        daemonLoaded = true;
       }
     });
     daemonCommand.stderr.on('data', function (data) {
@@ -20,6 +23,7 @@ function ipfsService($q) {
       if (result) {
         console.log('Warning: Daemon already is running in a seperate process! Closing this application will not kill your IPFS Daemon.')
       }
+      daemonLoaded = true;
     })
   }
 
@@ -163,6 +167,7 @@ function ipfsService($q) {
   }
 
   return {
+    daemonLoaded: daemonLoadedStatus,
     init: startDaemon,
     addFile: submitFile,
     saveToDisk: saveToDisk,
