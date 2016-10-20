@@ -14,8 +14,8 @@ function diskFactory($q, PublishService) {
   }
 
   function copyProjectToAppStorage(copyFromPath) {
-    
-    let copyFrom = path.resolve('/' + copyFromPath);
+
+    let copyFrom = '/' + copyFromPath;
     let pathBrokenIntoArray = copyFrom.split('/');
     let project = '/' + pathBrokenIntoArray[pathBrokenIntoArray.length - 1]
     let copyTo = path.resolve(__dirname + `/../projectFolder` + project)
@@ -32,27 +32,68 @@ function diskFactory($q, PublishService) {
   ///Users/ygoldobin/Desktop/codesmithHackathon1  
   // (//index.html, dispersion, data)
   function overwriteFileInProject(fileName, projectName, data) {
-    PublishService.loadPublished().then((data) => {
-      console.log(Object.keys(data))
-       console.log(data["codesmithHackathon1"])
+    // PublishService.loadPublished().then((data) => {
+    //   console.log(Object.keys(data))
+    //    console.log(data["codesmithHackathon1"])
+    // })
+    fileName = "index.html"
+    projectName = "codesmithHackathon1"
+    data = 'longmcDick'
+
+    let overwriteFile = path.resolve(__dirname + `/../projectFolder/` + projectName + '/' + fileName);
+    fs.writeFile(overwriteFile, data , (err) => {
+      if (err) return console.error(err);
+      // console.log('overwrote file at this path: \n', path.resolve(__dirname + `/../projectFolder` + projectFolderName + fileName))
     })
 
-    let pathToOverwrite = path.resolve(__dirname + `/../projectFolder` + projectName, fileName);
-    console.log(pathToOverwrite)
-    // fs.writeFile(pathToOverwrite, data, (err) => {
-    //   if (err) return console.error(err);
-    //   console.log('overwrote file at this path: \n', path.resolve(__dirname + `/../projectFolder` + projectFolderName + fileName))
-    // })
+    let ipfsAddProject = path.resolve(__dirname + `/../projectFolder/` + projectName)      
+    let command = `ipfs add -r ${ipfsAddProject}`;
+
+    exec(command, function (error, stdout, stderr) {
+      //grabs just the filename from the absolute path of the added file
+      // let fileLocationArray = hashFile.split('/');
+      console.log(stdout)
+      // let name = fileLocationArray[fileLocationArray.length - 1];
+      // //separate hashes from folder into an array
+      let hashArray = stdout.trim().split('\n');
+      let topFolder = hashArray[hashArray.length - 1].split(' ');
+      console.log('top folder hash: ', topFolder)
+      let tophash = topFolder.slice(1,2).join(' ');
+      console.log('top hash: ', tophash)
+
+
+      PublishService.add(
+      {
+        [value.item]:
+        [
+          {
+            'date': value.time,
+            'hash': value.hash,
+            'publish': false,
+            'changed': null,
+            'url': value.url,
+            'files': value.files
+          }
+        ]
+      });      
+      // let hashObj = {
+      //   "file": file,
+      //   "time": new Date().toUTCString(),
+      //   "url": "https://ipfs.io/ipfs/" + topHash[1],
+      //   'files': []
+      // }    
+    })
   }
 
-  function deleteAProjectFolder(projectFolderName) {
-    let folderDepthArr = projectFolderName.split('/');
-    let folderName = '/' + folderDepthArr[folderDepthArr.length - 1]
-    let folderPathToDelete = path.resolve(__dirname + `/../projectFolder` + folderName)
+  function deleteAProjectFolder(deletePath) {
 
-    fs.unlink(folderPathToDelete, (err) => {
+    let pathBrokenIntoArray = deletePath.split('/');
+    let deleteProject = '/' + pathBrokenIntoArray[pathBrokenIntoArray.length - 1]
+    let deleteIt = path.resolve(__dirname + `/../projectFolder` + deleteProject)
+    
+    fse.emptyDir(deleteIt, (err) => {
       if (err) throw err;
-      console.log('deleted file')
+      console.log('deleted directory contents')
     })
   }
 
