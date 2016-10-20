@@ -32,10 +32,7 @@ function diskFactory($q, PublishService) {
   ///Users/ygoldobin/Desktop/codesmithHackathon1  
   // (//index.html, dispersion, data)
   function overwriteFileInProject(fileName, projectName, data) {
-    // PublishService.loadPublished().then((data) => {
-    //   console.log(Object.keys(data))
-    //    console.log(data["codesmithHackathon1"])
-    // })
+
     fileName = "index.html"
     projectName = "codesmithHackathon1"
     data = 'lonDick'
