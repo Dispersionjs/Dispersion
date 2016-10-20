@@ -26,10 +26,9 @@ function FilesController($scope,FileFactory, PublishService, DiskFactory, IpfsSe
     IpfsService.unPin(hash);
     self.files = FileFactory.loadFilesFromStorage()
   }
+  // self.deleteHash = IpfsService.unPin
 
-  self.saveToDisk = function (hash, username) {
-    IpfsService.saveToDisk(hash, username);
-  }
+  self.saveToDisk = IpfsService.saveToDisk;
 
   self.addToPublish = function (value) {
     PublishService.add(
