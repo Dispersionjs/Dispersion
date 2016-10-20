@@ -28,7 +28,7 @@ function fileFactory($q){
         })
 
         $q.all(promiseArr).then(() => {
-          console.log("All data from LOCAL STORAGE", fileArray)
+          // console.log("All data from LOCAL STORAGE", fileArray)
           fileData.length = 0;
           fileData.push.apply(fileData,fileget(fileArray))
         })
@@ -88,7 +88,7 @@ function fileFactory($q){
 
   function testFileType(item) {
     let fileName = item[Object.keys(item)].file
-    console.log(item)
+    // console.log(item)
     if (fileName.includes('.jpg') || fileName.includes('.png') || fileName.includes('.JPG') || fileName.includes('.PNG') || fileName.includes('.jpeg')) {
       return 'image';
     } else if (!fileName.includes('.')) {

@@ -4,7 +4,8 @@ angular.module('projectDirective', [])
  return {
    restrict: 'E',
    transclude: true,
-   controller: 'FilesController',
+   controller: 'PublishController',
+   controllerAs: 'pubCtrl',
    scope: false,
    templateUrl: 'components/partials/project-add-bar.html',
    replace: true

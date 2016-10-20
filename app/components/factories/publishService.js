@@ -14,7 +14,7 @@ function pubService($q) {
       storage.get('published', function (error, data) {
         if (error) throw error;
         publishData = Object.assign(publishData, data);
-        console.log('publishData in publish service:', publishData)
+        // console.log('publishData in publish service:', publishData)
         resolve(data)
       });
     })
@@ -41,6 +41,7 @@ function pubService($q) {
     data: publishData,
     add: addToPublish,
     init: init,
+    loadPublished: loadPublished
   }
 }
 
