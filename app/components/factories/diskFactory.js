@@ -33,8 +33,8 @@ function diskFactory($q, PublishService) {
   // (//index.html, dispersion, data)
   function overwriteFileInProject(fileName, projectName, data) {
 
-    fileName = "index.html"
-    projectName = "codesmithHackathon1"
+    fileName = ".gitignore"
+    projectName = "FiraCode-master"
     data = 'lonDick'
 
     let overwriteFile = path.resolve(__dirname + `/../projectFolder/` + projectName + '/' + fileName);

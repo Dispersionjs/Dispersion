@@ -8,7 +8,7 @@ function fileFactory($q, $timeout, IpfsService) {
 
 
     function addHash() {
-        dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] }, function(addFiles) {
+        dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] }, function (addFiles) {
             IpfsService.addFile(addFiles[0]);
             $timeout(() => {
                 loadFilesFromStorage()
@@ -18,7 +18,7 @@ function fileFactory($q, $timeout, IpfsService) {
 
     function loadFilesFromStorage() {
         console.log('inside files from storage')
-        storage.keys(function(error, keys) {
+        storage.keys(function (error, keys) {
             if (error) throw error;
             var promiseArr = [];
             var fileArray = [];
@@ -49,7 +49,7 @@ function fileFactory($q, $timeout, IpfsService) {
     function fileget(fileArray) {
         let arr = [];
         let type;
-        fileArray.forEach(function(item, index) {
+        fileArray.forEach(function (item, index) {
             //finds file type
             type = testFileType(item);
             arr.push({
@@ -64,19 +64,19 @@ function fileFactory($q, $timeout, IpfsService) {
         return arr;
     };
 
-  function testFileType(item) {
-    let fileName = item[Object.keys(item)].file
-    // console.log(item)
-    if (fileName.includes('.jpg') || fileName.includes('.png') || fileName.includes('.JPG') || fileName.includes('.PNG') || fileName.includes('.jpeg')) {
-      return 'image';
-    } else if (!fileName.includes('.')) {
-      return 'folder';
-    } else if (fileName.includes('.xl')) {
-      return 'excel';
-    } else if (fileName.includes('.pdf') || fileName.includes('.txt') || fileName.includes('.doc')) {
-      return 'doc';
+    function testFileType(item) {
+        let fileName = item[Object.keys(item)].file
+        // console.log(item)
+        if (fileName.includes('.jpg') || fileName.includes('.png') || fileName.includes('.JPG') || fileName.includes('.PNG') || fileName.includes('.jpeg')) {
+            return 'image';
+        } else if (!fileName.includes('.')) {
+            return 'folder';
+        } else if (fileName.includes('.xl')) {
+            return 'excel';
+        } else if (fileName.includes('.pdf') || fileName.includes('.txt') || fileName.includes('.doc')) {
+            return 'doc';
+        }
     }
-
     return {
         addHash: addHash,
         data: fileData,
