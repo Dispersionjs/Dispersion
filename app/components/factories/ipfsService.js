@@ -6,6 +6,7 @@ module.factory('IpfsService', ['$q', '$interval', ipfsService]);
 function ipfsService($q, $interval) {
   let daemonLoadedStatus = () => daemonLoaded;
   let daemonLoaded = false;
+  $interval(console.log.bind(null, daemonLoaded), 2000);
   
   function startDaemon() {
     let daemonCommand = spawn('ipfs', ['daemon']);
@@ -15,6 +16,7 @@ function ipfsService($q, $interval) {
       if (result) {
         console.log('the daemon is running')
         daemonLoaded = true;
+        console.log('deamonLoaded', daemonLoaded)
       }
     });
     daemonCommand.stderr.on('data', function (data) {

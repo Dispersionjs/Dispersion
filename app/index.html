@@ -20,7 +20,7 @@
 	</div>
 	<div id='dash-content' ng-app='myApp'>
 		<div ng-controller='MainController as mainCtrl'>
-			<div class='preload' ng-show="!mainCtrl.daemonStatus()" >
+			<div class='preload' ng-if="!mainCtrl.daemonStatus()" >
 		<div id="">
 <div class='container'>
 	<!-- svg preloader

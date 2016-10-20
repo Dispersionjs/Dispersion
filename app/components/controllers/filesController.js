@@ -1,9 +1,10 @@
 
 angular
   .module('FilesController', [])
-  .controller('FilesController', ['FileFactory', 'PublishService', 'DiskFactory', 'IpfsService', FilesController]);
+  //passing $scope and UserFactory as dependencies to controller
+  .controller('FilesController', ['$scope', 'FileFactory', 'PublishService', 'DiskFactory', 'IpfsService', FilesController]);
 
-function FilesController(FileFactory, PublishService, DiskFactory, IpfsService) {
+function FilesController($scope,FileFactory, PublishService, DiskFactory, IpfsService) {
 
   const self = this;
   self.sortBy = 'time';
@@ -25,8 +26,6 @@ function FilesController(FileFactory, PublishService, DiskFactory, IpfsService) 
     IpfsService.unPin(hash);
     self.files = FileFactory.loadFilesFromStorage()
   }
-
-  self.saveToDisk = IpfsService.saveToDisk;
 
   self.addToPublish = function (value) {
     PublishService.add(
