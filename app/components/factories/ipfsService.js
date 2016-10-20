@@ -14,7 +14,7 @@ function ipfsService($q, $interval) {
         let result = /Daemon is ready/.test(dataString);
         if (result) {
           console.log('the daemon is running')
-          resolve(true);
+          resolve(result);
         }
       });
       daemonCommand.stderr.on('data', function (data) {
@@ -23,7 +23,7 @@ function ipfsService($q, $interval) {
         if (result) {
           console.log('Warning: Daemon already is running in a seperate process! Closing this application will not kill your IPFS Daemon.')
         }
-        resolve(true);
+        resolve(result);
       })
     })
   }

@@ -10,6 +10,7 @@ function mainController($scope, PublishService, FileFactory, DiskFactory, IpfsSe
   self.view = 'files';
   PublishService.init()
   IpfsService.init().then((data) => {
+    console.log('daemondata',data)
     self.daemonStatus = data;
   });
   DiskFactory.init();
