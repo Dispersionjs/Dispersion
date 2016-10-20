@@ -14,4 +14,5 @@ function PublishController(PublishService, DiskFactory) {
   self.addProject = DiskFactory.addProject;
   self.overwrite = DiskFactory.overwrite;
   self.delete = DiskFactory.delete;
+
 }
