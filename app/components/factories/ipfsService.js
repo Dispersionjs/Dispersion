@@ -6,26 +6,25 @@ module.factory('IpfsService', ['$q', '$interval', ipfsService]);
 function ipfsService($q, $interval) {
   let daemonLoadedStatus = () => daemonLoaded;
   let daemonLoaded = false;
-  $interval(console.log.bind(null, daemonLoaded), 2000);
-  
   function startDaemon() {
-    let daemonCommand = spawn('ipfs', ['daemon']);
-    daemonCommand.stdout.on('data', function (data) {
-      let dataString = data.toString();
-      let result = /Daemon is ready/.test(dataString);
-      if (result) {
-        console.log('the daemon is running')
-        daemonLoaded = true;
-        console.log('deamonLoaded', daemonLoaded)
-      }
-    });
-    daemonCommand.stderr.on('data', function (data) {
-      let dataString = data.toString();
-      let result = /daemon is running/.test(dataString);
-      if (result) {
-        console.log('Warning: Daemon already is running in a seperate process! Closing this application will not kill your IPFS Daemon.')
-      }
-      daemonLoaded = true;
+    return $q(function (resolve, reject) {
+      let daemonCommand = spawn('ipfs', ['daemon']);
+      daemonCommand.stdout.on('data', function (data) {
+        let dataString = data.toString();
+        let result = /Daemon is ready/.test(dataString);
+        if (result) {
+          console.log('the daemon is running')
+          resolve(true);
+        }
+      });
+      daemonCommand.stderr.on('data', function (data) {
+        let dataString = data.toString();
+        let result = /daemon is running/.test(dataString);
+        if (result) {
+          console.log('Warning: Daemon already is running in a seperate process! Closing this application will not kill your IPFS Daemon.')
+        }
+        resolve(true);
+      })
     })
   }
 
@@ -169,7 +168,6 @@ function ipfsService($q, $interval) {
   }
 
   return {
-    daemonLoaded: daemonLoadedStatus,
     init: startDaemon,
     addFile: submitFile,
     saveToDisk: saveToDisk,

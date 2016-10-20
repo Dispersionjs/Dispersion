@@ -9,13 +9,11 @@ function mainController($scope, PublishService, FileFactory, DiskFactory, IpfsSe
   const self = this;
   self.view = 'files';
   PublishService.init()
-  IpfsService.init();
+  IpfsService.init().then((data) => {
+    self.daemonStatus = data;
+  });
   DiskFactory.init();
   FileFactory.init();
-  self.daemonStatus = function (){
-    return self.daemonLoaded()
-  }
-  self.daemonLoaded = IpfsService.daemonLoaded;
   self.publishpage = function () {
   }
 }
