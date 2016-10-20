@@ -132,7 +132,6 @@ function ipfsService($q) {
     //set save-to directory to a file on user's desktop
     let directory = `/Users/${username}/Desktop/ipfs`
     let pinSaveCommand = `ipfs get --output="${directory}" ${pinHash}`;
-    console.log('pinsavecommand', pinSaveCommand)
     exec(pinSaveCommand, function (error, stdout, stderr) {
       if (error !== null) console.log('exec error: ' + error);
       //get data from hash for file save
@@ -162,7 +161,6 @@ function ipfsService($q) {
       });
     })
   }
-
 
   return {
     init: startDaemon,

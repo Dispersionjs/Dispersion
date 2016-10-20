@@ -1,41 +1,50 @@
 var module = angular
   .module('FileFactory', [])
 
-module.service('FileFactory', ['$q', fileFactory]);
+module.service('FileFactory', ['$q','$timeout','IpfsService', fileFactory]);
 
-function fileFactory($q){
+function fileFactory($q,$timeout,IpfsService) {
   let fileData = [];
 
-    function loadFilesFromStorage ($scope) {
-      storage.keys(function (error, keys) {
-        if (error) throw error;
-        var promiseArr = [];
-        var fileArray = [];
+  function addHash() {
+    dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] }, function (addFiles) {
+      IpfsService.addFile(addFiles[0]);
+      $timeout(() => {
+        loadFilesFromStorage()
+      }, 1000)
+    });
+  }
 
-        //make promise array
-        keys.forEach((key, index, array) => {
-          promiseArr.push(
-            $q((resolve, reject) => {
-              storage.get(key, (error, data) => {
-                if (/Qm/.test(key)) {
-                  fileArray.push({
-                    [key]: data
-                  })
-                }
-                resolve();
-              })
-            }))
-        })
+  function loadFilesFromStorage($scope) {
+    storage.keys(function (error, keys) {
+      if (error) throw error;
+      var promiseArr = [];
+      var fileArray = [];
 
-        $q.all(promiseArr).then(() => {
-          console.log("All data from LOCAL STORAGE", fileArray)
-          fileData.length = 0;
-          fileData.push.apply(fileData,fileget(fileArray))
-        })
+      //make promise array
+      keys.forEach((key, index, array) => {
+        promiseArr.push(
+          $q((resolve, reject) => {
+            storage.get(key, (error, data) => {
+              if (/Qm/.test(key)) {
+                fileArray.push({
+                  [key]: data
+                })
+              }
+              resolve();
+            })
+          }))
       })
-    }
-  
-    function fileget(fileArray) {
+
+      $q.all(promiseArr).then(() => {
+        console.log("All data from LOCAL STORAGE", fileArray)
+        fileData.length = 0;
+        fileData.push.apply(fileData, fileget(fileArray))
+      })
+    })
+  }
+
+  function fileget(fileArray) {
     let arr = [];
     let type;
     fileArray.forEach(function (item, index) {
@@ -68,8 +77,9 @@ function fileFactory($q){
   }
 
   return {
+    addHash: addHash,
     data: fileData,
-    init: loadFilesFromStorage, 
-    loadFilesFromStorage:loadFilesFromStorage
+    init: loadFilesFromStorage,
+    loadFilesFromStorage: loadFilesFromStorage
   }
 }

@@ -2,11 +2,12 @@
 angular
   .module('FilesController', [])
   //passing $scope and UserFactory as dependencies to controller
-  .controller('FilesController', ['$scope', '$q', '$timeout', 'FileFactory', 'PublishService', 'DiskFactory', 'IpfsService', FilesController]);
+  .controller('FilesController', ['$scope', 'FileFactory', 'PublishService', 'DiskFactory', 'IpfsService', FilesController]);
 
-function FilesController($scope, $q, $timeout, FileFactory, PublishService, DiskFactory, IpfsService) {
+function FilesController($scope,FileFactory, PublishService, DiskFactory, IpfsService) {
+
   const self = this;
-
+  self.sortBy = 'time';
   //get Username of local user. Used for file saving
   username().then(username => {
     self.username = username;
@@ -19,14 +20,7 @@ function FilesController($scope, $q, $timeout, FileFactory, PublishService, Disk
     $(`#sel-option${index}`).show();
   }
 
-  self.addHash = function () {
-    dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] }, function (addFiles) {
-      IpfsService.addFile(addFiles[0]);
-      $timeout(() => {
-        FileFactory.loadFilesFromStorage()
-      }, 1000)
-    });
-  }
+  self.addHash = FileFactory.addHash;
 
   self.deleteHash = function (hash) {
     IpfsService.unPin(hash);
@@ -53,29 +47,4 @@ function FilesController($scope, $q, $timeout, FileFactory, PublishService, Disk
         ]
       });
   }
-
-
-
-  /*********************************************************/
-  var publishObjectPromise = new Promise(function (resolve, reject) {
-    storage.get('publishStorage', function (error, data) {
-      if (error) throw error;
-      else resolve(data);
-    })
-  });
-
-  publishObjectPromise.then(function (data) {
-    console.log('data',data);
-    self.publishObject = data;
-  })
-
-  self.publisher = function (hash) {
-    console.log(hash)
-    IpfsService.publish(hash)
-  }
-
-  // DiskFactory.init();  
-  //Add project from local file system to electron app system
-  // $scope.addProject = FileFactory.copyProject();
-
 }
