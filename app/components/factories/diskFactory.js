@@ -19,7 +19,7 @@ function diskFactory($q, PublishService) {
     let pathBrokenIntoArray = copyFrom.split('/');
     let project = '/' + pathBrokenIntoArray[pathBrokenIntoArray.length - 1]
     let copyTo = path.resolve(__dirname + `/../projectFolder` + project)
-    
+
     console.log('copy from ', copyFrom)
     console.log('copyTo ', copyTo)
 
@@ -38,50 +38,59 @@ function diskFactory($q, PublishService) {
     // })
     fileName = "index.html"
     projectName = "codesmithHackathon1"
-    data = 'longmcDick'
+    data = 'lonDick'
 
     let overwriteFile = path.resolve(__dirname + `/../projectFolder/` + projectName + '/' + fileName);
-    fs.writeFile(overwriteFile, data , (err) => {
+    fs.writeFile(overwriteFile, data, (err) => {
       if (err) return console.error(err);
       // console.log('overwrote file at this path: \n', path.resolve(__dirname + `/../projectFolder` + projectFolderName + fileName))
     })
 
-    let ipfsAddProject = path.resolve(__dirname + `/../projectFolder/` + projectName)      
+    let ipfsAddProject = path.resolve(__dirname + `/../projectFolder/` + projectName)
     let command = `ipfs add -r ${ipfsAddProject}`;
 
+  
+
     exec(command, function (error, stdout, stderr) {
-      //grabs just the filename from the absolute path of the added file
-      // let fileLocationArray = hashFile.split('/');
       console.log(stdout)
+      let requrl;
       // let name = fileLocationArray[fileLocationArray.length - 1];
       // //separate hashes from folder into an array
       let hashArray = stdout.trim().split('\n');
       let topFolder = hashArray[hashArray.length - 1].split(' ');
       console.log('top folder hash: ', topFolder)
-      let tophash = topFolder.slice(1,2).join(' ');
+      let folderName = topFolder[2];
+      console.log('folderName', folderName)
+      let tophash = topFolder[1];
       console.log('top hash: ', tophash)
-
+      requrl = "https://ipfs.io/ipfs/" + tophash;
 
       PublishService.add(
-      {
-        [value.item]:
-        [
-          {
-            'date': value.time,
-            'hash': value.hash,
-            'publish': false,
-            'changed': null,
-            'url': value.url,
-            'files': value.files
-          }
-        ]
-      });      
-      // let hashObj = {
-      //   "file": file,
-      //   "time": new Date().toUTCString(),
-      //   "url": "https://ipfs.io/ipfs/" + topHash[1],
-      //   'files': []
-      // }    
+        {
+          [folderName]:
+          [
+            {
+              'date': new Date().toUTCString(),
+              'hash': tophash,
+              'publish': false,
+              'changed': null,
+              'url': "https://ipfs.io/ipfs/" + tophash,
+              'files': []
+            }
+          ]
+        });
+      
+      for (let i = 0; i < 5; i++) {
+      request(requrl, (err, response, body) => {
+        if (err) {
+          console.log('error making distribute request to IPFS');
+          console.error(err);
+        } else {
+          console.log(requrl)
+          console.log(response.statusCode)
+        }
+      })
+      }  
     })
   }
 
@@ -90,7 +99,7 @@ function diskFactory($q, PublishService) {
     let pathBrokenIntoArray = deletePath.split('/');
     let deleteProject = '/' + pathBrokenIntoArray[pathBrokenIntoArray.length - 1]
     let deleteIt = path.resolve(__dirname + `/../projectFolder` + deleteProject)
-    
+
     fse.emptyDir(deleteIt, (err) => {
       if (err) throw err;
       console.log('deleted directory contents')

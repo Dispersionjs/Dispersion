@@ -35,7 +35,8 @@ function fileFactory($q){
       })
     }
 
-    function addToPublish (value) {
+    function addToPublish(value) {
+      console.log('data put in add to Publish', value)
       let getPublishData = function () {
         let getPromise = new Promise(function (resolve, reject) {
           storage.get('published', function (error, data) {
