@@ -7,5 +7,4 @@ function PublishController(PublishService) {
   PublishService.init().then(console.log('init called in publish controller'))
   const self = this;
   self.data = PublishService.data;
-
 }

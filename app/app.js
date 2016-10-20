@@ -16,6 +16,7 @@ angular.module('myApp', [
   'topbarDirective',
   'publishDirective',
   'projectDirective',
+  'daemonDirective',
   'FileFactory',
   'PublishService',
   'MainController',
