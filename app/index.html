@@ -13,6 +13,10 @@
 
 <body>
 
+	<div class="row">
+
+	</div>
+
 	<div class="light-blue darken-1">
 		<h1 class="center brand-logo">Dispersion</h1>
 	</div>
@@ -27,24 +31,38 @@
 				</div>
 			</div>
 			<div ng-controller='FilesController as fileCtrl'>
-				<div ng-show="mainCtrl.view ==='files' " class="row">
+				<div ng-if="mainCtrl.view ==='files' " class="row">
+
 					<div class="col s12">
 						<top-bar></top-bar>
+
+						
+						<div class="input-field col s12">
+							<select ng-model="sortBy">
+							<option value="" disabled selected>Filter By...</option>
+           		<option value="time">-- time --</option>
+            	<option value="item">item</option>
+            	<option value="fileType">fileType</option>
+        		</select>
+							<label>Materialize Select</label>
+						</div>
+					
+
 						<ul class="collection">
-							<li class="collection-item avatar" ng-repeat='(key, value) in files track by $index'>
-								<i ng-if="value.fileType === 'folder'" class="material-icons circle">folder</i>
-								<img ng-if="value.fileType === 'image'" src="{{value.url}}" alt="" class="circle">
-								<i ng-if="value.fileType === 'doc'" class="material-icons circle">description</i>
-								<i ng-if="value.fileType === 'excel'" class="material-icons circle green">insert_chart</i>
-								<i ng-if="value.fileType === 'video'" class="material-icons circle red">play_arrow</i>
-								<span class="title">{{value.item}}</span>
-								<p>{{value.time}} <br> {{value.url}}
+							<li class="collection-item avatar" ng-repeat='file in fileCtrl.files | orderBy: sortBy track by $index '>
+								<i ng-if="file.fileType === 'folder'" class="material-icons circle">folder</i>
+								<img ng-if="file.fileType === 'image'" src="{{file.url}}" alt="" class="circle">
+								<i ng-if="file.fileType === 'doc'" class="material-icons circle">description</i>
+								<i ng-if="file.fileType === 'excel'" class="material-icons circle green">insert_chart</i>
+								<i ng-if="file.fileType === 'video'" class="material-icons circle red">play_arrow</i>
+								<span class="title">{{file.item}}</span>
+								<p>{{file.time}} <br> {{file.url}}
 								</p>
 								<div href="#!" class="secondary-content">
-									<a href='#!' ng-click='fileCtrl.addToPublish(value)'> <i class="material-icons">language</i></a>
+									<a href='#!' ng-click='fileCtrl.addToPublish(file)'> <i class="material-icons">language</i></a>
 									<a href='#!'> <i class="material-icons">info_outline</i></a>
-									<a href='#!' ng-click='fileCtrl.saveToDisk(value.hash,username)'> <i class="material-icons">system_update_alt</i></a>
-									<a href='#!' ng-click='fileCtrl.deleteHash(value.hash)'> <i class="material-icons">delete</i></a>
+									<a href='#!' ng-click='fileCtrl.saveToDisk(file.hash,username)'> <i class="material-icons">system_update_alt</i></a>
+									<a href='#!' ng-click='fileCtrl.deleteHash(file.hash)'> <i class="material-icons">delete</i></a>
 								</div>
 							</li>
 						</ul>
@@ -67,23 +85,31 @@
 		</div>
 </body>
 <script>
+
     // require other files to run in this process
   window.$ = window.jQuery = require('./node_modules/jquery/dist/jquery.min.js');
 	window.Hammer = require('./node_modules/hammerjs/hammer.min.js');
+	
   </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js "></script>
+
 <script src="./assets/js/dispersion.js "></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js "></script>
 <script src="components/directives/project-directive.js "></script>
-<script src="components/factories/hashFactory.js "></script>
+<script src="components/factories/fileFactory.js "></script>
 <script src="components/factories/ipfsService.js "></script>
 <script src="components/factories/publishService.js "></script>
-<script src="components/factories/fileFactory.js "></script>
+<script src="components/factories/diskFactory.js "></script>
 <script src="components/directives/topbarDirective.js "></script>
 <script src="components/directives/publishDirective.js "></script>
 <script src="components/controllers/mainController.js "></script>
 <script src="components/controllers/FilesController.js "></script>
 <script src="components/controllers/publishController.js "></script>
+<script> 	
+	$(document).ready(function() {
+    $('select').material_select();
+});
+</script>
 <script src="app.js "></script>
 
 </html>

@@ -5,9 +5,9 @@
 angular
   .module('FilesController', [])
   //passing $scope and UserFactory as dependencies to controller
-  .controller('FilesController', ['$scope', '$q', '$timeout', 'HashFactory', 'PublishService', 'FileFactory', 'IpfsService', FilesController]);
+  .controller('FilesController', ['$scope', '$q', '$timeout', 'FileFactory', 'PublishService', 'DiskFactory', 'IpfsService', FilesController]);
 
-function FilesController($scope, $q, $timeout, HashFactory, PublishService, FileFactory, IpfsService) {
+function FilesController($scope, $q, $timeout, FileFactory, PublishService, DiskFactory, IpfsService) {
   //start local Daemon
   const self = this;
   // Dispersion.startDaemon()
@@ -16,9 +16,11 @@ function FilesController($scope, $q, $timeout, HashFactory, PublishService, File
     self.username = username;
   });
 
-  self.files;
+  self.files = FileFactory.data;
+  console.log('files', self.files)
+
   //gets all of the users pinned hashes
-  HashFactory.loadFilesFromStorage($scope);
+  // FileFactory.loadFilesFromStorage($scope);
 
   //shows additional info about pinned file
   self.showInfo = function (index) {
@@ -29,14 +31,14 @@ function FilesController($scope, $q, $timeout, HashFactory, PublishService, File
     dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] }, function (addFiles) {
       IpfsService.addFile(addFiles[0]);
       $timeout(() => {
-        self.files = HashFactory.loadFilesFromStorage($scope)
+        FileFactory.loadFilesFromStorage()
       }, 1000)
     });
   }
 
   self.deleteHash = function (hash) {
     IpfsService.unPin(hash);
-    $scope.files = HashFactory.loadFilesFromStorage($scope)
+    $scope.files = FileFactory.loadFilesFromStorage()
   }
 
   self.saveToDisk = function (hash, username) {
@@ -82,7 +84,7 @@ function FilesController($scope, $q, $timeout, HashFactory, PublishService, File
     IpfsService.publish(hash)
   }
 
-  // FileFactory.init();  
+  // DiskFactory.init();  
   //Add project from local file system to electron app system
   // $scope.addProject = FileFactory.copyProject();
 
