@@ -1,26 +1,18 @@
-/**
- * Main goes here
- */
-//declaring the about module and controller
+
 angular
   .module('FilesController', [])
   //passing $scope and UserFactory as dependencies to controller
   .controller('FilesController', ['$scope', '$q', '$timeout', 'FileFactory', 'PublishService', 'DiskFactory', 'IpfsService', FilesController]);
 
 function FilesController($scope, $q, $timeout, FileFactory, PublishService, DiskFactory, IpfsService) {
-  //start local Daemon
   const self = this;
-  // Dispersion.startDaemon()
+
   //get Username of local user. Used for file saving
   username().then(username => {
     self.username = username;
   });
 
   self.files = FileFactory.data;
-  console.log('files', self.files)
-
-  //gets all of the users pinned hashes
-  // FileFactory.loadFilesFromStorage($scope);
 
   //shows additional info about pinned file
   self.showInfo = function (index) {
