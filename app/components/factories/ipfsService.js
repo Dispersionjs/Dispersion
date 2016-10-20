@@ -6,7 +6,6 @@ module.factory('IpfsService', ['$q', ipfsService]);
 function ipfsService($q) {
 
   function startDaemon() {
-    console.log('hi DOOOOOOOOD');
     let daemonCommand = spawn('ipfs', ['daemon']);
     daemonCommand.stdout.on('data', function (data) {
       let dataString = data.toString();
@@ -62,26 +61,28 @@ function ipfsService($q) {
         storage.set(topHash[1], hashObj, function (error) {
           if (error) throw error;
         });
-        //requests each hash url 5 times
-
-        //good functionality to abstract into its own function 
-        for (let key in requestObj) {
-          let url = requestObj[key]["url"]
-          for (let i = 0; i < 5; i++) {
-            request(url, (err, response, body) => {
-              if (err) {
-                console.log('error making distribute request to IPFS');
-                console.error(err);
-              } else {
-                console.log(url)
-                console.log(response.statusCode)
-              }
-            })
-          }
-        }
+        //Call function to request all hashes (5 times) in Merkel DAG
+        requestHashes(requestObj)
       })
     })
   }
+
+  function requestHashes(requestObj) {
+    for (let key in requestObj) {
+      let url = requestObj[key]["url"]
+      for (let i = 0; i < 5; i++) {
+        request(url, (err, response, body) => {
+          if (err) {
+            console.log('error making distribute request to IPFS');
+            console.error(err);
+          } else {
+            console.log(response.statusCode)
+          }
+        })
+      }
+    }
+  }
+
 
   function unPin(pinHash) {
     let pinRmCommand = 'ipfs pin rm ' + pinHash;
@@ -96,70 +97,71 @@ function ipfsService($q) {
   }
 
   function publishHash(hash) {
-     let publishIt = 'ipfs name publish ' + hash;
-      console.log(publishIt);
-      exec(publishIt, function (error, stdout, stderr) {
-        console.log(stdout, hash);
-        let hashed = `http://gateway.ipfs.io/ipns/${stdout.split(' ')[2].slice(0, -1)}`
-        //$('#hashlink').text(hashed);
-        if (error !== null) {
-          console.log('exec error: ' + error);
-        }
+    let publishIt = 'ipfs name publish ' + hash;
+    console.log(publishIt);
+    exec(publishIt, function (error, stdout, stderr) {
+      console.log(stdout, hash);
+      let hashed = `http://gateway.ipfs.io/ipns/${stdout.split(' ')[2].slice(0, -1)}`
+      //$('#hashlink').text(hashed);
+      if (error !== null) {
+        console.log('exec error: ' + error);
+      }
     })
   }
 
-    function addPin (pinHash, pinDescription) {
-      let pinCommand = 'ipfs pin add ' + pinHash;
-      let hashObject = {
-        "file": pinDescription,
-        "pinnedBy": 'someone else',
-        "pinDate": new Date(),
-        "url": "https://ipfs.io/ipfs/" + pinHash
-      };
-      exec(pinCommand, function (error, stdout, stderr) {
-        //saves pinned hash to Electron App storage
-        storage.set(pinHash, hashObject, function (error) {
-          if (error) throw error;
-        });
-        if (error !== null) {
-          console.log('exec error: ' + error);
+  function addPin(pinHash, pinDescription) {
+    let pinCommand = 'ipfs pin add ' + pinHash;
+    let hashObject = {
+      "file": pinDescription,
+      "pinnedBy": 'someone else',
+      "pinDate": new Date(),
+      "url": "https://ipfs.io/ipfs/" + pinHash
+    };
+    exec(pinCommand, function (error, stdout, stderr) {
+      //saves pinned hash to Electron App storage
+      storage.set(pinHash, hashObject, function (error) {
+        if (error) throw error;
+      });
+      if (error !== null) {
+        console.log('exec error: ' + error);
+      }
+    })
+  }
+
+  function saveToDisk(pinHash, username) {
+    //set save-to directory to a file on user's desktop
+    let directory = `/Users/${username}/Desktop/ipfs`
+    let pinSaveCommand = `ipfs get --output="${directory}" ${pinHash}`;
+    console.log('pinsavecommand', pinSaveCommand)
+    exec(pinSaveCommand, function (error, stdout, stderr) {
+      if (error !== null) console.log('exec error: ' + error);
+      //get data from hash for file save
+      storage.get(pinHash, function (error, data) {
+        if (error) throw error;
+        //check if the hash has already been pinned.
+        if (Object.keys(data).length === 0) {
+          alert("Please pin before download!");
+          return;
         }
-      })
-    }
-  
-  function saveToDisk (pinHash, username) {
-      //set save-to directory to a file on user's desktop
-      let directory = `/Users/${username}/Desktop/ipfs`
-      let pinSaveCommand = `ipfs get --output="${directory}" ${pinHash}`;
-      exec(pinSaveCommand, function (error, stdout, stderr) {
-        if (error !== null) console.log('exec error: ' + error);
-        //get data from hash for file save
-        storage.get(pinHash, function (error, data) {
-          if (error) throw error;
-          //check if the hash has already been pinned.
-          if (Object.keys(data).length === 0) {
-            alert("Please pin before download!");
-            return;
-          }
-          //initial location and name of saved hash. Default to Desktop
-          let fileLocation = `${directory}/${pinHash}`
-          //filename of hash
-          let filename = data.file
-          let fileExtension;
-          //determine and set file extension for saving
-          if (!filename.includes('.')) {
-            let buffer = readChunk.sync(fileLocation, 0, 262);
-            fileExtension = `.${fileType(buffer).ext}`;
-          } else {
-            fileExtension = ''
-          }
-          //rename file based on filename and extension
-          fs.rename(fileLocation, `"${directory}/${filename}${fileExtension}"`, function (err) {
-            if (err) console.log('ERROR: ' + err);
-          });
+        //initial location and name of saved hash. Default to Desktop
+        let fileLocation = `${directory}/${pinHash}`
+        //filename of hash
+        let filename = data.file
+        let fileExtension;
+        //determine and set file extension for saving
+        if (!filename.includes('.')) {
+          let buffer = readChunk.sync(fileLocation, 0, 262);
+          fileExtension = `.${fileType(buffer).ext}`;
+        } else {
+          fileExtension = ''
+        }
+        //rename file based on filename and extension
+        fs.rename(fileLocation, `"${directory}/${filename}${fileExtension}"`, function (err) {
+          if (err) console.log('ERROR: ' + err);
         });
-      })
-    }
+      });
+    })
+  }
 
 
   return {

@@ -5,11 +5,12 @@
 			<div class="card blue-grey darken-1">
 				<div class="card-content white-text">
 					<span class="card-title">{{key}}</span>
+					
 					<p>Project Description?</p>
 				</div>
 				<div class="card-action">
-					<div><i class="material-icons">done_all</i><span>currently published</span></div>
 					<a ng-click="mainCtrl.view= 'project'" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">mode_edit</i></a>
+					<div ng-show='{{value[0].publish}}'><i class="material-icons">done_all</i><span>currently published</span></div>
 					<a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
 				</div>
 			</div>

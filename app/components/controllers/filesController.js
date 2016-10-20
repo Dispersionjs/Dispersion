@@ -30,7 +30,7 @@ function FilesController($scope, $q, $timeout, FileFactory, PublishService, Disk
 
   self.deleteHash = function (hash) {
     IpfsService.unPin(hash);
-    $scope.files = FileFactory.loadFilesFromStorage()
+    self.files = FileFactory.loadFilesFromStorage()
   }
 
   self.saveToDisk = function (hash, username) {
@@ -38,7 +38,6 @@ function FilesController($scope, $q, $timeout, FileFactory, PublishService, Disk
   }
 
   self.addToPublish = function (value) {
-    console.log('value in add to publish: \n', value)
     PublishService.add(
       {
         [value.item]:
@@ -66,10 +65,9 @@ function FilesController($scope, $q, $timeout, FileFactory, PublishService, Disk
   });
 
   publishObjectPromise.then(function (data) {
-    console.log(data);
+    console.log('data',data);
     self.publishObject = data;
   })
-  console.log("Instant Log: " + $scope.publishArray);
 
   self.publisher = function (hash) {
     console.log(hash)

@@ -34,39 +34,6 @@ function fileFactory($q){
         })
       })
     }
-
-    function addToPublish (value) {
-      let getPublishData = function () {
-        let getPromise = new Promise(function (resolve, reject) {
-          storage.get('published', function (error, data) {
-            if (error) throw error;
-            resolve(data)
-          })
-        })
-        return getPromise;
-      }
-
-      let setPublishData = function (data) {
-        let publishObject = data;
-        //add to publishObject
-        console.log(data)
-        data[value.item] = [{ 'date': value.time, 'hash': value.hash, 'publish': false, 'changed': value.fileType, 'url': value.url, 'files': value.files }];
-        console.log(data)
-        let setPromise = new Promise(function (resolve, reject) {
-          storage.set('published', data, function (error) {
-            if (error) throw error;
-            resolve();
-          });
-        });
-        return setPromise;
-      }
-
-      return (
-        getPublishData().then(function (data) {
-          return setPublishData(data)
-        })
-      )
-    }
   
     function fileget(fileArray) {
     let arr = [];
@@ -100,10 +67,8 @@ function fileFactory($q){
     }
   }
 
-
   return {
     data: fileData,
-    addToPublish: addToPublish,
     init: loadFilesFromStorage, 
     loadFilesFromStorage:loadFilesFromStorage
   }
