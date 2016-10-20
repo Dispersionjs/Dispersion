@@ -2,10 +2,10 @@ angular.module('myApp', [
   'topbarDirective',
   'publishDirective',
   'projectDirective',
-  'HashFactory',
+  'FileFactory',
   'PublishService',
   'MainController',
-  'FileFactory',
+  'DiskFactory',
   'IpfsService',
   'FilesController',
   'PublishController'])

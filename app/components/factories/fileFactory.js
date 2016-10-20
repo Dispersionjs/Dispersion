@@ -1,40 +1,110 @@
 var module = angular
   .module('FileFactory', [])
 
-module.factory('FileFactory', ['$q', fileService]);
+module.service('FileFactory', ['$q', fileFactory]);
 
-function fileService($q) {
-  //Add "projectFolder" to local app folder
-  //Return promise
-  function initProjectFolder() {
-    fse.mkdirsSync(path.resolve(__dirname + `/../projectFolder`), (err) => {
-      if (err) return console.error(err);
-    });
-  }
+function fileFactory($q){
+  let fileData = [];
 
-  function copyProjectToAppStorage() {
-    /**TODO: Currently when you copy a directory with fse it will copy the contents of the directory
-    *but not the folder name. In a hacky way I rebuild the foldername. Could be better"**/
+    function loadFilesFromStorage ($scope) {
+      storage.keys(function (error, keys) {
+        if (error) throw error;
+        var promiseArr = [];
+        var fileArray = [];
 
-    /**TODO: Change scope Reference in project-add-bar. Instead keep path as reference in mainController*/
-    let folderDepthArr = $scope.projectDir.split('/');
-    let folderName = '/' + folderDepthArr[folderDepthArr.length - 1]
-    fse.copy($scope.projectDir, path.resolve(__dirname + `/../projectFolder` + folderName), (err) => {
-      if (err) return console.error(err);
-      console.log('copied folder to local directory')
+        //make promise array
+        keys.forEach((key, index, array) => {
+          promiseArr.push(
+            $q((resolve, reject) => {
+              storage.get(key, (error, data) => {
+                if (/Qm/.test(key)) {
+                  fileArray.push({
+                    [key]: data
+                  })
+                }
+                resolve();
+              })
+            }))
+        })
+
+        $q.all(promiseArr).then(() => {
+          console.log("All data from LOCAL STORAGE", fileArray)
+          fileData.length = 0;
+          fileData.push.apply(fileData,fileget(fileArray))
+        })
+      })
+    }
+
+    function addToPublish (value) {
+      let getPublishData = function () {
+        let getPromise = new Promise(function (resolve, reject) {
+          storage.get('published', function (error, data) {
+            if (error) throw error;
+            resolve(data)
+          })
+        })
+        return getPromise;
+      }
+
+      let setPublishData = function (data) {
+        let publishObject = data;
+        //add to publishObject
+        console.log(data)
+        data[value.item] = [{ 'date': value.time, 'hash': value.hash, 'publish': false, 'changed': value.fileType, 'url': value.url, 'files': value.files }];
+        console.log(data)
+        let setPromise = new Promise(function (resolve, reject) {
+          storage.set('published', data, function (error) {
+            if (error) throw error;
+            resolve();
+          });
+        });
+        return setPromise;
+      }
+
+      return (
+        getPublishData().then(function (data) {
+          return setPublishData(data)
+        })
+      )
+    }
+  
+    function fileget(fileArray) {
+    let arr = [];
+    let type;
+    fileArray.forEach(function (item, index) {
+      //finds file type
+      type = testFileType(item);
+      arr.push({
+        item: item[Object.keys(item)].file,
+        time: item[Object.keys(item)].time,
+        url: item[Object.keys(item)].url,
+        fileType: type,
+        hash: Object.keys(item)[0],
+        files: item[Object.keys(item)].files,
+      })
     })
+    return arr;
+  };
+
+  function testFileType(item) {
+    let fileName = item[Object.keys(item)].file
+    console.log(item)
+    if (fileName.includes('.jpg') || fileName.includes('.png') || fileName.includes('.JPG') || fileName.includes('.PNG') || fileName.includes('.jpeg')) {
+      return 'image';
+    } else if (!fileName.includes('.')) {
+      return 'folder';
+    } else if (fileName.includes('.xl')) {
+      return 'excel';
+    } else if (fileName.includes('.pdf') || fileName.includes('.txt') || fileName.includes('.doc')) {
+      return 'doc';
+    }
   }
 
-  function overwriteFileInProject(projectFolderName, fileName, data) {
-    fs.writeFile(path.resolve(__dirname + `/../projectFolder` + projectFolderName + fileName), data, (err) => {
-      if (err) return console.error(err);
-      console.log('overwrote file at this path: \n', path.resolve(__dirname + `/../projectFolder` + projectFolderName + fileName))
-    })
-  }
 
   return {
-    init: initProjectFolder,
-    copyProject: copyProjectToAppStorage,
-    overwrite: overwriteFileInProject
+    data: fileData,
+    addToPublish: addToPublish,
+    init: loadFilesFromStorage, 
+    loadFilesFromStorage:loadFilesFromStorage
   }
 }

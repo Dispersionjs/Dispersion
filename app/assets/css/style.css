@@ -19,16 +19,11 @@ h1 {
   cursor: pointer;
 }
 
+
 a{
     text-decoration:none;
 }
-[id*='select'] {
-    display:block;
-    width:235px;
-    height:20px;
-    border:1px solid #999;
-    padding:5px;
-}
+
 .toc-odd{
    position:absolute;
    top:32px;
