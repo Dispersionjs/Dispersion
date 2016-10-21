@@ -1,3 +1,4 @@
+
 h1 {
   font-size: 32px;
   text-align: center;
@@ -8,7 +9,7 @@ h1 {
 }
 
 h1 {
-  color: #fff;
+  color: #eeeeee;
   margin:0;
   padding-top: 8px;
   padding-bottom: 8px
@@ -19,9 +20,13 @@ h1 {
   cursor: pointer;
 }
 
+.material-icons {
+  /*color: #ffa000;*/
+}
+
 body {
 /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7d7e7d+0,0e0e0e+100;Black+3D */
-background: #f1f1f1; /* Old browsers */
+background: #eeeeee; /* Old browsers */
 }
 
 a{
@@ -31,7 +36,7 @@ a{
 .toc-odd{
    position:absolute;
    top:32px;
-   background:#f1f1f1;
+   background:#f5f5f5;
    width:250px;
     display:none;
 }
@@ -68,7 +73,11 @@ a{
 }
 
 
-
+.collection-item {
+    border-bottom:5px solid #eeeeee;  
+   margin-top:10px; 
+  /*border: 1px solid #eeeeee;*/
+}
 
 /*CSS for Daemon Load*/
 .preload {
