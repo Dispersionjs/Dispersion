@@ -19,6 +19,10 @@ h1 {
   cursor: pointer;
 }
 
+body {
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7d7e7d+0,0e0e0e+100;Black+3D */
+background: #f1f1f1; /* Old browsers */
+}
 
 a{
     text-decoration:none;
