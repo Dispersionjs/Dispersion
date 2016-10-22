@@ -30,44 +30,23 @@
 						</div>
 					</nav>
 				</div>
-
-
-				<!--<div class="col s6">
-                    <ul class="tabs">
-                        <li class="tab col s3"><a ng-click="mainCtrl.view= 'files'" class="active" href="#">add view</a></li>
-                        <li class="tab col s3"><a ng-click="mainCtrl.view = 'publish'; mainCtrl.publishPage()" href="#">publish view</a></li>
-                    </ul>
-                </div>-->
 			</div>
+
 			<div ng-controller='FilesController as fileCtrl'>
 				<div ng-show="mainCtrl.view ==='files' " class="row">
 					<div class="col s12">
 						<!--<top-bar></top-bar>-->
 						<div class='row'>
-
 							<a class="waves-effect amber darken-1 waves-light btn right " ng-click='fileCtrl.addHash()'><label ><i class="material-icons right">cloud</i></label>Add to IPFS</a>
-
-
 							<div class="btn  amber darken-1 waves-light input-field col s2">
-								    <select ng-model="sortBy">
-							                        <option value="" disabled selected>Filter Files</option>
-           					                        <option value="time">Date</option>
-            				                        <option value="item">Item</option>
-            				                        <option value="fileType">FileType</option>
-        					         </select>
+								<select ng-model="sortBy">
+							    <option value="" disabled selected>Filter Files</option>
+           				<option value="time">Date</option>
+            			<option value="item">Item</option>
+            			<option value="fileType">FileType</option>
+        				</select>
 							</div>
-
 						</div>
-
-						<!--<div class="input-field col s12">
-							<select ng-model="sortBy">
-							<option value="" disabled selected>Filter By...</option>
-           					<option value="time">-- time --</option>
-            				<option value="item">item</Loption>
-            				<option value="fileType">fileType</option>
-        					</select>
-						</div>-->
-
 
 						<ul class="collection">
 							<li class="collection-item grey lighten-2 avatar" ng-repeat='file in fileCtrl.files | orderBy: sortBy track by $index '>
@@ -87,10 +66,11 @@
 								</div>
 							</li>
 						</ul>
-						</ul>
 					</div>
 				</div>
 			</div>
+
+
 			<div>
 				<div ng-controller='PublishController as pubCtrl' ng-show="mainCtrl.view === 'publish' ">
 					<div class=" row ">
@@ -99,11 +79,15 @@
 						</div>
 					</div>
 				</div>
+
 				<div class="row" ng-show="mainCtrl.view==='project'" style="position: absolute; width:100%; height:100%">
 					this is testing project page yo. should probably be own directive/partial
 				</div>
 			</div>
+
 		</div>
+	</div>
+	
 </body>
 <script>
     // require other files to run in this process
