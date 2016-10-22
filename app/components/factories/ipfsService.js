@@ -138,6 +138,18 @@ function ipfsService($q, $interval) {
         })
     }
 
+    function getFileData(hash, file) {
+        return $q(function(resolve, reject) {
+            let fileCommand = `ipfs cat ${hash}/${file}`;
+            exec(fileCommand, function(error, stdout, stderr) {
+                resolve(stdout)
+                if (error !== null) {
+                    console.log('exec error: ' + error);
+                }
+            })
+        })
+    }
+
     function saveToDisk(pinHash, username) {
         //set save-to directory to a file on user's desktop
         let directory = `/Users/${username}/Desktop/ipfs`
@@ -173,6 +185,7 @@ function ipfsService($q, $interval) {
     }
 
     return {
+        getFileData: getFileData,
         init: startDaemon,
         addFile: submitFile,
         saveToDisk: saveToDisk,
