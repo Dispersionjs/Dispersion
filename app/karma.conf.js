@@ -1,7 +1,7 @@
 // Karma configuration
 // Generated on Fri Oct 21 2016 11:40:19 GMT-0700 (PDT)
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -56,11 +56,22 @@ module.exports = function(config) {
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
 
-
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS'],
+    // Inside `karma.conf.js`
+browsers: ['Electron'],
 
+// If you would like Node.js integration support (e.g. `require`)
+//   then, you must include this in `preprocessors` and `client`
+// DEV: preprocessors is for backfilling `__filename` and local `require` paths
+preprocessors: {
+  '**/*.js': ['electron']
+},
+// DEV: `useIframe: false` is for launching a new window instead of using an iframe
+//   In Electron, iframes don't get `nodeIntegration` priveleges yet windows do
+client: {
+  useIframe: false
+},
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits

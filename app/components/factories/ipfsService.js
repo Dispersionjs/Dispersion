@@ -1,11 +1,10 @@
-var module = angular
+angular
     .module('IpfsService', [])
-
-module.factory('IpfsService', ['$q', '$interval', ipfsService]);
+    .factory('IpfsService', ['$q', '$interval', ipfsService]);
 
 function ipfsService($q, $interval) {
     let daemonLoadedStatus = () => daemonLoaded;
-    let daemonLoaded = false;
+     let daemonLoaded = false;
 
     function startDaemon() {
         return $q(function(resolve, reject) {

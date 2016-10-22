@@ -1,14 +1,14 @@
-  var IpfsService;
 
-  // Before each test load our api.users module
-  beforeEach(angular.mock.module('IpfsService'));
+describe('IpfsService', function () {
+var ipfsService;
+beforeEach(angular.mock.module('ipfsService'));
 
-  // Before each test set our injected Users factory (_Users_) to our local Users variable
-  beforeEach(inject(function(_IpfsService_) {
-    IpfsService = _IpfsService_;
-  }));
+beforeEach(inject(function (_ipfsService_) {
+        ipfsService = _ipfsService_;
+    }));
 
-  // A simple test to verify the Users factory exists
-  it('should exist', function() {
-    expect(IpfsService).toBeDefined();
+  it('should be', function () {
+      expect(ipfsService).to.be.a('Object');
   });
+
+})
