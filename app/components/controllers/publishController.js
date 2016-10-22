@@ -10,9 +10,21 @@ function PublishController(PublishService, IpfsService, DiskFactory) {
   self.data = PublishService.data;
 
   self.publishToIpfs = IpfsService.publish
+  
+  self.activeButton = function (value) {
+   console.log(value)
+   for (let key in self.data) {
+     if (self.data[key].toggled && self.data[key] !== value) {
+       self.data[key].toggled = false
+     }
+   }
+    
+    value.toggled = !value.toggled;
 
+  }    
   // self.addProject = DiskFactory.addProject;
   // self.overwrite = DiskFactory.overwrite;
   // self.delete = DiskFactory.delete;
 
 }
+
