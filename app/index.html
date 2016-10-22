@@ -11,47 +11,52 @@
 	<link rel="stylesheet" href="assets/css/style.css" media="screen" title="no title">
 </head>
 
+
 <body>
 
-	<div class="row">
-	</div>
-	<div class="light-blue darken-1">
-		<h1 class="center brand-logo">Dispersion</h1>
-	</div>
 	<div id='dash-content' ng-app='myApp'>
 		<div ng-controller='MainController as mainCtrl'>
 			<daemon-load></daemon-load>
 			<div ng-show="mainCtrl.view !== 'project'" class="row">
-		    <div class="col s6">
-					<ul class="tabs">
-						<li class="tab col s3"><a ng-click="mainCtrl.view= 'files'" class="active" href="#">add view</a></li>
-						<li class="tab col s3"><a ng-click="mainCtrl.view = 'publish'; mainCtrl.publishPage()" href="#">publish view</a></li>
-					</ul>
+
+				<div class="navbar-fixed">
+					<nav>
+						<div class="nav-wrapper blue-grey darken-2">
+							<a src="./assets/images/pedal.png" class="brand-logo left"> <img src="./assets/images/pedal.png" alt="some_text" style="width:25px;height:25px;">Dispersion</a>
+							<ul id="nav-mobile" class="right">
+								<li class='active fileNav'><a ng-click="mainCtrl.view= 'files'" href="#">My Files</a></li>
+								<li class='pubNav'><a ng-click="mainCtrl.view = 'publish'; mainCtrl.publishPage()" href="#">Publish</a></li>
+							</ul>
+						</div>
+					</nav>
 				</div>
 			</div>
+
 			<div ng-controller='FilesController as fileCtrl'>
 				<div ng-show="mainCtrl.view ==='files' " class="row">
 					<div class="col s12">
-						<top-bar></top-bar>
-						<div class="input-field col s12">
-							<select ng-model="sortBy">
-							<option value="" disabled selected>Filter By...</option>
-           					<option value="time">-- time --</option>
-            				<option value="item">item</Loption>
-            				<option value="fileType">fileType</option>
-        					</select>
+						<!--<top-bar></top-bar>-->
+						<div class='row'>
+							<a class="waves-effect amber darken-1 waves-light btn right " ng-click='fileCtrl.addHash()'><label ><i class="material-icons right">cloud</i></label>Add to IPFS</a>
+							<div class="btn  amber darken-1 waves-light input-field col s2">
+								<select ng-model="sortBy">
+							    <option value="" disabled selected>Filter Files</option>
+           				<option value="time">Date</option>
+            			<option value="item">Item</option>
+            			<option value="fileType">FileType</option>
+        				</select>
+							</div>
 						</div>
 
-
 						<ul class="collection">
-							<li class="collection-item avatar" ng-repeat='file in fileCtrl.files | orderBy: sortBy track by $index '>
+							<li class="collection-item grey lighten-2 avatar" ng-repeat='file in fileCtrl.files | orderBy: sortBy track by $index '>
 								<i ng-if="file.fileType === 'folder'" class="material-icons circle">folder</i>
 								<img ng-if="file.fileType === 'image'" src="{{file.url}}" alt="" class="circle">
 								<i ng-if="file.fileType === 'doc'" class="material-icons circle">description</i>
 								<i ng-if="file.fileType === 'excel'" class="material-icons circle green">insert_chart</i>
 								<i ng-if="file.fileType === 'video'" class="material-icons circle red">play_arrow</i>
-								<span class="title">{{file.item}}</span>
-								<p>{{file.time}} <br> {{file.url}}
+								<span class="title text-darken-3">{{file.item}}</span>
+								<p class=" blue-grey-text text-darken-4">{{file.time}} <br> {{file.url}}
 								</p>
 								<div href="#!" class="secondary-content">
 									<a href='#!' ng-click='fileCtrl.addToPublish(file)'> <i class="material-icons">language</i></a>
@@ -61,10 +66,11 @@
 								</div>
 							</li>
 						</ul>
-						</ul>
 					</div>
 				</div>
 			</div>
+
+
 			<div>
 				<div ng-controller='PublishController as pubCtrl' ng-show="mainCtrl.view === 'publish' ">
 					<div class=" row ">
@@ -73,11 +79,15 @@
 						</div>
 					</div>
 				</div>
+
 				<div class="row" ng-show="mainCtrl.view==='project'" style="position: absolute; width:100%; height:100%">
 					this is testing project page yo. should probably be own directive/partial
 				</div>
 			</div>
+
 		</div>
+	</div>
+	
 </body>
 <script>
     // require other files to run in this process
@@ -100,6 +110,17 @@
 <script src="components/controllers/publishController.js "></script>
 <script>
     $(document).ready(function() {
+
+        $('.pubNav').click(function(){
+            $(this).addClass('active');
+            $('.fileNav').removeClass('active');
+        })
+
+         $('.fileNav').click(function(){
+            $(this).addClass('active');
+            $('.pubNav').removeClass('active');
+        })
+
         $('select').material_select();
     });
 </script>

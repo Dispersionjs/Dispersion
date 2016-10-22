@@ -106,6 +106,7 @@ function ipfsService($q, $interval) {
     }
 
     function publishHash(hash) {
+        hash = hash[0]['hash']
         let publishIt = 'ipfs name publish ' + hash;
         console.log(publishIt);
         exec(publishIt, function(error, stdout, stderr) {
