@@ -75,6 +75,8 @@ function fileFactory($q, $timeout, IpfsService) {
       return 'excel';
     } else if (fileName.includes('.pdf') || fileName.includes('.txt') || fileName.includes('.doc')) {
       return 'doc';
+    } else {
+      return 'other';
     }
   }
   return {
