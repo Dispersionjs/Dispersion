@@ -10,20 +10,22 @@ const request = require('request');
 const username = require('username');
 const fse = require('fs-extra');
 const path = require('path');
-//const {dialog} = require('electron').remote;
+const {dialog} = require('electron').remote;
 
 angular.module('myApp', [
   'topbarDirective',
   'publishDirective',
   'projectDirective',
   'daemonDirective',
+  'settingsDirective',
   'FileFactory',
   'PublishService',
   'MainController',
   'DiskFactory',
   'IpfsService',
   'FilesController',
-  'PublishController'])
+  'PublishController',
+  'SettingsController'])
   .config(['$sceProvider', function ($sceProvider) {
    $sceProvider.enabled(false);
  }])

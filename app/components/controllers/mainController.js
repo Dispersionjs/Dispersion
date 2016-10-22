@@ -15,9 +15,5 @@ function mainController($scope, PublishService, FileFactory, DiskFactory, IpfsSe
   });
   DiskFactory.init();
   FileFactory.init();
-  
-  IpfsService.peerID().then(function (data) {
-    self.peerID = data
-  });
 }
 

@@ -33,29 +33,25 @@
 			</div>
 
 			<div ng-controller='FilesController as fileCtrl'>
-				<div ng-show="mainCtrl.view ==='files' " class="row">
-					<div class="col s12">
-						<!--<top-bar></top-bar>-->
-						<div class='row'>
-							<a class=" col s6 waves-effect amber darken-1 waves-light btn right " ng-click='fileCtrl.addHash()'><label ><i class="material-icons right">cloud</i></label>Add to IPFS</a>
+				<div ng-show="mainCtrl.view ==='files' ">
 
-							<div class="input-field col s2">
-								<select ng-model="sortBy">
+
+					<div class='row'>
+						<div class="col s2 right">
+							<a class="waves-effect amber darken-1 waves-light btn-large right " ng-click='fileCtrl.addHash()'><label ><i class="material-icons right">cloud</i></label>Add to IPFS</a>
+						</div>
+						<div class="col s2 left ">
+							<select ng-model="sortBy">
 							    <option value="" disabled selected>Filter Files</option>
            				<option value="time">Date</option>
             			<option value="item">Item</option>
             			<option value="fileType">FileType</option>
-        				</select>
-							</div>
-
+        		</select>
 						</div>
+					</div>
 
-
-						<div class="divider"></div>
-
-
-
-						<ul class="collapsible" data-collapsible="accordion">
+					<div class="row">
+						<ul class="collapsible col s12" data-collapsible="accordion">
 							<!--LI HEADER CONTENT-->
 							<li class="collection-item grey lighten-2 avatar" ng-repeat='file in fileCtrl.files | orderBy: sortBy track by $index '>
 								<div class="collapsible-header">
@@ -75,56 +71,35 @@
 								</div>
 								<!--LI BODY CONTENT-->
 								<div class="collapsible-body">
-
-
 									<p>{{file.url}}</p>
 									<a class='btn' ng-click='fileCtrl.addToPublish(file)'>Stage to Publish <i class="material-icons">send</i></a>
 									<a class='btn' ng-click='fileCtrl.saveToDisk(file.hash,fileCtrl.username)'>Download <i class="material-icons">system_update_alt</i></a>
 									<a class='btn' ng-click='fileCtrl.deleteHash(file.hash)'> Delete<i class="material-icons">delete</i></a>
-
-
 								</div>
 							</li>
+
 						</ul>
-
-
 					</div>
+
 				</div>
 			</div>
 
 
-			<div>
-				<div ng-controller='PublishController as pubCtrl' ng-show="mainCtrl.view === 'publish' ">
-					<div class=" row ">
-						<div class="col s12 ">
-							<publish-card ng-show="mainCtrl.view==='publish'"></publish-card>
-						</div>
+
+			<div ng-controller='PublishController as pubCtrl' ng-show="mainCtrl.view === 'publish' ">
+				<div class=" row ">
+					<div class="col s12 ">
+						<publish-card ng-show="mainCtrl.view==='publish'"></publish-card>
 					</div>
 				</div>
-
 				<div class="row" ng-show="mainCtrl.view==='project'" style="position: absolute; width:100%; height:100%">
 					this is testing project page yo. should probably be own directive/partial
 				</div>
 			</div>
 
-			<!-- Settings Modal Structure -->
-			<div id="modal1" class="modal modal-fixed-footer">
-				<div class="modal-content">
-					<ul class="collection with-header">
-						<li class="collection-header">
-							<h4>IPFS Settings</h4>
-						</li>
-						<li class="collection-item">
-							<div class='settings-item'><span>IPNS LINK:</span>{{mainCtrl.peerID}}</div>
-						</li>
-						<li class="collection-item">
-							<div class='settings-item'><span>Add trusted Bootstrap peer:</span></div>
-						</li>
-					</ul>
-				</div>
-				<div class="modal-footer">
-					<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close Settings</a>
-				</div>
+			<div ng-controller='SettingsController as settingsCtrl'>
+				<!-- Settings Modal Structure -->
+				<settings></settings>
 			</div>
 		</div>
 	</div>
@@ -147,9 +122,11 @@
 <script src="components/directives/daemon-load-directive.js "></script>
 <script src="components/directives/topbarDirective.js "></script>
 <script src="components/directives/publishDirective.js "></script>
+<script src="components/directives/settings-directive.js "></script>
 <script src="components/controllers/mainController.js "></script>
 <script src="components/controllers/FilesController.js "></script>
 <script src="components/controllers/publishController.js "></script>
+<script src="components/controllers/settingsController.js "></script>
 <script>
     $(document).ready(function() {
         $('.pubNav').click(function(){
@@ -164,8 +141,8 @@
         // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
          $('.modal-trigger').leanModal();
 
-				 $('.collapsible').collapsible({ accordion : false // A setting that changes the collapsible behavior to expandable instead
-				 of the default accordion style });
+				 $('.collapsible').collapsible({ accordion : false });
+				 // A setting that changes the collapsible behavior to expandable instead of the default accordion style 
 
         $('select').material_select();
     });

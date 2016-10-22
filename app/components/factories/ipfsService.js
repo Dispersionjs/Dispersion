@@ -194,7 +194,30 @@ function ipfsService($q, $interval) {
     })
   }
 
+  function addBootstrapPeer(peerAddress) {
+    return $q(function (resolve, reject) {
+      let idCommand = `ipfs bootstrap add ${peerAddress}`;
+      exec(idCommand, function (error, stdout, stderr) {
+        if (error !== null) console.log('exec error: ' + error);
+        let success = `peer added`
+        resolve(success)
+      })
+    })
+  }
+
+  function bootstrapList() {
+    return $q(function (resolve, reject) {
+      let idCommand = `ipfs bootstrap`;
+      exec(idCommand, function (error, stdout, stderr) {
+        if (error !== null) console.log('exec error: ' + error);
+        console.log(stdout)
+        resolve(success)
+      })
+    })
+  }
+
   return {
+    addPeer: addBootstrapPeer,
     peerID: getPeerID,
     getFileData: getFileData,
     init: startDaemon,
