@@ -1,0 +1,17 @@
+{
+  "name": "project_page",
+  "description": "",
+  "main": "ProjectController.js",
+  "authors": [
+    "Weylin Wagnon <weylinwagnon@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
