@@ -2,17 +2,20 @@
 	<!--<project-add-bar></project-add-bar>-->
 	<div ng-repeat="(key, value) in pubCtrl.data">
 		<div class="col s12 m6">
-			<div class="card blue-grey darken-1">
+			<div ng-class="{'teal lighten-2' : value.toggled, 'blue-grey' : !value.toggled}" class="card">
 				<div class="card-content white-text">
 					<span class="card-title">{{key}}</span>			
-					<p>Date added:<span>{{value[0].date}}</span></p>
+					<p>Date added: <span>{{value[0].date}}</span></p>
 				</div>
 				<div class="card-action">
-					<a ng-click="mainCtrl.view= 'project'" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">mode_edit</i></a>
+					<a ng-click="mainCtrl.view= 'project'" class="btn-floating btn-large amber darken-2 waves-effect waves-light red"><i class="material-icons">mode_edit</i></a>
 					<div ng-show='{{value[0].publish}}'><i class="material-icons">done_all</i><span>currently published</span></div>
-					<a ng-click="pubCtrl.publishToIpfs(value)" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+					<a   ng-click="pubCtrl.activeButton(value); pubCtrl.publishToIpfs(value)" class="btn-floating btn-large amber darken-2 waves-effect waves-light red"><i class="material-icons">add</i></a>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+
+

@@ -21,7 +21,9 @@
 				<div class="navbar-fixed">
 					<nav>
 						<div class="nav-wrapper blue-grey darken-2">
-							<a src="./assets/images/pedal.png" class="brand-logo left"> <img src="./assets/images/pedal.png" alt="some_text" style="width:25px;height:25px;">Dispersion</a>
+							<a src="./assets/images/pedal.png" class="brand-logo left">
+								<img src="./assets/images/pedal.png" alt="some_text" style="width:25px;height:25px;">Dispersion
+							</a>
 							<ul id="nav-mobile" class="right">
 								<li class='active fileNav'><a ng-click="mainCtrl.view= 'files'" href="#">My Files</a></li>
 								<li class='pubNav'><a ng-click="mainCtrl.view = 'publish'; mainCtrl.publishPage()" href="#">Publish</a></li>
@@ -35,12 +37,12 @@
 			<div ng-controller='FilesController as fileCtrl'>
 				<div ng-show="mainCtrl.view ==='files' ">
 
-
 					<div class='row'>
-						<div class="col s2 right">
-							<a class="waves-effect amber darken-1 waves-light btn-large right " ng-click='fileCtrl.addHash()'><label ><i class="material-icons right">cloud</i></label>Add to IPFS</a>
+						<div class="col s4 right ">
+							<a class="waves-effect right amber darken-1 waves-light btn-large" ng-click='fileCtrl.addHash()'><label ><i class="material-icons right">cloud</i></label>Add to IPFS</a>
 						</div>
-						<div class="col s2 left ">
+
+						<div class="col s4 left ">
 							<select ng-model="sortBy">
 							    <option value="" disabled selected>Filter Files</option>
            				<option value="time">Date</option>
@@ -71,10 +73,17 @@
 								</div>
 								<!--LI BODY CONTENT-->
 								<div class="collapsible-body">
-									<p>{{file.url}}</p>
-									<a class='btn' ng-click='fileCtrl.addToPublish(file)'>Stage to Publish <i class="material-icons">send</i></a>
-									<a class='btn' ng-click='fileCtrl.saveToDisk(file.hash,fileCtrl.username)'>Download <i class="material-icons">system_update_alt</i></a>
-									<a class='btn' ng-click='fileCtrl.deleteHash(file.hash)'> Delete<i class="material-icons">delete</i></a>
+									<!--<p></p>-->
+									<div class="row">
+
+
+										<div class="col s10">
+											<h6>{{file.url}}</h6>
+											<a class="waves-effect amber darken-1 waves-light btn" ng-click='fileCtrl.addToPublish(file)'><label ><i class="material-icons right">send</i></label>Stage</a>
+											<a class="waves-effect amber darken-1 waves-light btn" ng-click='fileCtrl.saveToDisk(file.hash,fileCtrl.username)'><label ><i class="material-icons right">send</i></label>Download</a>
+											<a class="waves-effect amber darken-1 waves-light btn" ng-click='fileCtrl.deleteHash(file.hash)'><label ><i class="material-icons right">delete</i></label>Delete</a>
+										</div>
+									</div>
 								</div>
 							</li>
 
@@ -83,8 +92,6 @@
 
 				</div>
 			</div>
-
-
 
 			<div ng-controller='PublishController as pubCtrl' ng-show="mainCtrl.view === 'publish' ">
 				<div class=" row ">
