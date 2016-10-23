@@ -13,13 +13,19 @@
 			<li class="collection-item">
 				<div class='settings-item'>
 					<h5>Trusted Bootstrap Peers:</h5>
-					{{settingsCtrl.peerID}}
+					<ul class="collapsible" data-collapsible="accordion">
+						<li>
+							<div class="collapsible-header"><i class="material-icons">supervisor_account</i>Peers</div>
+							<div class="collapsible-body">
+								<p ng-repeat='peer in settingsCtrl.bootStrapList'>{{peer}}</p>
+							</div>
+						</li>
+					</ul>
 				</div>
 			</li>
 			<li class="collection-item">
 				<div class='settings-item'>
 					<h5>Add trusted Bootstrap peer:</h5>
-					<div class="row">
 						<form class="col s12">
 							<div class="row">
 								<div class="input-field col s6">
@@ -29,7 +35,6 @@
 								</div>
 							</div>
 						</form>
-					</div>
 				</div>
 			</li>
 		</ul>

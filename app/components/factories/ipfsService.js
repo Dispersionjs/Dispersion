@@ -188,8 +188,10 @@ function ipfsService($q, $interval) {
       exec(idCommand, function (error, stdout, stderr) {
         if (error !== null) console.log('exec error: ' + error);
         let peerID = JSON.parse(stdout)['Identity']['PeerID'];
-        let ipnsLink = `https://gateway.ipfs.io/ipns/${peerID}`
-        resolve(ipnsLink)
+        let bootstrap = JSON.parse(stdout)['Bootstrap'];
+        let ipnsLink = `https://gateway.ipfs.io/ipns/${peerID}`;
+        let peerArray = [ipnsLink,bootstrap]
+        resolve(peerArray)
       })
     })
   }
@@ -200,17 +202,6 @@ function ipfsService($q, $interval) {
       exec(idCommand, function (error, stdout, stderr) {
         if (error !== null) console.log('exec error: ' + error);
         let success = `peer added`
-        resolve(success)
-      })
-    })
-  }
-
-  function bootstrapList() {
-    return $q(function (resolve, reject) {
-      let idCommand = `ipfs bootstrap`;
-      exec(idCommand, function (error, stdout, stderr) {
-        if (error !== null) console.log('exec error: ' + error);
-        console.log(stdout)
         resolve(success)
       })
     })
