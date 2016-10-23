@@ -22,6 +22,7 @@ function FilesController(FileFactory, PublishService, DiskFactory, IpfsService) 
   self.addHash = FileFactory.addHash;
 
   self.deleteHash = function (hash) {
+    console.log('titties')
     IpfsService.unPin(hash).then(() => {
       FileFactory.init();
     });
@@ -39,4 +40,5 @@ function FilesController(FileFactory, PublishService, DiskFactory, IpfsService) 
       }]
     });
   }
+  
 }
