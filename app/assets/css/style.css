@@ -128,3 +128,8 @@ blockquote{
     stroke-dashoffset: 2000;
   }
 }
+
+.settings-item span {
+  font-size: 21px;
+  font-weight: thin;
+}

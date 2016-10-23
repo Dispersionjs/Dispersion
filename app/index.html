@@ -11,7 +11,6 @@
 	<link rel="stylesheet" href="assets/css/style.css" media="screen" title="no title">
 </head>
 
-
 <body>
 
 	<div id='dash-content' ng-app='myApp'>
@@ -28,6 +27,7 @@
 							<ul id="nav-mobile" class="right">
 								<li class='active fileNav'><a ng-click="mainCtrl.view= 'files'" href="#">My Files</a></li>
 								<li class='pubNav'><a ng-click="mainCtrl.view = 'publish'; mainCtrl.publishPage()" href="#">Publish</a></li>
+								<li class='pubNav'><a class="modal-trigger" href="#modal1"><i class="large material-icons">settings</i></a></li>
 							</ul>
 						</div>
 					</nav>
@@ -104,6 +104,10 @@
 				</div>
 			</div>
 
+			<div ng-controller='SettingsController as settingsCtrl'>
+				<!-- Settings Modal Structure -->
+				<settings></settings>
+			</div>
 		</div>
 	</div>
 </body>
@@ -125,9 +129,11 @@
 <script src="components/directives/daemon-load-directive.js "></script>
 <script src="components/directives/topbarDirective.js "></script>
 <script src="components/directives/publishDirective.js "></script>
+<script src="components/directives/settings-directive.js "></script>
 <script src="components/controllers/mainController.js "></script>
 <script src="components/controllers/FilesController.js "></script>
 <script src="components/controllers/publishController.js "></script>
+<script src="components/controllers/settingsController.js "></script>
 <script>
     $(document).ready(function() {
         $('.pubNav').click(function(){
@@ -139,12 +145,11 @@
             $(this).addClass('active');
             $('.pubNav').removeClass('active');
         })
+        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+         $('.modal-trigger').leanModal();
 
-
-    $('.collapsible').collapsible({
-      accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
-    });
-
+				 $('.collapsible').collapsible({ accordion : false });
+				 // A setting that changes the collapsible behavior to expandable instead of the default accordion style 
 
         $('select').material_select();
     });
