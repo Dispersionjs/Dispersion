@@ -19,11 +19,18 @@ function ipfsService($q, $interval) {
       });
       daemonCommand.stderr.on('data', function (data) {
         let dataString = data.toString();
-        let result = /daemon is running/.test(dataString);
-        if (result) {
+        console.log(dataString)
+        let daemonRunning = /daemon is running/.test(dataString);
+        if (daemonRunning) {
           console.log('Warning: Daemon already is running in a seperate process! Closing this application will not kill your IPFS Daemon.')
+        resolve(daemonRunning);
         }
-        resolve(result);
+        let permissionDenied = /cannot acquire lock/.test(dataString);
+        if (permissionDenied) {
+          alert('Warning: File permission denied. Please install latest version of Go or use "sudo ipfs daemon"')
+          resolve(permissionDenied);
+        }
+
       })
     })
   }
