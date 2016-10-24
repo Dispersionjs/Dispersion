@@ -19,18 +19,11 @@ function ipfsService($q, $interval) {
       });
       daemonCommand.stderr.on('data', function (data) {
         let dataString = data.toString();
-        console.log(dataString)
-        let daemonRunning = /daemon is running/.test(dataString);
-        if (daemonRunning) {
+        let result = /daemon is running/.test(dataString);
+        if (result) {
           console.log('Warning: Daemon already is running in a seperate process! Closing this application will not kill your IPFS Daemon.')
-        resolve(daemonRunning);
         }
-        let permissionDenied = /cannot acquire lock/.test(dataString);
-        if (permissionDenied) {
-          alert('Warning: File permission denied. Please install latest version of Go or use "sudo ipfs daemon"')
-          resolve(permissionDenied);
-        }
-
+        resolve(result);
       })
     })
   }
@@ -49,8 +42,12 @@ function ipfsService($q, $interval) {
       let name = fileLocationArray[fileLocationArray.length - 1];
       //separate hashes from folder into an array
       let hashArray = stdout.trim().split('\n');
+      console.log(hashArray);
       let topHash = hashArray[hashArray.length - 1].split(' ');
       let file = topHash.slice(2).join(' ');
+
+
+
       let hashObj = {
         "file": file,
         "time": new Date().toUTCString(),
