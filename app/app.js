@@ -15,7 +15,6 @@ const {dialog} = require('electron').remote;
 angular.module('myApp', [
   'topbarDirective',
   'publishDirective',
-  'projectDirective',
   'daemonDirective',
   'settingsDirective',
   'FileFactory',
@@ -25,8 +24,15 @@ angular.module('myApp', [
   'IpfsService',
   'FilesController',
   'PublishController',
-  'SettingsController'])
+  'SettingsController',
+  'ui.ace',
+  'ProjectService',
+  'ProjectController',
+  'FileHistoryDirective',
+  'FileHistoryController',
+  'FileHistoryFactory'
+])
   .config(['$sceProvider', function ($sceProvider) {
-   $sceProvider.enabled(false);
- }])
+    $sceProvider.enabled(false);
+  }])
 

@@ -1,0 +1,28 @@
+{
+  "name": "dispersion",
+  "description": "Electron based interface for ipfs",
+  "main": "main.js",
+  "authors": [
+    "Dispersion"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "electron",
+    "ipfs"
+  ],
+  "homepage": "https://github.com/waggertron/Dispersion",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.8",
+    "jquery": "^3.1.1",
+    "angular-ui-ace": "^0.2.3",
+    "materialize": "^0.97.7",
+    "hammerjs": "^2.0.8"
+  }
+}
