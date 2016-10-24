@@ -133,3 +133,74 @@ blockquote{
   font-size: 21px;
   font-weight: thin;
 }
+
+
+
+.projectView  .ace_editor { min-height: 200px; }
+.projectView  ul li {
+  display: inline;
+}
+  /*iframe {
+    display:block;
+    width:100%;
+    height: 100%;
+}*/
+/*#outer{
+max-width: 320px;
+max-height: 180px;
+width: 100%;
+height: 100%;
+}*/
+.projectView  #outer{
+width: 320px;
+height: 180px;
+
+}
+
+/*#inner{
+    height: 0px;
+    padding-bottom: 56.25%;
+}*/
+
+.projectView  img{
+max-width:100%;
+max-height:100%;
+}
+.projectView  button {
+  border-radius: 8px;
+  background-color: white;
+}
+.projectView  button.selected {
+  background-color: lightblue;
+}
+.projectView  .changedFile {
+  
+}
+.projectView .changedFile::after {
+  content: '*changed';
+}
+
+.projectView .mediaContentWrapper {
+  max-height: 900px;
+  max-width: 600px;
+}
+.projectView  .fileVersion {
+  margin: 0;
+  font-size: .4em;
+  text-decoration: none;
+  background-color: #ddd;
+
+}
+
+.projectView  .fileVersionListItem {
+  margin: 0;
+  padding: 0;
+}
+.projectView .fileVersionList {
+  padding: 0;
+}
+.projectView  .editor {
+  width: 60%;
+  min-height: 400px;
+  max-height: 800px; 
+}

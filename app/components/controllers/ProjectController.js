@@ -16,6 +16,7 @@ function projectController($http, ProjectService, $scope) {
   self.showEditor = false;
   self.showMedia = false;
   self.showFiles = false;
+  self.lastProjectIndex = null;
   self.toggleShowFiles = (index) => {
     self.showFiles = self.lastVersionIndex === undefined || index !== self.lastVersionIndex ? true : !self.showFiles;
     self.lastVersionIndex = index;

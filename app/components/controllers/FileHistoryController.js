@@ -219,6 +219,7 @@ function fileHistoryController(ProjectService, $scope, $http, FileHistoryFactory
             $scope.fileHistoryVersions[index].data = res.data;
             $scope.previousEditorContent = $scope.editorContent;
             $scope.editorContent = res.data;
+            // $scope.aceEditor.setValue(res.data);
             $scope.showEditor = true;
           });
         }
