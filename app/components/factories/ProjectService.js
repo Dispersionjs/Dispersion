@@ -98,52 +98,52 @@ angular.module('ProjectService', [])
 
 function projectService($http, $q) {
   /**returns length -1  of currently selected project data array */
-  this.projectArrayLength = () => this.projectArray.length - 1;
-  this.publishedArrayLength = () => this.publishedProjectVersions().length - 1;
+  const self = this;
+  self.projectArrayLength = () => {
+    if (self.projectArray.length) {
+      return self.projectArray.length - 1;
+    } 
+  }
+  self.publishedArrayLength = () => self.publishedProjectVersions().length - 1;
   /** returns all published event objects from the projectArray history */
-  this.publishedProjectVersions = () => {
-    return this.projectArray.filter((version) => {
+  self.publishedProjectVersions = () => {
+    return self.projectArray.filter((version) => {
       return version.publish
     });
   }
 
   /** returns the url of the currently selected project version */
-  this.currentUrl = (file) => {
+  self.currentUrl = (file) => {
     if (!file) {
-      return this.selectedVersion.url;
+      return self.selectedVersion.url;
     } else {
-      return this.selectedVersion.url
+      return self.selectedVersion.url
     }
   }
 
 
-  //should refactor this one \/  
+  //should refactor self one \/  
   /** returns a string that was the last changed file of the publish event */
-  this.currentFile = () => this.selectedVersion.changed;
+  self.currentFile = () => self.selectedVersion.changed;
 
-  this.currentFileType = () => this.currentFile();
+  self.currentFileType = () => self.currentFile();
 
-  this.changeSelectedVersion = (index) => {
+  self.changeSelectedVersion = (index) => {
     //will need to change to account for unpublished projects
-    this.selectedVersion = this.publishedProjectVersions()[this.publishedArrayLength() - index];
-    // console.log('this.selctedversion: ', this.selectedVersion);
-    // this.currentUrl = this.selectedVersion.url;
-    // console.log('this.currenturl: ', this.currentUrl());
-    // this.currentFile = this.selectedVersion.changed;
-    // console.log('this.currentFile: ', this.currentFile());
+    //
+    self.selectedVersion = self.publishedProjectVersions()[self.publishedArrayLength() - index];
+    // self.selectedVersion = self.publishedProjectVersions.length === 1 ? self.publishedProjectVersions()[self.publishedArrayLength() - index] : null;
+
   }
 
-  this.getContentUrl = () => {
-    return this.currentUrl() + this.currentFile();
+  self.getContentUrl = () => {
+    return self.currentUrl() + self.currentFile();
   }
-  this.selectedVersionFilesList = () => this.selectedVersion.files;
-  this.data = testData;
-  this.publishedProject = 'Dispersion';
-  this.currentProject = () => this.publishedProject;
-  this.projectArray = this.data[this.publishedProject];
-  this.newestVersion = this.projectArray[this.projectArrayLength()];
-  this.selectedVersion = this.newestVersion;
-
-  // this.editorContent = this.currentProjectVersion;
-
+  self.selectedVersionFilesList = () => self.selectedVersion.files;
+  self.data = testData;
+  self.publishedProject = 'Dispersion';
+  self.currentProject = () => self.publishedProject;
+  self.projectArray = self.data[self.publishedProject];
+  self.newestVersion = self.projectArray[self.projectArrayLength()];
+  self.selectedVersion = self.newestVersion;
 }
