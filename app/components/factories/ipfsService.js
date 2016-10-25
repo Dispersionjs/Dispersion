@@ -30,48 +30,55 @@ function ipfsService($q, $interval) {
 
   //Hashes file, puts it in storage, and requests it to distribute 
   function submitFile(filepath) {
-    //file or directory to be hashed.
-    let hashFile = filepath
-    if (hashFile.includes('/')) hashFile = `"${hashFile}"`;
-    // recursively hashes directory or file and adds to ipfs
-    let command = `ipfs add -r ${hashFile}`;
+    return $q((resolve, reject) => {
+      //file or directory to be hashed.
+      let hashFile = filepath
+      if (hashFile.includes('/')) hashFile = `"${hashFile}"`;
+      // recursively hashes directory or file and adds to ipfs
+      let command = `ipfs add -r ${hashFile}`;
 
-    exec(command, function (error, stdout, stderr) {
-      //grabs just the filename from the absolute path of the added file
-      let fileLocationArray = hashFile.split('/');
-      let name = fileLocationArray[fileLocationArray.length - 1];
-      //separate hashes from folder into an array
-      let hashArray = stdout.trim().split('\n');
-      console.log(hashArray);
-      let topHash = hashArray[hashArray.length - 1].split(' ');
-      let file = topHash.slice(2).join(' ');
+      exec(command, function (error, stdout, stderr) {
+        //grabs just the filename from the absolute path of the added file
+        let fileLocationArray = hashFile.split('/');
+        let name = fileLocationArray[fileLocationArray.length - 1];
+        //separate hashes from folder into an array
+        let hashArray = stdout.trim().split('\n');
+        console.log(hashArray);
+        let topHash = hashArray[hashArray.length - 1].split(' ');
+        let file = topHash.slice(2).join(' ');
 
 
 
-      let hashObj = {
-        "file": file,
-        "time": new Date().toUTCString(),
-        "url": "https://ipfs.io/ipfs/" + topHash[1],
-        'files': []
-      }
-      //iterates over the individual hashes, makes requests to them, and stores top level hash in local storage
-      hashArray.forEach(function (hString, index) {
-        let tempArray = hString.split(' ');
-        var requestObj = {
-          [tempArray[1]]: {
-            "url": "https://ipfs.io/ipfs/" + tempArray[1]
+        let hashObj = {
+          "file": file,
+          "time": new Date().toUTCString(),
+          "url": "https://ipfs.io/ipfs/" + topHash[1],
+          'files': []
+        }
+        //iterates over the individual hashes, makes requests to them, and stores top level hash in local storage
+        hashArray.forEach(function (hString, index) {
+          let tempArray = hString.split(' ');
+          var requestObj = {
+            [tempArray[1]]: {
+              "url": "https://ipfs.io/ipfs/" + tempArray[1]
+            }
           }
-        }
-        //grabs the inner file paths and pushes into file array
-        if (index < hashArray.length - 1) {
-          hashObj.files.push(`/${tempArray[2].split('/').slice(1).join('/')}`)
-        }
-        //store top hash in local storage
-        storage.set(topHash[1], hashObj, function (error) {
-          if (error) throw error;
-        });
-        //Call function to request all hashes (5 times) in Merkel DAG
-        requestHashes(requestObj)
+          //grabs the inner file paths and pushes into file array
+          if (index < hashArray.length - 1) {
+            hashObj.files.push(`/${tempArray[2].split('/').slice(1).join('/')}`)
+          }
+          //store top hash in local storage
+          requestHashes(requestObj)
+          resolve([topHash[1], hashObj])
+          //attempting to refactor, restore this portion if it breaks everything
+          // storage.set(topHash[1], hashObj, function (error) {
+          //   if (error) throw error;
+          // });
+
+
+          //Call function to request all hashes (5 times) in Merkel DAG
+          // requestHashes(requestObj)
+        })
       })
     })
   }
@@ -194,7 +201,7 @@ function ipfsService($q, $interval) {
         let peerID = JSON.parse(stdout)['Identity']['PeerID'];
         let bootstrap = JSON.parse(stdout)['Bootstrap'];
         let ipnsLink = `https://gateway.ipfs.io/ipns/${peerID}`;
-        let peerArray = [ipnsLink,bootstrap]
+        let peerArray = [ipnsLink, bootstrap]
         resolve(peerArray)
       })
     })

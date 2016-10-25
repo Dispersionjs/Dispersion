@@ -56,7 +56,7 @@
 					<div class="row">
 						<ul class="collapsible col s12" data-collapsible="accordion">
 							<!--LI HEADER CONTENT-->
-							<li class="collection-item grey lighten-2 avatar" ng-repeat='file in fileCtrl.files | orderBy: sortBy track by $index '>
+							<li class="collection-item grey lighten-2 avatar" ng-repeat='(hash,file) in fileCtrl.files | orderBy: sortBy track by $index '>
 								<div class="collapsible-header">
 									<!--Set Icon-->
 									<i ng-if="file.fileType === 'folder'" class="material-icons circle">folder</i>
@@ -66,7 +66,7 @@
 									<i ng-if="file.fileType === 'excel'" class="material-icons circle green">insert_chart</i>
 									<i ng-if="file.fileType === 'video'" class="material-icons circle red">play_arrow</i>
 									<!--Header Li TEXT-->
-									<span class="title text-darken-3">{{file.item}}</span>
+									<span class="title text-darken-3">{{file.file}}</span>
 									<span class="right">
 										<span class="left">{{file.time}}</span>
 									<!--<i class="material-icons">info_outline</i>-->

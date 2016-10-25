@@ -40,5 +40,4 @@ function FilesController(FileFactory, PublishService, DiskFactory, IpfsService) 
       }]
     });
   }
-  
 }
