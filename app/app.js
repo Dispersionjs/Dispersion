@@ -35,4 +35,12 @@ angular.module('myApp', [
   .config(['$sceProvider', function ($sceProvider) {
     $sceProvider.enabled(false);
   }])
+  .controller('ViewController', [viewController])
+function viewController() {
+  const self = this;
+  self.view = 'loading';
+  self.changeView = function (view) {
+    self.view = view;
+  }
+}
 

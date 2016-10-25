@@ -1,22 +1,14 @@
 var module = angular
   .module('FileFactory', [])
 
-module.service('FileFactory', ['$q', '$timeout', 'IpfsService', fileFactory]);
+module.service('FileFactory', ['$q', 'IpfsService', fileFactory]);
 
-function fileFactory($q, $timeout, IpfsService) {
+function fileFactory($q, IpfsService) {
   let fileData = [];
 
-  function addToFileData(hash, hashObj) {
-    let file, date, url, files, data;
-    hash = Object.keys(hashObj)[0];
-    data = hashObj;
-    file = data.file;
-    date = data.date;
-    url = data.url;
-    files = data.files;
-    console.log(hash, file, date, url, files);
-    const newNonNestedHashObj = { hash, file, date, url, files };
-    fileData.push(newNonNestedHashObj);
+  function addToFileData(hashObj) {
+
+    fileData.push(hashObj);
     storage.set('files', fileData, (error) => {
       if (error) {
         console.log('error in addFile to data in file Factory, the error is: \n');
@@ -25,16 +17,16 @@ function fileFactory($q, $timeout, IpfsService) {
     })
   }
   function addHash() {
-    //convert to singular file add, if necessary
     dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] }, function (selected) {
-      IpfsService.addFile(selected[0]).then((hashPair) => {
-        let [folderHash, hashObjData] = hashPair;
-        addToFileData(folderHash, hashObjData);
-      });
+      if (selected) {
+        IpfsService.addFile(selected[0]).then((addedHashObject) => {
+          addToFileData(addedHashObject);
+        });
+      }
     });
   }
 
-  function loadFilesFromStorage() {
+  function init() {
     return $q((resolve, reject) => {
       storage.get('files', (error, data) => {
         console.log('files key in local storage', data)
@@ -42,61 +34,13 @@ function fileFactory($q, $timeout, IpfsService) {
           console.error(error)
           reject()
         } else {
-          for (let hash of Object.keys(data)) {
-            console.log(hash)
-            fileData.push({ [hash]: data[hash] })
-          }
+          Object.assign(fileData, data);
+          console.log('files loaded from storage: \n', data)
           resolve(fileData);
         }
       })
     })
-    // console.log('inside files from storage')
-    // storage.keys(function (error, keys) {
-    //   if (error) throw error;
-    //   var promiseArr = [];
-    //   var fileArray = [];
-
-    //   //make promise array
-    //   keys.forEach((key, index, array) => {
-    //     promiseArr.push(
-    //       $q((resolve, reject) => {
-    //         storage.get(key, (error, data) => {
-    //           if (/Qm/.test(key)) {
-    //             fileArray.push({
-    //               [key]: data
-    //             })
-    //           }
-    //           resolve();
-    //         })
-    //       }))
-    //   })
-
-    //   $q.all(promiseArr).then(() => {
-    //     console.log("All data from LOCAL STORAGE", fileArray)
-    //     fileData.length = 0;
-    //     fileData.push.apply(fileData, fileget(fileArray))
-    //   })
-    // })
   }
-
-  function fileget(fileArray) {
-    let arr = [];
-    let type;
-    fileArray.forEach(function (item, index) {
-      //finds file type
-      type = testFileType(item);
-      arr.push({
-        item: item[Object.keys(item)].file,
-        time: item[Object.keys(item)].time,
-        url: item[Object.keys(item)].url,
-        fileType: type,
-        hash: Object.keys(item)[0],
-        files: item[Object.keys(item)].files,
-      })
-    })
-    return arr;
-  };
-
   function testFileType(item) {
     //commented out all other lines to deal with error on empty file storage
     return 'other'
@@ -122,6 +66,6 @@ function fileFactory($q, $timeout, IpfsService) {
     data: fileData,
     add: addToFileData,
     getFileData: getFileData,
-    init: loadFilesFromStorage
+    init: init
   }
 }

@@ -6,28 +6,37 @@ module.factory('PublishService', ['$q', pubService]);
 
 function pubService($q) {
   let publishData = {};
+  // function init() {
+  //   return loadPublished()
+  // }
   function init() {
-    return loadPublished()
-  }
-  function loadPublished() {
-    return $q(function (resolve, reject) {
-      storage.get('published', function (error, data) {
-        if (error) throw error;
+    return $q((resolve, reject) => {
+      storage.get('publish', (error, data) => {
+        if (error) reject(error);
         publishData = Object.assign(publishData, data);
         // console.log('publishData in publish service:', publishData)
         resolve(data)
       });
     })
   }
+  let currentlyPublished = '';
+  function getCurrentlyPublished() {
+    return currentlyPublished;
+  }
   function updateStore() {
     // uncomment later, just for a check
-    storage.set('published', publishData)
+    storage.set('publish', publishData)
+    storage.get('currentlyPublished', (error, data) => {
+      currentlyPublished = data;
+    })
   }
   function addToPublish(pubObj) {
     console.log('add to publish called in publish service');
     console.log('pubObj in add to publish: \n', pubObj);
     for (let key in pubObj) {
       if (!publishData[key]) {
+        console.log('key, publishData');
+        console.log(key, publishData)
         publishData[key] = pubObj[key];
       } else {
         console.log('this project has already been published')
@@ -41,16 +50,8 @@ function pubService($q) {
     data: publishData,
     add: addToPublish,
     init: init,
-    loadPublished: loadPublished
+    currentlyPublished: getCurrentlyPublished
   }
 }
 
-// somectrl
-
-// PublishService.load()
-// somectrl.data = PublishService.data;
-// PublishService.add(pubObj)
-// PublishService.init().then((storedData) => {
-
-// })
 

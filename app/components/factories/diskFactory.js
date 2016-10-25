@@ -7,10 +7,16 @@ function diskFactory($q, PublishService) {
   //Add "projectFolder" to local app folder
   //Return promise
   function initProjectFolder() {
-    fse.mkdirsSync(path.resolve(__dirname + `/../projectFolder`), (err) => {
-      if (err) return console.error(err);
-      console.log('projectFolder made in Dispersion directory');
-    });
+    $q((resolve, reject) => {
+      fse.ensureDir(path.resolve(__dirname + `/../projectFolder`), (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          console.log('projectFolder made in Dispersion directory: ', path.resolve(__dirname + `/../projectFolder`));
+          resolve()
+        }
+      });
+    })
   }
 
   function copyProjectToAppStorage(copyFromPath) {
@@ -46,7 +52,7 @@ function diskFactory($q, PublishService) {
     let ipfsAddProject = path.resolve(__dirname + `/../projectFolder/` + projectName)
     let command = `ipfs add -r ${ipfsAddProject}`;
 
-  
+
 
     exec(command, function (error, stdout, stderr) {
       console.log(stdout)
@@ -76,18 +82,18 @@ function diskFactory($q, PublishService) {
             }
           ]
         });
-      
+
       for (let i = 0; i < 5; i++) {
-      request(requrl, (err, response, body) => {
-        if (err) {
-          console.log('error making distribute request to IPFS');
-          console.error(err);
-        } else {
-          console.log(requrl)
-          console.log(response.statusCode)
-        }
-      })
-      }  
+        request(requrl, (err, response, body) => {
+          if (err) {
+            console.log('error making distribute request to IPFS');
+            console.error(err);
+          } else {
+            console.log(requrl)
+            console.log(response.statusCode)
+          }
+        })
+      }
     })
   }
 
