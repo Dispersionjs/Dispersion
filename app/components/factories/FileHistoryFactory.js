@@ -5,9 +5,9 @@
 
 
 angular.module('FileHistoryFactory', [])
-  .factory('FileHistoryFactory', ['ProjectService', '$q', fileHistoryFactory])
+  .factory('FileHistoryFactory', ['ProjectService', '$q', 'IpfsService', fileHistoryFactory])
 
-function fileHistoryFactory(ProjectService, $q) {
+function fileHistoryFactory(ProjectService, $q, IpfsService) {
   let historyData = {}
   function init() {
     return $q((resolve, reject) => {
@@ -46,23 +46,7 @@ function fileHistoryFactory(ProjectService, $q) {
 
 
 
-  let selectedProject = 'Dispersion'
-  function changeProject() {
-    if (selectedProject === 'Dispersion') {
-      selectedProject = "yang"
-    }
-    if (selectedProject === 'yang') {
-      selectedProject = "Dispersion"
-    }
-  }
-  function fileVersionArray(file) {
-    return historyData[selectedProject].filter((version) => {
-      if (file) {
-        if (file[0] !== '/') file = '/' + file;
-        return version.file === file;
-      }
-    });
-  }
+
   function addFileVersion() {
     //on add, call storage.set
     let obj = {

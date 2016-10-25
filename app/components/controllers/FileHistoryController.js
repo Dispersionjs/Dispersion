@@ -165,10 +165,8 @@ function fileHistoryController(ProjectService, $scope, $http, FileHistoryFactory
       date: new Date(),
       data: $scope.editorContent,
       hash: '',
-      publish: false,
-      changed: $scope.filename,
-      url: '',
-      files: $scope.projectobj.files
+      file: $scope.filename,
+      url: ''
     }
   }
   //make new history, need to add to file history factroy data store 
