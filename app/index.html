@@ -132,6 +132,8 @@
 							<ul>
 								<li ng-repeat="file in projCtrl.filesList() track by $index ">
 									<div>
+										{{file}}
+
 										<file-history data-filename="{{file}} " data-index="{{$index}} " data-projectname="{{projCtrl.currentProject()}} " data-projectobject={{projCtrl.selectedVersion}}
 											data-mode="{{projCtrl.getMode(file)}} " data-image="{{projCtrl.isImage(file)}} "></file-history>
 									</div>

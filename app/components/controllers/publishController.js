@@ -8,11 +8,11 @@ function PublishController(PublishService, IpfsService, DiskFactory) {
   // PublishService.init().then(console.log('init called in publish controller'))
   const self = this;
   self.data = PublishService.data;
-  self.publishedProjectCard = '';
-  self.updatePublishedStatus = function () {
-    self.publishedProjectCard = PublishService.currentlyPublished();
-  }
+
+  self.currentlyPublished = PublishService.currentlyPublished;
+
   self.publishToIpfs = function (value, name) {
+    PublishService.setPublished(name);
     // self.publishedProjectCard = name;
     IpfsService.publish(value, name)
   }

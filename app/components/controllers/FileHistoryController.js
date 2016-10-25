@@ -129,12 +129,23 @@ function fileHistoryController(ProjectService, $scope, $http, FileHistoryFactory
     'yaml',
   ];
   $scope.projectobj = JSON.parse($scope.projectobject);
-  $scope.versions = () => FileHistoryFactory.fileHistory($scope.filename);
-  $scope.fileHistoryVersions = $scope.versions().sort((a, b) => {
-    return (new Date(b.date) - new Date(a.date));
-  });
-  console.log($scope.fileHistoryVersions)
-  $scope.logShit = () => console.log($scope.fileHistoryVersions);
+
+  $scope.versions = function () {
+    return FileHistoryFactory.fileHistory[$scope.projectname].filter((version) => {
+      let file = $scope.filename
+      if (file) {
+        if (file[0] !== '/') file = '/' + file;
+        return version.file === file;
+      }
+    });
+  }
+  // return FileHistoryFactory.fileHistory($scope.filename);
+
+  // $scope.$scope.versions() = $scope.versions().sort((a, b) => {
+  //   return (new Date(b.date) - new Date(a.date));
+  // });
+  $scope.logShit = () => console.log($scope.versions());
+  $scope.testAdd = FileHistoryFactory.add
 
   // $scope.fileHistory = 
 
@@ -146,6 +157,9 @@ function fileHistoryController(ProjectService, $scope, $http, FileHistoryFactory
     console.log('clicked toggle show info')
     $scope.showInfo = !$scope.showInfo;
   }
+
+
+  //instead now make new file history obj
   $scope.makeNewHistoryObj = () => {
     return {
       date: new Date(),
@@ -157,6 +171,7 @@ function fileHistoryController(ProjectService, $scope, $http, FileHistoryFactory
       files: $scope.projectobj.files
     }
   }
+  //make new history, need to add to file history factroy data store 
   $scope.saveFile = function () {
     console.log('$scope.editorcontent in saveFile', $scope.editorContent);
     let newHistoryObj = $scope.makeNewHistoryObj();
@@ -164,12 +179,13 @@ function fileHistoryController(ProjectService, $scope, $http, FileHistoryFactory
     FileHistoryFactory.add(newHistoryObj);
     $scope.fileHistoryVersions.unshift(newHistoryObj);
     // console.log('after push, file history versions \n\n\n\n', $scope.fileHistoryVersions);
-
   }
   $scope.recordIndex = function (index) {
     console.log(index)
     $scope.openVersionIndex = index;
   }
+
+  // delete item from file factroy array
   $scope.delete = function () {
     //update to change in extended full app data store model
     console.log('filehistoryversions:', $scope.fileHistoryVersions)
@@ -201,6 +217,8 @@ function fileHistoryController(ProjectService, $scope, $http, FileHistoryFactory
   $scope.aceChanged = function (e) {
 
   };
+
+  //change to use just url on file obj
   $scope.updateEditorContent = function (index = 0, file) {
     // console.log($scope.aceEditor);
     if (!$scope.image) {
@@ -214,7 +232,7 @@ function fileHistoryController(ProjectService, $scope, $http, FileHistoryFactory
         $scope.showEditor = true;
       } else {
         if (version && version.url) {
-          $http.get(version.url + $scope.filename).then((res) => {
+          $http.get(version.url).then((res) => {
             // console.log('http called for ', version.url + $scope.filename)
             $scope.fileHistoryVersions[index].data = res.data;
             $scope.previousEditorContent = $scope.editorContent;
@@ -227,11 +245,36 @@ function fileHistoryController(ProjectService, $scope, $http, FileHistoryFactory
       }
     }
   }
+  // $scope.updateEditorContent = function (index = 0, file) {
+  //   // console.log($scope.aceEditor);
+  //   if (!$scope.image) {
+  //     let version = file ? file : $scope.fileHistoryVersions[index];
+
+  //     // console.log(version);
+
+  //     if (version && version.data) {
+  //       // $scope.editorContent = version.data;
+  //       $scope.aceEditor.setValue(version.data)
+  //       $scope.showEditor = true;
+  //     } else {
+  //       if (version && version.url) {
+  //         $http.get(version.url + $scope.filename).then((res) => {
+  //           // console.log('http called for ', version.url + $scope.filename)
+  //           $scope.fileHistoryVersions[index].data = res.data;
+  //           $scope.previousEditorContent = $scope.editorContent;
+  //           $scope.editorContent = res.data;
+  //           // $scope.aceEditor.setValue(res.data);
+  //           $scope.showEditor = true;
+  //         });
+  //       }
+  //       // $scope.showEditor = false;
+  //     }
+  //   }
+  // }
   $scope.clearEditor = function () {
     console.log('clear clicked', $scope.editorContent)
     $scope.previousEditorContent = $scope.editorContent;
     $scope.aceEditor.setValue('');
-
   }
   $scope.undo = function () {
     console.log('undo clicked');
@@ -245,6 +288,8 @@ function fileHistoryController(ProjectService, $scope, $http, FileHistoryFactory
     $scope.mediaContentUrl = url;
     $scope.showMedia = true;
   }
+
+  // 
   $scope.getContentUrl = ProjectService.getContentUrl; //function 
   // $http.get(self.getContentUrl(file)).then((res) => {
   //   $scope.editorContent = res.data;

@@ -15,13 +15,20 @@ function pubService($q) {
         if (error) reject(error);
         publishData = Object.assign(publishData, data);
         // console.log('publishData in publish service:', publishData)
-        resolve(data)
+        storage.get('currentlyPublished', (err, name) => {
+          currentlyPublished = name;
+          console.log(currentlyPublished);
+          resolve(data)
+        })
       });
     })
   }
-  let currentlyPublished = '';
+  let currentlyPublished;
   function getCurrentlyPublished() {
     return currentlyPublished;
+  }
+  function setCurrentlyPublished(name) {
+    currentlyPublished = name;
   }
   function updateStore() {
     // uncomment later, just for a check
@@ -50,7 +57,8 @@ function pubService($q) {
     data: publishData,
     add: addToPublish,
     init: init,
-    currentlyPublished: getCurrentlyPublished
+    currentlyPublished: getCurrentlyPublished,
+    setPublished: setCurrentlyPublished
   }
 }
 

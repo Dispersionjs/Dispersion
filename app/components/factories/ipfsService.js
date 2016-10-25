@@ -115,6 +115,7 @@ function ipfsService($q, $interval) {
     console.log(projectName)
     console.log(publishObj)
     publishObj[0]['publish'] = true;
+    console.log('publish obj 0', publishObj)
     storage.set('currentlyPublished', projectName);
     console.log('after changing publish key', publishObj)
     hash = publishObj[0]['hash']

@@ -6,8 +6,7 @@ angular.module('projectDirective', [])
       transclude: true,
       controller: 'PublishController',
       controllerAs: 'pubCtrl',
-      scope: {
-     ,
+      scope: false,
       templateUrl: 'components/partials/project-add-bar.html',
       replace: true
     };
