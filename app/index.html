@@ -56,7 +56,8 @@
 					<div class="row">
 						<ul class="collapsible col s12" data-collapsible="accordion">
 							<!--LI HEADER CONTENT-->
-							<li class="collection-item grey lighten-2 avatar" ng-repeat='(hash,file) in fileCtrl.files | orderBy: sortBy track by $index '>
+							<li class="collection-item grey lighten-2 avatar" ng-repeat='file in fileCtrl.files | orderBy: sortBy track by $index '>
+								{{file}}
 								<div class="collapsible-header">
 									<!--Set Icon-->
 									<i ng-if="file.fileType === 'folder'" class="material-icons circle">folder</i>

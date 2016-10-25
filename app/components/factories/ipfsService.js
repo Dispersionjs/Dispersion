@@ -51,7 +51,7 @@ function ipfsService($q, $interval) {
 
         let hashObj = {
           "file": file,
-          "time": new Date().toUTCString(),
+          "date": new Date().toUTCString(),
           "url": "https://ipfs.io/ipfs/" + topHash[1],
           'files': []
         }

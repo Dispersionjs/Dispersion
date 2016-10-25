@@ -6,16 +6,7 @@ module.service('FileFactory', ['$q', '$timeout', 'IpfsService', fileFactory]);
 function fileFactory($q, $timeout, IpfsService) {
   let fileData = [];
 
-  function addToFileData(hash, obj) {
-    fileData.push({ [hash]: obj });
-    storage.set('files', fileData, (error) => {
-      if (error) {
-        console.log('error in addFile to data in file Factory, the error is: \n');
-        console.error(error);
-      }
-    })
-  }
-  function resaveFileData(hash, obj) {
+  function addToFileData(hash, hashbj) {
     fileData.push({ [hash]: obj });
     storage.set('files', fileData, (error) => {
       if (error) {
@@ -25,27 +16,12 @@ function fileFactory($q, $timeout, IpfsService) {
     })
   }
   function addHash() {
-    // dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] }, function (addFiles) {
-    //we are removing option for multi selection, please restore the above line if neccessary
-    // IpfsService.addFile(addFiles[0]);
-    // $timeout(() => {
-    //   loadFilesFromStorage()
-    // }, 1000)
-    // });
-
     //convert to singular file add, if necessary
     dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] }, function (selected) {
       IpfsService.addFile(selected[0]).then((hashPair) => {
         let [folderHash, hashObjData] = hashPair;
         addToFileData(folderHash, hashObjData);
       });
-      // $timeout(() => {
-      //   loadFilesFromStorage()
-      // }, 1000)
-      // self.storeFile = function (hashPair) {
-      //   let [folderHash, hashObjData] = hashPair;
-      //   FileFactory.add(folderHash, hashObjData);
-      // }
     });
   }
 
