@@ -11,9 +11,8 @@ function FilesController(FileFactory, PublishService, DiskFactory, IpfsService) 
   username().then(username => {
     self.username = username;
   });
-
   self.files = FileFactory.data;
-
+  self.getFileData = FileFactory.getFileData
   //shows additional info about pinned file
   self.showInfo = function (index) {
     $(`#sel-option${index}`).show();
@@ -24,14 +23,14 @@ function FilesController(FileFactory, PublishService, DiskFactory, IpfsService) 
   self.deleteHash = function (hash) {
     console.log('titties')
     IpfsService.unPin(hash).then(() => {
-      FileFactory.init();
+      // FileFactory.init();
     });
   }
 
   self.addToPublish = function (value) {
     PublishService.add({
-      [value.item]: [{
-        'date': value.time,
+      [value.file]: [{
+        'date': value.date,
         'hash': value.hash,
         'publish': false,
         'changed': null,
@@ -40,5 +39,4 @@ function FilesController(FileFactory, PublishService, DiskFactory, IpfsService) 
       }]
     });
   }
-  
 }

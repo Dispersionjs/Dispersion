@@ -12,23 +12,22 @@
 	<link rel="stylesheet" href="assets/css/style.css" media="screen" title="no title">
 </head>
 
-<body>
+<body ng-app='myApp'>
 
-	<div id='dash-content' ng-app='myApp'>
+	<div id='dash-content'>
 		<div ng-controller='MainController as mainCtrl'>
 			<daemon-load></daemon-load>
-
-			<div ng-show="mainCtrl.view !== 'project'" class="row">
-				<div class="navbar-fixed">
+			<div ng-show=" mainCtrl.view !=='project' " class="row ">
+				<div class="navbar-fixed ">
 					<nav>
-						<div class="nav-wrapper blue-grey darken-2">
-							<a src="./assets/images/pedal.png" class="brand-logo left">
-								<img src="./assets/images/pedal.png" alt="some_text" style="width:25px;height:25px;">Dispersion
+						<div class="nav-wrapper blue-grey darken-2 ">
+							<a src="./assets/images/pedal.png " class="brand-logo left ">
+								<img src="./assets/images/pedal.png " alt="some_text " style="width:25px;height:25px; ">Dispersion
 							</a>
-							<ul id="nav-mobile" class="right">
-								<li class='active fileNav'><a ng-click="mainCtrl.view= 'files'" href="#">My Files</a></li>
-								<li class='pubNav'><a ng-click="mainCtrl.view = 'publish'; mainCtrl.publishPage()" href="#">Publish</a></li>
-								<li class='pubNav'><a class="modal-trigger" href="#modal1"><i class="large material-icons">settings</i></a></li>
+							<ul id="nav-mobile " class="right ">
+								<li class='active fileNav'><a ng-click="mainCtrl.view='files' " href="# ">My Files</a></li>
+								<li class='pubNav'><a ng-click="mainCtrl.view='publish'" href="# ">Publish</a></li>
+								<li class='pubNav'><a class="modal-trigger " href="#modal1 "><i class="large material-icons ">settings</i></a></li>
 							</ul>
 						</div>
 					</nav>
@@ -36,80 +35,97 @@
 			</div>
 
 			<div ng-controller='FilesController as fileCtrl'>
-				<div ng-show="mainCtrl.view ==='files' ">
+				<div ng-show="mainCtrl.view==='files' ">
 
 					<div class='row'>
 						<div class="col s4 right ">
-							<a class="waves-effect right amber darken-1 waves-light btn-large" ng-click='fileCtrl.addHash()'><label ><i class="material-icons right">cloud</i></label>Add to IPFS</a>
+							<a class="waves-effect right amber darken-1 waves-light btn-large
+		" ng-click='fileCtrl.addHash()'><label ><i class="material-icons right ">cloud</i></label>Add to IPFS</a>
 						</div>
 
 						<div class="col s4 left ">
-							<select ng-model="sortBy">
-							    <option value="" disabled selected>Filter Files</option>
-           				<option value="time">Date</option>
-            			<option value="item">Item</option>
-            			<option value="fileType">FileType</option>
+							<select ng-model="sortBy ">
+							    <option value=" " disabled selected>Filter Files</option>
+           				<option value="time ">Date</option>
+            			<option value="item ">Item</option>
+            			<option value="fileType ">FileType</option>
         		</select>
 						</div>
 					</div>
 
-					<div class="row">
-						<ul class="collapsible col s12" data-collapsible="accordion">
+					<div class="row ">
+						<ul class="collapsible col s12 " data-collapsible="accordion ">
 							<!--LI HEADER CONTENT-->
-							<li class="collection-item grey lighten-2 avatar" ng-repeat='file in fileCtrl.files | orderBy: sortBy track by $index '>
-								<div class="collapsible-header">
+							<li class="collection-item grey lighten-2 avatar " ng-repeat='fileObj in fileCtrl.getFileData() | orderBy: sortBy track by $index '>
+								<div class="collapsible-header ">
 									<!--Set Icon-->
-									<i ng-if="file.fileType === 'folder'" class="material-icons circle">folder</i>
-									<i ng-if="file.fileType === 'other'" class="material-icons circle">web</i>
-									<i ng-if="file.fileType === 'image'" class="material-icons circle">visibility</i>
-									<i ng-if="file.fileType === 'doc'" class="material-icons circle">description</i>
-									<i ng-if="file.fileType === 'excel'" class="material-icons circle green">insert_chart</i>
-									<i ng-if="file.fileType === 'video'" class="material-icons circle red">play_arrow</i>
+									<i ng-if="fileObj.fileType==='folder' " class="material-icons circle ">folder</i>
+									<i ng-if="fileObj.fileType==='other' " class="material-icons circle ">web</i>
+									<i ng-if="fileObj.fileType==='image' " class="material-icons circle ">visibility</i>
+									<i ng-if="fileObj.fileType==='doc' " class="material-icons circle ">description</i>
+									<i ng-if="fileObj.fileType==='excel' " class="material-icons circle green ">insert_chart</i>
+									<i ng-if="fileObj.fileType==='video' " class="material-icons circle red ">play_arrow</i>
 									<!--Header Li TEXT-->
-									<span class="title text-darken-3">{{file.item}}</span>
-									<span class="right">
-										<span class="left">{{file.time}}</span>
-									<!--<i class="material-icons">info_outline</i>-->
+									<span class="title text-darken-3 " ng-bind="fileObj.file"></span>
+									<span class="right ">
+										<span class="left " ng-bind="fileObj.date "></span>
+									<!--<i class="material-icons ">info_outline</i>-->
 									</span>
 								</div>
 								<!--LI BODY CONTENT-->
-								<div class="collapsible-body">
+								<div class="collapsible-body ">
 									<!--<p></p>-->
-									<div class="row">
-
-
-										<div class="col s10">
-											<h6>{{file.url}}</h6>
-											<a class="waves-effect amber darken-1 waves-light btn" ng-click='fileCtrl.addToPublish(file)'><label ><i class="material-icons right">send</i></label>Stage</a>
-											<a class="waves-effect amber darken-1 waves-light btn" ng-click='fileCtrl.saveToDisk(file.hash,fileCtrl.username)'><label ><i class="material-icons right">send</i></label>Download</a>
-											<a class="waves-effect amber darken-1 waves-light btn" ng-click='fileCtrl.deleteHash(file.hash)'><label ><i class="material-icons right">delete</i></label>Delete</a>
+									<div class="row ">
+										<div class="col s10 ">
+											<h6><a href="{{fileObj.url}} ">{{fileObj.url}}</a></h6>
+											<ul>
+												<li ng-repeat="fileName in fileObj.files  track by $index">{{fileName}}</li>
+											</ul>
+											<a class="waves-effect amber darken-1 waves-light btn
+		" ng-click='fileCtrl.addToPublish(fileObj)'><label ><i class="material-icons right ">send</i></label>Stage</a>
+											<a class="waves-effect amber darken-1 waves-light btn
+		" ng-click='fileCtrl.saveToDisk(fileObj.hash,fileCtrl.username)'><label ><i class="material-icons right ">send</i></label>Download</a>
+											<a class="waves-effect amber darken-1 waves-light btn
+		" ng-click='fileCtrl.deleteHash(fileObj.hash)'><label ><i class="material-icons right ">delete</i></label>Delete</a>
 										</div>
 									</div>
 								</div>
 							</li>
-
 						</ul>
 					</div>
-
 				</div>
 			</div>
-
-			<div ng-controller='PublishController as pubCtrl' ng-show="mainCtrl.view === 'publish' ">
+			<div ng-controller='PublishController as pubCtrl' ng-show="mainCtrl.view==='publish' ">
 				<div class=" row ">
 					<div class="col s12 ">
-						<publish-card ng-show="mainCtrl.view==='publish'"></publish-card>
+						<publish-card ng-show="mainCtrl.view==='publish' "></publish-card>
 					</div>
 				</div>
 			</div>
-			<div class="row projectView" ng-show="mainCtrl.view==='project'" style="position: absolute; width:100%; height:100%">
-				<h1>test</h1>
+			<div class="row projectView " ng-show="mainCtrl.view==='project' " style="position: absolute; width:100%; height:100% ">
+				<div class='row'>
+					<div class="col s4 right ">
+						<a class="waves-effect right amber darken-1 waves-light btn-large " ng-click="mainCtrl.view='publish'
+		"><label ><i class="material-icons right ">cloud</i></label>back to publish</a>
+					</div>
+
+					<div class="col s4 left ">
+						<!--for styling left side, taken from files page-->
+						<!--<select ng-model="sortBy ">
+							    <option value=" " disabled selected>Filter Files</option>
+           				<option value="time ">Date</option>
+            			<option value="item ">Item</option>
+            			<option value="fileType ">FileType</option>
+        		</select>-->
+					</div>
+				</div>
 				<div ng-controller=" ProjectController as projCtrl ">
 					<h1 ng-bind="projCtrl.currentProject() "></h1>
 					<div>
 						<ul>
 							<li ng-repeat="version in projCtrl.publishedVersions() | orderBy: '-date' track by $index ">
-								<button ng-class="$index === projCtrl.lastProjectIndex && projCtrl.showIframe ? 'selected': 'notSelected';
-				" ng-click='projCtrl.selectVersion($index); projCtrl.toggleShowFiles($index)'>{{version.date |date:"MM/dd/yyyy 'at' h:mma "}}</button>
+								<button ng-class="$index=== projCtrl.lastProjectIndex && projCtrl.showIframe ? 'selected': 'notSelected';
+		" ng-click='projCtrl.selectVersion($index); projCtrl.toggleShowFiles($index)'>{{version.date |date:"MM/dd/yyyy 'at' h:mma "}}</button>
 							</li>
 						</ul>
 						<div ng-if="projCtrl.showFiles ">

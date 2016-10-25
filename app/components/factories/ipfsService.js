@@ -3,6 +3,8 @@ angular
   .factory('IpfsService', ['$q', '$interval', ipfsService]);
 
 function ipfsService($q, $interval) {
+
+  ///may have made some breaking changes, please try and clean up and test thoroughly
   let daemonLoadedStatus = () => daemonLoaded;
   let daemonLoaded = false;
 
@@ -22,63 +24,64 @@ function ipfsService($q, $interval) {
         let result = /daemon is running/.test(dataString);
         if (result) {
           console.log('Warning: Daemon already is running in a seperate process! Closing this application will not kill your IPFS Daemon.')
+          resolve(result);
+        } else {
+          reject(dataString);
         }
-        resolve(result);
       })
     })
   }
 
   //Hashes file, puts it in storage, and requests it to distribute 
   function submitFile(filepath) {
-    //file or directory to be hashed.
-    let hashFile = filepath
-    if (hashFile.includes('/')) hashFile = `"${hashFile}"`;
-    // recursively hashes directory or file and adds to ipfs
-    let command = `ipfs add -r ${hashFile}`;
+    return $q((resolve, reject) => {
+      //file or directory to be hashed.
+      let hashFile = filepath
+      if (hashFile.includes('/')) hashFile = `"${hashFile}"`;
+      // recursively hashes directory or file and adds to ipfs
+      let command = `ipfs add -r ${hashFile}`;
 
-    exec(command, function (error, stdout, stderr) {
-      //grabs just the filename from the absolute path of the added file
-      let fileLocationArray = hashFile.split('/');
-      let name = fileLocationArray[fileLocationArray.length - 1];
-      //separate hashes from folder into an array
-      let hashArray = stdout.trim().split('\n');
-      console.log(hashArray);
-      let topHash = hashArray[hashArray.length - 1].split(' ');
-      let file = topHash.slice(2).join(' ');
-
-
-
-      let hashObj = {
-        "file": file,
-        "time": new Date().toUTCString(),
-        "url": "https://ipfs.io/ipfs/" + topHash[1],
-        'files': []
-      }
-      //iterates over the individual hashes, makes requests to them, and stores top level hash in local storage
-      hashArray.forEach(function (hString, index) {
-        let tempArray = hString.split(' ');
-        var requestObj = {
-          [tempArray[1]]: {
-            "url": "https://ipfs.io/ipfs/" + tempArray[1]
+      exec(command, function (error, stdout, stderr) {
+        //grabs just the filename from the absolute path of the added file
+        let fileLocationArray = hashFile.split('/');
+        let name = fileLocationArray[fileLocationArray.length - 1];
+        //separate hashes from folder into an array
+        let hashArray = stdout.trim().split('\n');
+        console.log('hash array, tophash');
+        console.log(hashArray)
+        let topHash = hashArray[hashArray.length - 1].split(' ');
+        console.log(topHash)
+        let file = topHash.slice(2).join(' ');
+        let hashObj = {
+          "file": file,
+          "hash": topHash[1],
+          "date": new Date().toUTCString(),
+          "url": "https://ipfs.io/ipfs/" + topHash[1],
+          'files': []
+        }
+        hashArray.forEach(function (hString, index) {
+          let tempArray = hString.split(' ');
+          var requestObj = {
+            [tempArray[1]]: {
+              "url": "https://ipfs.io/ipfs/" + tempArray[1]
+            }
           }
-        }
-        //grabs the inner file paths and pushes into file array
-        if (index < hashArray.length - 1) {
-          hashObj.files.push(`/${tempArray[2].split('/').slice(1).join('/')}`)
-        }
-        //store top hash in local storage
-        storage.set(topHash[1], hashObj, function (error) {
-          if (error) throw error;
-        });
-        //Call function to request all hashes (5 times) in Merkel DAG
-        requestHashes(requestObj)
+          if ((/\./.test(tempArray[tempArray.length - 1])) && index < hashArray.length - 1) {
+            console.log('tempArray', tempArray)
+            // hashObj.files.push(`/${tempArray[2].split('/').slice(1).join('/')}`)
+            hashObj.files.push(`/${tempArray.slice(2).join('\ ').split('/').slice(1).join('/')}`)
+          }
+
+          requestHashes(requestObj)
+          resolve(hashObj)
+        })
       })
     })
   }
 
   function requestHashes(requestObj) {
     for (let key in requestObj) {
-      let url = requestObj[key]["url"]
+      let url = requestObj[key]["url"];
       for (let i = 0; i < 5; i++) {
         request(url, (err, response, body) => {
           if (err) {
@@ -98,18 +101,23 @@ function ipfsService($q, $interval) {
       let pinRmCommand = 'ipfs pin rm ' + pinHash;
       exec(pinRmCommand, function (error, stdout, stderr) {
         storage.remove(pinHash, function (error) {
-          if (error) throw error;
+          if (error) reject(error);
           resolve()
         });
         if (error !== null) {
-          console.log('exec error: ' + error);
+          reject(error);
         }
       })
     })
   }
 
-  function publishHash(hash) {
-    hash = hash[0]['hash']
+  function publishHash(publishObj, projectName) {
+    console.log(projectName)
+    console.log(publishObj)
+    publishObj[0]['publish'] = true;
+    storage.set('currentlyPublished', projectName);
+    console.log('after changing publish key', publishObj)
+    hash = publishObj[0]['hash']
     let publishIt = 'ipfs name publish ' + hash;
     exec(publishIt, function (error, stdout, stderr) {
       console.log(stdout, hash);
@@ -194,7 +202,7 @@ function ipfsService($q, $interval) {
         let peerID = JSON.parse(stdout)['Identity']['PeerID'];
         let bootstrap = JSON.parse(stdout)['Bootstrap'];
         let ipnsLink = `https://gateway.ipfs.io/ipns/${peerID}`;
-        let peerArray = [ipnsLink,bootstrap]
+        let peerArray = [ipnsLink, bootstrap]
         resolve(peerArray)
       })
     })
