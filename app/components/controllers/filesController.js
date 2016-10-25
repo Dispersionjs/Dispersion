@@ -11,22 +11,7 @@ function FilesController(FileFactory, PublishService, DiskFactory, IpfsService) 
   username().then(username => {
     self.username = username;
   });
-  self.files = getFileData()
-  self.updateFiles = function () {
-    return FileFactory.data.map((hashObj, arrayIndex) => {
-      let hash, file, date, url, files, index, data;
-      hash = Object.keys(hashObj)[0];
-      data = hashObj[hash]
-      file = data.file;
-      date = data.date;
-      url = data.url;
-      files = data.files;
-      index = arrayIndex;
-      return { hash, file, date, url, files, index }
-    });
-  }
-  self.files = self.updateFiles()
-
+  self.files = FileFactory.data;
   //shows additional info about pinned file
   self.showInfo = function (index) {
     $(`#sel-option${index}`).show();

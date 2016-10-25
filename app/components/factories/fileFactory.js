@@ -6,8 +6,17 @@ module.service('FileFactory', ['$q', '$timeout', 'IpfsService', fileFactory]);
 function fileFactory($q, $timeout, IpfsService) {
   let fileData = [];
 
-  function addToFileData(hash, hashbj) {
-    fileData.push({ [hash]: obj });
+  function addToFileData(hash, hashObj) {
+    let file, date, url, files, data;
+    hash = Object.keys(hashObj)[0];
+    data = hashObj;
+    file = data.file;
+    date = data.date;
+    url = data.url;
+    files = data.files;
+    console.log(hash, file, date, url, files);
+    const newNonNestedHashObj = { hash, file, date, url, files };
+    fileData.push(newNonNestedHashObj);
     storage.set('files', fileData, (error) => {
       if (error) {
         console.log('error in addFile to data in file Factory, the error is: \n');
