@@ -16,22 +16,26 @@
 
 	<div id='dash-content'>
 		<div ng-controller='MainController as mainCtrl'>
-			<daemon-load></daemon-load>
-			<div ng-show=" mainCtrl.view !=='project' " class="row ">
-				<div class="navbar-fixed ">
-					<nav>
-						<div class="nav-wrapper blue-grey darken-2 ">
-							<a src="./assets/images/pedal.png " class="brand-logo left ">
-								<img src="./assets/images/pedal.png " alt="some_text " style="width:25px;height:25px; ">Dispersion
-							</a>
-							<ul id="nav-mobile " class="right ">
-								<li class='active fileNav'><a ng-click="mainCtrl.view='files' " href="# ">My Files</a></li>
-								<li class='pubNav'><a ng-click="mainCtrl.view='publish'" href="# ">Publish</a></li>
-								<li class='pubNav'><a class="modal-trigger " href="#modal1 "><i class="large material-icons ">settings</i></a></li>
-							</ul>
-						</div>
-					</nav>
+			<div ng-controller='SettingsController as settingsCtrl'>
+				<daemon-load></daemon-load>
+				<div ng-show=" mainCtrl.view !=='project' " class="row ">
+					<div class="navbar-fixed ">
+						<nav>
+							<div class="nav-wrapper blue-grey darken-2 ">
+								<a src="./assets/images/pedal.png " class="brand-logo left ">
+									<img src="./assets/images/pedal.png " alt="some_text " style="width:25px;height:25px; ">Dispersion
+								</a>
+								<ul id="nav-mobile " class="right ">
+									<li class='active fileNav'><a ng-click="mainCtrl.view='files' " href="# ">My Files</a></li>
+									<li class='pubNav'><a ng-click="mainCtrl.view='publish'" href="# ">Publish</a></li>
+									<li class='pubNav'><a ng-click="settingsCtrl.loadConfig()" class="modal-trigger" href="#modal1 "><i class="large material-icons ">settings</i></a></li>
+								</ul>
+							</div>
+						</nav>
+					</div>
 				</div>
+				<!-- Settings Modal Structure -->
+				<settings></settings>
 			</div>
 
 			<div ng-controller='FilesController as fileCtrl'>
@@ -142,10 +146,6 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			<div ng-controller='SettingsController as settingsCtrl'>
-				<!-- Settings Modal Structure -->
-				<settings></settings>
 			</div>
 		</div>
 	</div>
