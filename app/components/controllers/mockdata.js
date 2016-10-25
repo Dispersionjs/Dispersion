@@ -98,7 +98,8 @@ const testFileData = {
       "date": "2016-10-18T18:22:23.133Z",
       "hash": "QmT45exg6ZEiCBxC4LfoVZPvPkzdtQvNqWxbF9CJN3Xnec",
       "file": "/index.html",
-      "url": "https://ipfs.io/ipfs/QmT45exg6ZEiCBxC4LfoVZPvPkzdtQvNqWxbF9CJN3Xnec/index.html",
+      "hash":
+      "url": "https://ipfs.io/ipfs/QmT45exg6ZEiCBxC4LfoVZPvPkzdtQvNqWxbF9CJN3Xnec",
     },
     {
       "date": "2016-10-19T18:22:23.133Z",

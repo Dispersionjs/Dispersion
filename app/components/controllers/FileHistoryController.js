@@ -1,7 +1,8 @@
 angular.module('FileHistoryController', [])
-  .controller('FileHistoryController', ['ProjectService', '$scope', '$http', 'FileHistoryFactory', fileHistoryController]);
-function fileHistoryController(ProjectService, $scope, $http, FileHistoryFactory) {
+  .controller('FileHistoryController', ['ProjectService', '$scope', '$http', 'DiskFactory', 'FileHistoryFactory', fileHistoryController]);
+function fileHistoryController(ProjectService, $scope, $http, DiskFactory, FileHistoryFactory) {
   //TODO: 
+  FileHistoryFactory.init()
   $scope.showInfo = false;
   $scope.showEditor = false;
   $scope.showMedia = false;
@@ -131,6 +132,10 @@ function fileHistoryController(ProjectService, $scope, $http, FileHistoryFactory
   $scope.projectobj = JSON.parse($scope.projectobject);
 
   $scope.versions = function () {
+    // console.log('getfile histroy results', FileHistoryFactory.getFileHistory());
+    // console.log($scope.projectname)
+    // console.log(FileHistoryFactory.getFileHistory()[$scope.projectname])
+    if (!FileHistoryFactory.getFileHistory()) return []
     return FileHistoryFactory.fileHistory[$scope.projectname].filter((version) => {
       let file = $scope.filename
       if (file) {
@@ -139,17 +144,6 @@ function fileHistoryController(ProjectService, $scope, $http, FileHistoryFactory
       }
     });
   }
-  // return FileHistoryFactory.fileHistory($scope.filename);
-
-  // $scope.$scope.versions() = $scope.versions().sort((a, b) => {
-  //   return (new Date(b.date) - new Date(a.date));
-  // });
-  $scope.logShit = () => console.log($scope.versions());
-  $scope.testAdd = FileHistoryFactory.add
-
-  // $scope.fileHistory = 
-
-
   $scope.toggleEditor = () => {
     $scope.showEditor = !$scope.showEditor;
   }
@@ -158,25 +152,19 @@ function fileHistoryController(ProjectService, $scope, $http, FileHistoryFactory
     $scope.showInfo = !$scope.showInfo;
   }
 
-
   //instead now make new file history obj
   $scope.makeNewHistoryObj = () => {
-    return {
-      date: new Date(),
-      data: $scope.editorContent,
-      hash: '',
-      file: $scope.filename,
-      url: ''
-    }
+    return [$scope.filename, $scope.projectname, $scope.editorContent, { date: new Date().toUTCString(), file: $scope.filename }]
   }
+
   //make new history, need to add to file history factroy data store 
   $scope.saveFile = function () {
     console.log('$scope.editorcontent in saveFile', $scope.editorContent);
-    let newHistoryObj = $scope.makeNewHistoryObj();
-    console.log('save clicked, historyoobj generated: \n', newHistoryObj);
-    FileHistoryFactory.add(newHistoryObj);
-    $scope.fileHistoryVersions.unshift(newHistoryObj);
-    // console.log('after push, file history versions \n\n\n\n', $scope.fileHistoryVersions);
+    let fileDataSaveArray = $scope.makeNewHistoryObj();
+    console.log('save clicked, historyoobj generated: \n', fileDataSaveArray);
+    console.log('pushing to FilehHistoryfactory')
+    FileHistoryFactory.add(fileDataSaveArray[3], fileDataSaveArray[1])
+    DiskFactory.overwrite(...fileDataSaveArray);
   }
   $scope.recordIndex = function (index) {
     console.log(index)
@@ -218,28 +206,20 @@ function fileHistoryController(ProjectService, $scope, $http, FileHistoryFactory
 
   //change to use just url on file obj
   $scope.updateEditorContent = function (index = 0, file) {
-    // console.log($scope.aceEditor);
     if (!$scope.image) {
-      let version = file ? file : $scope.fileHistoryVersions[index];
-
-      // console.log(version);
-
+      let version = file ? file : $scope.versions()[index];
       if (version && version.data) {
-        // $scope.editorContent = version.data;
         $scope.aceEditor.setValue(version.data)
         $scope.showEditor = true;
       } else {
         if (version && version.url) {
           $http.get(version.url).then((res) => {
-            // console.log('http called for ', version.url + $scope.filename)
-            $scope.fileHistoryVersions[index].data = res.data;
+            $scope.versions()[index].data = res.data;
             $scope.previousEditorContent = $scope.editorContent;
             $scope.editorContent = res.data;
-            // $scope.aceEditor.setValue(res.data);
             $scope.showEditor = true;
           });
         }
-        // $scope.showEditor = false;
       }
     }
   }

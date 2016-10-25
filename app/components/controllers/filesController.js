@@ -20,6 +20,7 @@ function FilesController(FileFactory, PublishService, DiskFactory, IpfsService) 
 
   self.addHash = FileFactory.addHash;
 
+  ///investigae this, delete whereever neccessary  
   self.deleteHash = function (hash) {
     console.log('titties')
     IpfsService.unPin(hash).then(() => {
@@ -28,6 +29,8 @@ function FilesController(FileFactory, PublishService, DiskFactory, IpfsService) 
   }
 
   self.addToPublish = function (value) {
+    console.log('in add to publish, value: ', value);
+    DiskFactory.addProject(value.pathToFile);
     PublishService.add({
       [value.file]: [{
         'date': value.date,

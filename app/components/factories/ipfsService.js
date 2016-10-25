@@ -78,6 +78,37 @@ function ipfsService($q, $interval) {
       })
     })
   }
+  function rehashProject(filepath, fileVersionObject, fileName) {
+    //file or directory to be hashed.
+    // recursively hashes directory or file and adds to ipfs
+    let command = `ipfs add -r "${filepath}"`;
+
+    exec(command, function (error, stdout, stderr) {
+      //grabs just the filename from the absolute path of the added file
+
+      let hashArray = stdout.trim().split('\n');
+
+      let topHash = hashArray[hashArray.length - 1].split(' ')[1];
+      console.log(topHash)
+      fileVersionObject.hash = topHash;
+      fileVersionObject.url = `https://ipfs.io/ipfs/${topHash}${fileName}`;
+
+      let hashObj = {
+        "file": file,
+        "hash": topHash[1],
+        "url": "https://ipfs.io/ipfs/" + topHash[1] + filename,
+      }
+      hashArray.forEach(function (hString, index) {
+        let tempArray = hString.split(' ');
+        var requestObj = {
+          [tempArray[1]]: {
+            "url": "https://ipfs.io/ipfs/" + tempArray[1]
+          }
+        }
+        requestHashes(requestObj)
+      })
+    })
+  }
 
   function requestHashes(requestObj) {
     for (let key in requestObj) {

@@ -5,10 +5,10 @@
 
 
 angular.module('FileHistoryFactory', [])
-  .factory('FileHistoryFactory', ['ProjectService', '$q', 'IpfsService', fileHistoryFactory])
+  .factory('FileHistoryFactory', ['ProjectService', '$q', 'IpfsService', '$timeout', fileHistoryFactory])
 
-function fileHistoryFactory(ProjectService, $q, IpfsService) {
-  let historyData = {}
+function fileHistoryFactory(ProjectService, $q, IpfsService, $timeout) {
+  var historyData = {}
   function init() {
     return $q((resolve, reject) => {
       storage.get('fileVersions', (error, data) => {
@@ -22,46 +22,26 @@ function fileHistoryFactory(ProjectService, $q, IpfsService) {
         //update history array
 
       })
-    })
+    });
+  }
+  function getFileHistory() {
+    return historyData
   }
 
-  //TODO: function to add to object to project service array, should hook into file controller to make effective save event. it should: pass editorcontent data and file name, projectname, save file to project path, overwriting if necessay, then rehash, contstruct what we have before rrefered to as a "publish object" with publish set to false, add that to  project service array. then save the project service array to disk, 
-  // const historyData = ProjectService.projectArray;
-  /** takes in a file string, returns array of event objects that were files changes, not publish events */
-  // function fileVersionArray(file) {
-  //   return historyData.filter((version) => {
-  //     if (file) {
-  //       if (file[0] !== '/') file = '/' + file;
-  //       return version.changed === file && version.files.includes(file);
-  //     }
-  //   });
-  // }
-
-  //   {
-  //   "date": "2016-10-19T18:22:23.133Z",
-  //   "hash": "QmXtuj4RRhSNDxNpa2MKaea4sZ5GRprjvtrdaTH84pY9NC",
-  //   "file": "/index.html",
-  //   "url": "https://ipfs.io/ipfs/QmXtuj4RRhSNDxNpa2MKaea4sZ5GRprjvtrdaTH84pY9NC/index.html",
-  // },
-
-
-
-
-  function addFileVersion() {
-    //on add, call storage.set
-    let obj = {
-      "date": "2017-10-20T18:22:23.133Z",
-      "hash": "QmWxnq9onYoNcsYjTpk1mcHTCU6bgmXBCALwkP7roP68HY",
-      "file": "/index.html",
-      "url": "https://ipfs.io/ipfs/QmWxnq9onYoNcsYjTpk1mcHTCU6bgmXBCALwkP7roP68HY/index.html",
-    }
-    // ProjectService.projectArray.push(obj);
-    historyData["Dispersion"].push(obj);
+  function updateLocalStorage() {
+    // storage.set('fileVersions', historyData)
   }
-  //delete
-  //save
+
+
+  function addFileVersion(fileVersionObj, projectName) {
+    historyData[projectName].push(fileVersionObj);
+    $timeout((updateLocalStorage), 2000);
+
+  }
+
   return {
     fileHistory: historyData,
+    getFileHistory: getFileHistory,
     add: addFileVersion,
     init: init
   };
@@ -73,39 +53,39 @@ function fileHistoryFactory(ProjectService, $q, IpfsService) {
 
 
 
-// const testFileData = {
-//   "Dispersion": [
-//     {
-//       "date": "2016-10-18T18:22:23.133Z",
-//       "hash": "QmT45exg6ZEiCBxC4LfoVZPvPkzdtQvNqWxbF9CJN3Xnec",
-//       "file": "/index.html",
-//       "url": "https://ipfs.io/ipfs/QmT45exg6ZEiCBxC4LfoVZPvPkzdtQvNqWxbF9CJN3Xnec/index.html",
-//     },
-//     {
-//       "date": "2016-10-19T18:22:23.133Z",
-//       "hash": "QmXtuj4RRhSNDxNpa2MKaea4sZ5GRprjvtrdaTH84pY9NC",
-//       "file": "/index.html",
-//       "url": "https://ipfs.io/ipfs/QmXtuj4RRhSNDxNpa2MKaea4sZ5GRprjvtrdaTH84pY9NC/index.html",
-//     },
-//     {
-//       "date": "2016-10-20T18:22:23.133Z",
-//       "hash": "QmWxnq9onYoNcsYjTpk1mcHTCU6bgmXBCALwkP7roP68HY",
-//       "file": "/index.html",
-//       "url": "https://ipfs.io/ipfs/QmWxnq9onYoNcsYjTpk1mcHTCU6bgmXBCALwkP7roP68HY/index.html",
-//     }
-//   ],
-//   "yang": [
-//     {
-//       "date": "2016-10-18T18:22:23.133Z",
-//       "hash": "QmT45exg6ZEiCBxC4LfoVZPvPkzdtQvNqWxbF9CJN3Xnec",
-//       "file": "/index.html",
-//       "url": "https://ipfs.io/ipfs/QmT45exg6ZEiCBxC4LfoVZPvPkzdtQvNqWxbF9CJN3Xnec/index.html",
-//     },
-//     {
-//       "date": "2016-10-19T18:22:23.133Z",
-//       "hash": "QmXtuj4RRhSNDxNpa2MKaea4sZ5GRprjvtrdaTH84pY9NC",
-//       "file": "/index.html",
-//       "url": "https://ipfs.io/ipfs/QmXtuj4RRhSNDxNpa2MKaea4sZ5GRprjvtrdaTH84pY9NC/index.html",
-//     }
-//   ]
-// }
+const testFileData = {
+  "Dispersion": [
+    {
+      "date": "2016-10-18T18:22:23.133Z",
+      "hash": "QmT45exg6ZEiCBxC4LfoVZPvPkzdtQvNqWxbF9CJN3Xnec",
+      "file": "/index.html",
+      "url": "https://ipfs.io/ipfs/QmT45exg6ZEiCBxC4LfoVZPvPkzdtQvNqWxbF9CJN3Xnec/index.html",
+    },
+    {
+      "date": "2016-10-19T18:22:23.133Z",
+      "hash": "QmXtuj4RRhSNDxNpa2MKaea4sZ5GRprjvtrdaTH84pY9NC",
+      "file": "/index.html",
+      "url": "https://ipfs.io/ipfs/QmXtuj4RRhSNDxNpa2MKaea4sZ5GRprjvtrdaTH84pY9NC/index.html",
+    },
+    {
+      "date": "2016-10-20T18:22:23.133Z",
+      "hash": "QmWxnq9onYoNcsYjTpk1mcHTCU6bgmXBCALwkP7roP68HY",
+      "file": "/index.html",
+      "url": "https://ipfs.io/ipfs/QmWxnq9onYoNcsYjTpk1mcHTCU6bgmXBCALwkP7roP68HY/index.html",
+    }
+  ],
+  "yang": [
+    {
+      "date": "2016-10-18T18:22:23.133Z",
+      "hash": "QmT45exg6ZEiCBxC4LfoVZPvPkzdtQvNqWxbF9CJN3Xnec",
+      "file": "/index.html",
+      "url": "https://ipfs.io/ipfs/QmT45exg6ZEiCBxC4LfoVZPvPkzdtQvNqWxbF9CJN3Xnec/index.html",
+    },
+    {
+      "date": "2016-10-19T18:22:23.133Z",
+      "hash": "QmXtuj4RRhSNDxNpa2MKaea4sZ5GRprjvtrdaTH84pY9NC",
+      "file": "/index.html",
+      "url": "https://ipfs.io/ipfs/QmXtuj4RRhSNDxNpa2MKaea4sZ5GRprjvtrdaTH84pY9NC/index.html",
+    }
+  ]
+}
