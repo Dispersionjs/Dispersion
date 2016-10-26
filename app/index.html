@@ -81,9 +81,18 @@
 									<!--<p></p>-->
 									<div class="row ">
 										<div class="col s10 ">
-											<h6><a href="{{fileObj.url}} ">{{fileObj.url}}</a></h6>
+											<h6><a class="content-link" ng-click="showcontent = !showcontent">{{fileObj.url}}</a></h6>
+											<div ng-show="showcontent" class="iframe-wrap">
+												<a href="#" ng-click="showcontent = !showcontent" class="close-modal"></a>
+												<iframe class="file-iframe" ng-src="{{fileObj.url}}"></iframe>
+											</div>
 											<ul>
-												<li ng-repeat="fileName in fileObj.files  track by $index">{{fileName}}</li>
+												<li class="content-link" ng-click="showInnercontent = !showInnercontent" ng-repeat="fileName in fileObj.files  track by $index">{{fileName}}>
+													<div ng-if="showInnercontent" class="iframe-wrap">
+														<a href="#" ng-click="showInnercontent = !showInnercontent" class="close-modal"></a>
+														<iframe class="file-iframe"ng-src="{{fileCtrl.getIframeUrl(fileObj.url,fileName)}}"></iframe>
+													</div>
+												</li>
 											</ul>
 											<a class="waves-effect amber darken-1 waves-light btn
 		" ng-click='fileCtrl.addToPublish(fileObj)'><label ><i class="material-icons right ">send</i></label>Stage</a>
@@ -173,7 +182,6 @@
 <script type="text/javascript " src="./components/controllers/FilesController.js "></script>
 <script type="text/javascript " src="./components/controllers/publishController.js "></script>
 <script type="text/javascript " src="./components/controllers/settingsController.js "></script>
-
 <script type="text/javascript " src="./bower_components/ace-builds/src-min-noconflict/ace.js "></script>
 <script type="text/javascript " src="./bower_components/angular-ui-ace/ui-ace.js "></script>
 <script type="text/javascript " src="./bower_components/ace-builds/src-min-noconflict/ext-language_tools.js "></script>
