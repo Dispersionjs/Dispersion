@@ -1,19 +1,17 @@
-<div>
-	<button class="fileButton" ng-click="updateEditorContent(); recordIndex(0); toggleShowInfo();">{{filename.slice(1)}}</button>
+<div class="individual-file-partial">
+	<button class="waves-effect waves-light grey btn" ng-click="updateEditorContent(); recordIndex(0); toggleShowInfo();">{{filename.slice(1)}}</button>
 	<div class="filediv" ng-show="showInfo" ng-if="!image">
 		<ul class="fileVersionList">
-			<li>Previous Versions</li>
-			<button><</button>
+			<li class="fileVersionListItem">Previous Versions</li>
+			<li class="fileVersionListItem"><button class="transparent"><i class="material-icons">skip_previous</i></button></li>
 
 			<li class="fileVersionListItem" ng-repeat="item in fileHistoryVersions track by $index">
 				<a href="#" class="fileVersion" ng-click="updateEditorContent($index); recordIndex($index)">{{item.date | date:"MM/dd/yy h:mma"}}</a>
 			</li>
-			<button>></button>
+			<li class="fileVersionListItem"><button class="transparent"><i class="material-icons">skip_next</i></button></li>
 		</ul>
-		<button ng-click="saveFile()">Save</button>
-		<button ng-click="clearEditor()">Clear</button>
-		<button ng-click="undo()">Undo</button>
-		<select ng-options="theme as theme for theme in themes" ng-model="theme"></select>
+
+		<select  class="input-field col s12" ng-options="theme as theme for theme in themes" ng-model="theme"></select>
 		<select ng-options="mode as mode for mode in modes" ng-model="mode"></select>
 		<div class="editor" ng-if="showEditor && !image" ng-model="editorContent" ui-ace="{
       useWrapMode: true,
@@ -29,10 +27,14 @@
           enableLiveAutocompletion: true
       }}">
 		</div>
-		<button>Save</button>
-		<button ng-click="delete()">Delete</button>
+		<div class="save-delete">
+			<button class="waves-effect waves-light btn" ng-click="saveFile()"><i class="material-icons left">done</i>Save</button>
+			<button class="waves-effect waves-light btn" ng-click="delete()"><i class="material-icons left">delete</i>Delete</button>
+		</div>
 	</div>
 	<div id="outer" ng-show="image">
 		<img ng-if="image" ng-src='{{projectobj.url + filename}}' />
 	</div>
+
+
 </div>
