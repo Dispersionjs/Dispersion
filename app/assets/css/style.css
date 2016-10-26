@@ -94,14 +94,14 @@ blockquote{
 }
 
 .container {
-      position: absolute;
-      top:0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      width: 350px;
-      height: 350px;
-      margin: auto;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 350px;
+  height: 350px;
+  margin: auto;
 }
 
 .part {
@@ -140,7 +140,10 @@ blockquote{
 
 
 
-.projectView  .ace_editor { min-height: 200px; }
+.projectView  .ace_editor { 
+  min-height: 200px; 
+  }
+
 .projectView  ul li {
   display: inline;
 }
@@ -167,8 +170,8 @@ height: 180px;
 }*/
 
 .projectView  img{
-max-width:100%;
-max-height:100%;
+ max-width:100%;
+ max-height:100%;
 }
 
 .projectView  button.selected {
@@ -209,12 +212,12 @@ max-height:100%;
 
 .transparent {
   
-    background-color: transparent;
-    background-repeat:no-repeat;
-    border: none;
-    cursor:pointer;
-    overflow: hidden;
-    outline:none;
+  background-color: transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
 }
 .projectView  .editor {
   width: 60%;
@@ -222,8 +225,68 @@ max-height:100%;
   max-height: 800px; 
 }
 
+.content-link {
+  cursor: pointer;
+}
+
+.close-modal {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  cursor:pointer;
+  color: #fff;
+  border: 1px solid #AEAEAE;
+  border-radius: 30px;
+  background: #605F61;
+  font-size: 31px;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 0px;
+  padding: 11px 3px;       
+}
+
+.close-modal:before {
+    content: "×";
+}
+
+.iframe-wrap {
+  z-index: 9999;
+  position: absolute;
+  top:22px;
+  left:50%; 
+  transform: translate(-50%, 0);
+  width: 95vw;
+  height: 100vw;
+  background-color: #fafafa;
+  border-radius: 2px;
+}
+
+.file-iframe {
+  width: 100%;
+  height: 100%;
+}  
+
+  .modal { 
+    width: 90%;
+    max-height: 85%;
+  }
+
+  .modal.modal-fixed-footer {
+    height: 85%;
+}
+
+  @media only screen and (max-width: 992px) {
+    .modal {
+      width: 90%;
+    } 
+  }
+
+.modal h4 {
+  text-align: center;
+  padding-top: 15px;
+}
 .project {
-    margin-left: 25px;
+  margin-left: 25px;
 }
 
 .individual-file-partial{
@@ -232,4 +295,12 @@ max-height:100%;
 
 .save-delete-buttons{
   width: 157px;
+}
+
+.proj-modal-button {
+  margin-left:5px;
+}
+
+.pub-version-list {
+  padding-right: 5px;
 }
