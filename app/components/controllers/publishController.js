@@ -13,16 +13,19 @@ function PublishController(PublishService, IpfsService, DiskFactory, ProjectServ
   self.isPublished = function (projectName) {
     return self.currentlyPublished() === projectName;
   }
+  self.setProjectView = function (projectName) {
+    ProjectService.changeSelectedProject(projectName)
+  }
 
 
 
   self.publishToIpfs = function (value, name) {
     console.log('value, name in publish to ipfs called from publish controller', value, name)
     // self.publishedProjectCard = name;
-    self.setAsPublished(projectName);
+    self.setAsPublished(name);
     ProjectService.changeSelectedProject(name);
     IpfsService.publish(value, name)
-    PublishService.add(value, true, name);
+    // PublishService.add(value, true, name);
   }
 
   // self.activeButton = function (value) {

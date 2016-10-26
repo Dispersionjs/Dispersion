@@ -45,6 +45,7 @@ function pubService($q) {
       // for (let key in pubObj) {
       // console.log('key in publishData', publishData[key])
       // console.log('key in pobObj', pubObj[key])
+      console.log(publishData)
       publishData[name].unshift(pubObj[0])
       // }
     } else {

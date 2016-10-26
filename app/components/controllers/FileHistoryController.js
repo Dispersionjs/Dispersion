@@ -132,11 +132,8 @@ function fileHistoryController(ProjectService, $scope, $http, DiskFactory, FileH
   $scope.projectobj = JSON.parse($scope.projectobject);
 
   $scope.versions = function () {
-    // console.log('getfile histroy results', FileHistoryFactory.getFileHistory());
-    // console.log($scope.projectname)
-    // console.log(FileHistoryFactory.getFileHistory()[$scope.projectname])
     if (!FileHistoryFactory.getFileHistory()[$scope.projectname]) return []
-    return FileHistoryFactory.getfileHistory()[$scope.projectname].filter((version) => {
+    return FileHistoryFactory.getFileHistory()[$scope.projectname].filter((version) => {
       let file = $scope.filename
       if (file) {
         if (file[0] !== '/') file = '/' + file;

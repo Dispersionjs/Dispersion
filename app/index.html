@@ -98,7 +98,7 @@
 			<div ng-controller='PublishController as pubCtrl' ng-show="mainCtrl.view==='publish' ">
 				<div class=" row ">
 					<div class="col s12 ">
-						<publish-card ng-show="mainCtrl.view==='publish' "></publish-card>
+						<publish-card></publish-card>
 					</div>
 				</div>
 			</div>
@@ -118,7 +118,7 @@
 					</nav>
 				</div>
 
-				<div class="project" ng-controller=" ProjectController as projCtrl ">
+				<div class="project" ng-controller="ProjectController as projCtrl ">
 					<h1 ng-bind="projCtrl.currentProject()" class="amber"></h1>
 					<div>
 						<ul>
@@ -128,40 +128,41 @@
 		" ng-click='projCtrl.selectVersion($index); projCtrl.toggleShowFiles($index)'>{{version.date |date:"MM/dd/yyyy 'at' h:mma "}}</button>
 							</li>
 						</ul>
-						<div ng-if="true">
-							{{projCtrl.filesList()}}
-							<ul>
-								<li ng-repeat="file in projCtrl.filesList() track by $index ">
-									<div>
-										<!--{{file}} {{projCtrl.filesList()}}
+						<div>
+							<div ng-if="true">
+								<!--{{projCtrl.filesList()}}-->
+								<ul>
+									<li ng-repeat="file in projCtrl.filesList() track by $index ">
+										<div>
+											<!--{{file}} {{projCtrl.filesList()}}
 
-										<hr>
-										<hr> {{$index}}
-										<hr>
-										<hr> {{projCtrl.currentProject()}}
-										<hr>
-										<hr> {{projCtrl.selectedVersion()}}
-										<hr>
-										<hr> {{projCtrl.publishedVersions()}}
-										<hr>
-										<hr> {{projCtrl.getMode(file)}} {{projCtrl.isImage(file)}}-->
-										<file-history data-filename="{{file}}" data-index="{{$index}}" data-projectname="{{'projCtrl.currentProject()'}}" data-projectobject="{{projCtrl.selectedVersion()}}"
-											data-mode="{{projCtrl.getMode(file)}}" data-image="{{projCtrl.isImage(file)}}"></file-history>
-									</div>
-								</li>
-							</ul>
-							<button ng-click="projCtrl.togglePreview() ">Preview</button>
-							<iframe class="pagePreview " ng-show="projCtrl.preview " ng-src='{{projCtrl.currentUrl()}}'></iframe>
+											<hr>
+											<hr> {{$index}}
+											<hr>
+											<hr> {{projCtrl.currentProject()}}
+											<hr>
+											<hr> {{projCtrl.selectedVersion()}}
+											<hr>
+											<hr> {{projCtrl.publishedVersions()}}
+											<hr>
+											<hr> {{projCtrl.getMode(file)}} {{projCtrl.isImage(file)}}-->
+											<file-history data-filename="{{file}}" data-index="{{$index}}" data-projectname="{{projCtrl.currentProject()}}" data-projectobject="{{projCtrl.selectedVersion()}}"
+												data-mode="{{projCtrl.getMode(file)}}" data-image="{{projCtrl.isImage(file)}}"></file-history>
+										</div>
+									</li>
+								</ul>
+								<button ng-click="projCtrl.togglePreview() ">Preview</button>
+								<iframe class="pagePreview " ng-show="projCtrl.preview " ng-src='{{projCtrl.currentUrl()}}'></iframe>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div ng-controller='SettingsController as settingsCtrl'>
-				<!-- Settings Modal Structure -->
-				<settings></settings>
+				<div ng-controller='SettingsController as settingsCtrl'>
+					<!-- Settings Modal Structure -->
+					<settings></settings>
+				</div>
 			</div>
 		</div>
-	</div>
 </body>
 
 

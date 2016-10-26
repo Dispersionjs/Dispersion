@@ -1,11 +1,13 @@
 <div>
 	<button class="fileButton" ng-click="updateEditorContent(); recordIndex(0); toggleShowInfo();">{{filename.slice(1)}}</button>
 	<div class="filediv" ng-show="showInfo" ng-if="!image">
+		<!--<div class="filediv" ng-show="showInfo" ng-if="!image">-->
 		<ul class="fileVersionList">
 			<li>Previous Versions</li>
 			<button><</button>
+			<!--{{versions()}}-->
 
-			<li class="fileVersionListItem" ng-repeat="item in versions(  ) track by $index">
+			<li class="fileVersionListItem" ng-repeat="item in versions() track by $index">
 				<a href="#" class="fileVersion" ng-click="updateEditorContent($index); recordIndex($index)">{{item.date | date:"MM/dd/yy h:mma"}}</a>
 			</li>
 			<button>></button>
@@ -13,7 +15,7 @@
 
 		<select ng-options="theme as theme for theme in themes" ng-model="theme"></select>
 		<select ng-options="mode as mode for mode in modes" ng-model="mode"></select>
-		<div class="editor" ng-if="showEditor && !image" ng-model="editorContent" ui-ace="{
+		<div class="editor" ng-show="showEditor && !image" ng-model="editorContent" ui-ace="{
       useWrapMode: true,
       showGutter: true,
       onLoad: aceLoaded,

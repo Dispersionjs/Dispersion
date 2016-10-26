@@ -1,9 +1,9 @@
 angular
   .module('FilesController', [])
   //passing $scope and UserFactory as dependencies to controller
-  .controller('FilesController', ['FileFactory', 'PublishService', 'DiskFactory', 'IpfsService', FilesController]);
+  .controller('FilesController', ['FileFactory', 'PublishService', 'DiskFactory', 'IpfsService', 'FileHistoryFactory', FilesController]);
 
-function FilesController(FileFactory, PublishService, DiskFactory, IpfsService) {
+function FilesController(FileFactory, PublishService, DiskFactory, IpfsService, FileHistoryFactory) {
 
   const self = this;
   self.sortBy = 'time';
@@ -41,5 +41,10 @@ function FilesController(FileFactory, PublishService, DiskFactory, IpfsService) 
         'files': value.files
       }]
     });
+    //initial add of all files to FileVersionHistory
+    FileHistoryFactory.initialAdd(value.date, value.url, value.hash, value.files, value.file);
+
+    // date, url, hash, filesArray, projectName
+
   }
 }

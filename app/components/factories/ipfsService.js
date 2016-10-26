@@ -94,9 +94,9 @@ function ipfsService($q, $interval) {
       fileVersionObject.url = `https://ipfs.io/ipfs/${topHash}${fileName}`;
 
       let hashObj = {
-        "file": file,
+        "file": fileName,
         "hash": topHash[1],
-        "url": "https://ipfs.io/ipfs/" + topHash[1] + filename,
+        "url": "https://ipfs.io/ipfs/" + topHash[1] + fileName,
       }
       hashArray.forEach(function (hString, index) {
         let tempArray = hString.split(' ');
@@ -253,6 +253,7 @@ function ipfsService($q, $interval) {
     addPeer: addBootstrapPeer,
     peerID: getPeerID,
     getFileData: getFileData,
+    rehashProject: rehashProject,
     init: startDaemon,
     addFile: submitFile,
     saveToDisk: saveToDisk,
