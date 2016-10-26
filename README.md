@@ -20,7 +20,7 @@ Installation
 ```
 git clone https://github.com/Dispersionjs/Dispersion.git
 cd Dispersion/app
-npm install
+npm run install:dispersion
 npm start
 ```
 
