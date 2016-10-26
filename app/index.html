@@ -111,7 +111,7 @@
 			<div ng-controller='PublishController as pubCtrl' ng-show="mainCtrl.view==='publish' ">
 				<div class=" row ">
 					<div class="col s12 ">
-						<publish-card ng-show="mainCtrl.view==='publish' "></publish-card>
+						<publish-card></publish-card>
 					</div>
 				</div>
 			</div>
@@ -145,8 +145,8 @@
 								<button ng-click="projCtrl.modalTrigger()" class="proj-modal-button waves-effect waves-light blue-grey btn" href="#">Preview</button>
 								<li ng-repeat="file in projCtrl.filesList() track by $index ">
 									<div>
-										<file-history data-filename="{{file}} " data-index="{{$index}} " data-projectname="{{projCtrl.currentProject()}} " data-projectobject={{projCtrl.selectedVersion}}
-											data-mode="{{projCtrl.getMode(file)}} " data-image="{{projCtrl.isImage(file)}} "></file-history>
+										<file-history data-filename="{{file}}" data-index="{{$index}}" data-projectname="{{projCtrl.currentProject()}}" data-projectobject="{{projCtrl.selectedVersion()}}"
+											data-mode="{{projCtrl.getMode(file)}}" data-image="{{projCtrl.isImage(file)}}"></file-history>
 									</div>
 								</li>
 							</ul>
@@ -161,9 +161,9 @@
 						</div>
 					</div>
 				</div>
+
 			</div>
 		</div>
-	</div>
 </body>
 
 

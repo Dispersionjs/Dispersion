@@ -1,16 +1,18 @@
 <div class="individual-file-partial">
-	<button class="waves-effect waves-light grey btn" ng-click="updateEditorContent(); recordIndex(0); toggleShowInfo();">{{filename.slice(1)}}</button>
+	<button class="waves-effect waves-light grey btn" ng-click="updateEditorContent(); recordIndex(); toggleShowInfo();">{{filename.slice(1)}}</button>
 	<div class="filediv" ng-show="showInfo" ng-if="!image">
+		<!--<div class="filediv" ng-show="showInfo" ng-if="!image">-->
 		<ul class="fileVersionList">
+
 			<li class="fileVersionListItem">Previous Versions</li>
 			<li class="fileVersionListItem"><button class="transparent"><i class="material-icons">skip_previous</i></button></li>
 
-			<li class="fileVersionListItem" ng-repeat="item in fileHistoryVersions track by $index">
+
+			<li class="fileVersionListItem" ng-repeat="item in versions() track by $index">
 				<a href="#" class="fileVersion" ng-click="updateEditorContent($index); recordIndex($index)">{{item.date | date:"MM/dd/yy h:mma"}}</a>
 			</li>
 			<li class="fileVersionListItem"><button class="transparent"><i class="material-icons">skip_next</i></button></li>
 		</ul>
-
 		<div class="editor" ng-if="showEditor && !image" ng-model="editorContent" ui-ace="{
       useWrapMode: true,
       showGutter: true,
@@ -47,7 +49,8 @@
   				</div>
 			</div>-->
 		</div>
-		
+
+
 	</div>
 	<div id="outer" ng-show="image">
 		<img ng-if="image" ng-src='{{projectobj.url + filename}}' />

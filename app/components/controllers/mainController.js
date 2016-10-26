@@ -2,9 +2,9 @@
 angular
   .module('MainController', [])
   //passing $scope and UserFactory as dependencies to controller
-  .controller('MainController', ['$scope', 'PublishService', 'FileFactory', 'DiskFactory', 'IpfsService', '$timeout', mainController]);
+  .controller('MainController', ['$scope', 'PublishService', 'FileFactory', 'DiskFactory', 'IpfsService', '$timeout', 'FileHistoryFactory', mainController]);
 
-function mainController($scope, PublishService, FileFactory, DiskFactory, IpfsService, $timeout) {
+function mainController($scope, PublishService, FileFactory, DiskFactory, IpfsService, $timeout, FileHistoryFactory) {
   //load publish object when switching to publish page
   const self = this;
   let secondAttempt = false;
@@ -16,6 +16,7 @@ function mainController($scope, PublishService, FileFactory, DiskFactory, IpfsSe
       })
       .then(DiskFactory.init)
       .then(PublishService.init)
+      .then(FileHistoryFactory.init)
       .then(() => {
         $timeout(() => {
           self.view = 'files';

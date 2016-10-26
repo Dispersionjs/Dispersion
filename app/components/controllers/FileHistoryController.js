@@ -1,7 +1,8 @@
 angular.module('FileHistoryController', [])
-  .controller('FileHistoryController', ['ProjectService', '$scope', '$http', 'FileHistoryFactory', fileHistoryController]);
-function fileHistoryController(ProjectService, $scope, $http, FileHistoryFactory) {
+  .controller('FileHistoryController', ['ProjectService', '$scope', '$http', 'DiskFactory', 'FileHistoryFactory', fileHistoryController]);
+function fileHistoryController(ProjectService, $scope, $http, DiskFactory, FileHistoryFactory) {
   //TODO: 
+  FileHistoryFactory.init()
   $scope.showInfo = false;
   $scope.showEditor = false;
   $scope.showMedia = false;
@@ -129,16 +130,17 @@ function fileHistoryController(ProjectService, $scope, $http, FileHistoryFactory
     'yaml',
   ];
   $scope.projectobj = JSON.parse($scope.projectobject);
-  $scope.versions = () => FileHistoryFactory.fileHistory($scope.filename);
-  $scope.fileHistoryVersions = $scope.versions().sort((a, b) => {
-    return (new Date(b.date) - new Date(a.date));
-  });
-  console.log($scope.fileHistoryVersions)
-  $scope.logShit = () => console.log($scope.fileHistoryVersions);
 
-  // $scope.fileHistory = 
-
-
+  $scope.versions = function () {
+    if (!FileHistoryFactory.getFileHistory()[$scope.projectname]) return []
+    return FileHistoryFactory.getFileHistory()[$scope.projectname].filter((version) => {
+      let file = $scope.filename
+      if (file) {
+        if (file[0] !== '/') file = '/' + file;
+        return version.file === file;
+      }
+    });
+  }
   $scope.toggleEditor = () => {
     $scope.showEditor = !$scope.showEditor;
   }
@@ -146,30 +148,27 @@ function fileHistoryController(ProjectService, $scope, $http, FileHistoryFactory
     console.log('clicked toggle show info')
     $scope.showInfo = !$scope.showInfo;
   }
+
+  //instead now make new file history obj
   $scope.makeNewHistoryObj = () => {
-    return {
-      date: new Date(),
-      data: $scope.editorContent,
-      hash: '',
-      publish: false,
-      changed: $scope.filename,
-      url: '',
-      files: $scope.projectobj.files
-    }
+    return [$scope.filename, $scope.projectname, $scope.editorContent, { date: new Date().toUTCString(), file: $scope.filename }]
   }
+
+  //make new history, need to add to file history factroy data store 
   $scope.saveFile = function () {
     console.log('$scope.editorcontent in saveFile', $scope.editorContent);
-    let newHistoryObj = $scope.makeNewHistoryObj();
-    console.log('save clicked, historyoobj generated: \n', newHistoryObj);
-    FileHistoryFactory.add(newHistoryObj);
-    $scope.fileHistoryVersions.unshift(newHistoryObj);
-    // console.log('after push, file history versions \n\n\n\n', $scope.fileHistoryVersions);
-
+    let fileDataSaveArray = $scope.makeNewHistoryObj();
+    console.log('save clicked, historyoobj generated: \n', fileDataSaveArray);
+    console.log('pushing to FilehHistoryfactory')
+    FileHistoryFactory.add(fileDataSaveArray[3], fileDataSaveArray[1])
+    DiskFactory.overwrite(...fileDataSaveArray);
   }
   $scope.recordIndex = function (index) {
     console.log(index)
     $scope.openVersionIndex = index;
   }
+
+  // delete item from file factroy array
   $scope.delete = function () {
     //update to change in extended full app data store model
     console.log('filehistoryversions:', $scope.fileHistoryVersions)
@@ -201,37 +200,56 @@ function fileHistoryController(ProjectService, $scope, $http, FileHistoryFactory
   $scope.aceChanged = function (e) {
 
   };
+
+  //change to use just url on file obj
   $scope.updateEditorContent = function (index = 0, file) {
-    // console.log($scope.aceEditor);
     if (!$scope.image) {
-      let version = file ? file : $scope.fileHistoryVersions[index];
-
-      // console.log(version);
-
+      let version = file ? file : $scope.versions()[index];
       if (version && version.data) {
-        // $scope.editorContent = version.data;
         $scope.aceEditor.setValue(version.data)
         $scope.showEditor = true;
       } else {
         if (version && version.url) {
-          $http.get(version.url + $scope.filename).then((res) => {
-            // console.log('http called for ', version.url + $scope.filename)
-            $scope.fileHistoryVersions[index].data = res.data;
+          $http.get(version.url).then((res) => {
+            $scope.versions()[index].data = res.data;
             $scope.previousEditorContent = $scope.editorContent;
             $scope.editorContent = res.data;
-            // $scope.aceEditor.setValue(res.data);
             $scope.showEditor = true;
           });
         }
-        // $scope.showEditor = false;
       }
     }
   }
+  // $scope.updateEditorContent = function (index = 0, file) {
+  //   // console.log($scope.aceEditor);
+  //   if (!$scope.image) {
+  //     let version = file ? file : $scope.fileHistoryVersions[index];
+
+  //     // console.log(version);
+
+  //     if (version && version.data) {
+  //       // $scope.editorContent = version.data;
+  //       $scope.aceEditor.setValue(version.data)
+  //       $scope.showEditor = true;
+  //     } else {
+  //       if (version && version.url) {
+  //         $http.get(version.url + $scope.filename).then((res) => {
+  //           // console.log('http called for ', version.url + $scope.filename)
+  //           $scope.fileHistoryVersions[index].data = res.data;
+  //           $scope.previousEditorContent = $scope.editorContent;
+  //           $scope.editorContent = res.data;
+  //           // $scope.aceEditor.setValue(res.data);
+  //           $scope.showEditor = true;
+  //         });
+  //       }
+  //       // $scope.showEditor = false;
+  //     }
+  //   }
+  // }
   $scope.clearEditor = function () {
     console.log('clear clicked', $scope.editorContent)
     $scope.previousEditorContent = $scope.editorContent;
     $scope.aceEditor.setValue('');
-
   }
   $scope.undo = function () {
     console.log('undo clicked');
@@ -245,6 +263,8 @@ function fileHistoryController(ProjectService, $scope, $http, FileHistoryFactory
     $scope.mediaContentUrl = url;
     $scope.showMedia = true;
   }
+
+  // 
   $scope.getContentUrl = ProjectService.getContentUrl; //function 
   // $http.get(self.getContentUrl(file)).then((res) => {
   //   $scope.editorContent = res.data;

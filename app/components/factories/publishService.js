@@ -15,13 +15,21 @@ function pubService($q) {
         if (error) reject(error);
         publishData = Object.assign(publishData, data);
         // console.log('publishData in publish service:', publishData)
-        resolve(data)
+        storage.get('currentlyPublished', (err, name) => {
+          currentlyPublished = name;
+          console.log(currentlyPublished);
+          resolve(data)
+        })
       });
     })
   }
-  let currentlyPublished = '';
+  let currentlyPublished;
   function getCurrentlyPublished() {
     return currentlyPublished;
+  }
+  function setCurrentlyPublished(name) {
+    currentlyPublished = name;
+    storage.set('currentlyPublished', name);
   }
   function updateStore() {
     // uncomment later, just for a check
@@ -30,17 +38,28 @@ function pubService($q) {
       currentlyPublished = data;
     })
   }
-  function addToPublish(pubObj) {
-    console.log('add to publish called in publish service');
-    console.log('pubObj in add to publish: \n', pubObj);
-    for (let key in pubObj) {
-      if (!publishData[key]) {
-        console.log('key, publishData');
-        console.log(key, publishData)
-        publishData[key] = pubObj[key];
-      } else {
-        console.log('this project has already been published')
-        //add more logic to maybe just append to array
+  function addToPublish(pubObj, snapshot = false, name = '') {
+    console.log('publishData ', publishData)
+    console.log('pubObj ', pubObj)
+    if (snapshot) {
+      // for (let key in pubObj) {
+      // console.log('key in publishData', publishData[key])
+      // console.log('key in pobObj', pubObj[key])
+      console.log(publishData)
+      publishData[name].unshift(pubObj[0])
+      // }
+    } else {
+      console.log('add to publish called in publish service');
+      console.log('pubObj in add to publish: \n', pubObj);
+      for (let key in pubObj) {
+        if (!publishData[key]) {
+          console.log('key, publishData');
+          console.log(key, publishData)
+          publishData[key] = pubObj[key];
+        } else {
+          console.log('this project has already been published')
+          //add more logic to maybe just append to array
+        }
       }
     }
     updateStore()
@@ -50,7 +69,8 @@ function pubService($q) {
     data: publishData,
     add: addToPublish,
     init: init,
-    currentlyPublished: getCurrentlyPublished
+    currentlyPublished: getCurrentlyPublished,
+    setPublished: setCurrentlyPublished
   }
 }
 

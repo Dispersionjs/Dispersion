@@ -2,16 +2,15 @@
 	<!--<project-add-bar></project-add-bar>-->
 	<div ng-repeat="(projectName, value) in pubCtrl.data">
 		<div class="col s12 m6">
-			<div ng-class="{'teal lighten-2' : projectName === pubCtrl.publishedProjectCard, 'blue-grey' : projectName !== pubCtrl.pubCtrl.publishedProjectCard}"
-				class="card">
+			<div ng-class="{'teal lighten-2' : pubCtrl.isPublished(projectName), 'blue-grey' : !pubCtrl.isPublished(projectName)}" class="card">
 				<div class="card-content white-text">
 					<span class="card-title">{{projectName}}</span>
 					<p>Date added: <span>{{value[0].date}}</span></p>
 				</div>
 				<div class="card-action">
-					<a ng-click="mainCtrl.view= 'project'" class="btn-floating btn-large amber darken-2 waves-effect waves-light red"><i class="material-icons">mode_edit</i></a>
-					<div ng-show='projectName === pubCtrl.currentlyPublished()'><i class="material-icons">done_all</i><span>currently published</span></div>
-					<a ng-click="pubCtrl.publishToIpfs(value, projectName); pubCtrl.updatePublishedStatus()" class="btn-floating btn-large amber darken-2 waves-effect waves-light red"><i class="material-icons">add</i></a>
+					<a ng-click="mainCtrl.view= 'project'; pubCtrl.setProjectView(projectName)" class="btn-floating btn-large amber darken-2 waves-effect waves-light red"><i class="material-icons">mode_edit</i></a>
+					<div ng-show='pubCtrl.isPublished(projectName)'><i class="material-icons">done_all</i><span>currently published</span></div>
+					<a ng-click="pubCtrl.publishToIpfs(value, projectName)" class="btn-floating btn-large amber darken-2 waves-effect waves-light red"><i class="material-icons">add</i></a>
 				</div>
 			</div>
 		</div>
