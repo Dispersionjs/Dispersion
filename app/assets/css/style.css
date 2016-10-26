@@ -69,6 +69,10 @@ blockquote{
     justify-content: space-between;
 }
 
+.project-nav-bar{
+  font-size: 2.3em; 
+  margin-left: 30px;
+}
 
 .collection-item {
     /*border-bottom:5px solid #eeeeee;  */
@@ -170,9 +174,7 @@ max-height:100%;
 .projectView  button.selected {
   background-color: lightblue;
 }
-.projectView  .changedFile {
-  
-}
+
 .projectView .changedFile::after {
   content: '*changed';
 }
@@ -183,18 +185,36 @@ max-height:100%;
 }
 .projectView  .fileVersion {
   margin: 0;
-  font-size: .4em;
+  font-size: 15px;
   text-decoration: none;
-  background-color: #ddd;
 
 }
 
-.projectView  .fileVersionListItem {
+.save-delete {
+  padding-top: 8px;
+}
+
+.fileVersionListItem {
   margin: 0;
+  padding-top: 10px;
   padding: 0;
+  height: 20px;
 }
-.projectView .fileVersionList {
+.fileVersionList {
   padding: 0;
+   padding-top: 8px;
+   padding-bottom: 8px;
+   display: flex;
+}
+
+.transparent {
+  
+    background-color: transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
 }
 .projectView  .editor {
   width: 60%;
@@ -204,4 +224,12 @@ max-height:100%;
 
 .project {
     margin-left: 25px;
+}
+
+.individual-file-partial{
+  padding: 5px;
+}
+
+.save-delete-buttons{
+  width: 157px;
 }

@@ -106,9 +106,10 @@
 				<div class="navbar-fixed ">
 					<nav>
 						<div class="nav-wrapper amber darken-2 ">
-							<a src="./assets/images/pedal.png " class="brand-logo left ">
+							<a class="project-nav-bar">Dispersion</a>
+							<!--<a src="./assets/images/pedal.png " class="brand-logo left ">
 								<img src="./assets/images/pedal.png " alt="some_text " style="width:25px;height:25px; ">Dispersion
-							</a>
+							</a>-->
 							<ul id="nav-mobile " class="right ">
 								<li class='active fileNav'><a ng-click="mainCtrl.view='files' " href="# ">My Files</a></li>
 								<li class='pubNav'><a ng-click="mainCtrl.view='publish'" href="# ">Publish</a></li>
@@ -136,7 +137,7 @@
 									</div>
 								</li>
 							</ul>
-							<button ng-click="projCtrl.togglePreview() ">Preview</button>
+							<button class="waves-effect waves-light blue-grey btn" ng-click="projCtrl.togglePreview() ">Preview</button>
 							<iframe class="pagePreview " ng-show="projCtrl.preview " ng-src='{{projCtrl.currentUrl()}}'></iframe>
 						</div>
 					</div>
@@ -199,8 +200,34 @@
 				 // A setting that changes the collapsible behavior to expandable instead of the default accordion style 
 
         $('select').material_select();
+
+
+		// Close the dropdown menu if the user clicks outside of it
+		window.onclick = function(event) {
+	  		if (!event.target.matches('.dropbtn')) {
+
+    		var dropdowns = document.getElementsByClassName("dropdown-content");
+   			var i;
+    		for (i = 0; i < dropdowns.length; i++) {
+      			var openDropdown = dropdowns[i];
+      			if (openDropdown.classList.contains('show')) {
+      		  		openDropdown.classList.remove('show');
+      			}
+    		}
+  		}
+	}
+
+
     });
 </script>
+
+<script>
+
+	/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+
+</script>
+
 <script src="app.js "></script>
 
 </html>
