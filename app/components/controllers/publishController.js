@@ -2,19 +2,30 @@ angular
   .module('PublishController', [])
   //passing $scope and UserFactory as dependencies to controller
 
-  .controller('PublishController', ['PublishService', 'IpfsService', 'DiskFactory', PublishController]);
+  .controller('PublishController', ['PublishService', 'IpfsService', 'DiskFactory', 'ProjectService', PublishController]);
 
-function PublishController(PublishService, IpfsService, DiskFactory) {
+function PublishController(PublishService, IpfsService, DiskFactory, ProjectService) {
   // PublishService.init().then(console.log('init called in publish controller'))
   const self = this;
   self.data = PublishService.data;
-  self.publishedProjectCard = '';
-  self.updatePublishedStatus = function () {
-    self.publishedProjectCard = PublishService.currentlyPublished();
+  self.currentlyPublished = PublishService.currentlyPublished;
+  self.setAsPublished = PublishService.setPublished;
+  self.isPublished = function (projectName) {
+    return self.currentlyPublished() === projectName;
   }
+  self.setProjectView = function (projectName) {
+    ProjectService.changeSelectedProject(projectName)
+  }
+
+
+
   self.publishToIpfs = function (value, name) {
+    console.log('value, name in publish to ipfs called from publish controller', value, name)
     // self.publishedProjectCard = name;
+    self.setAsPublished(name);
+    ProjectService.changeSelectedProject(name);
     IpfsService.publish(value, name)
+    // PublishService.add(value, true, name);
   }
 
   // self.activeButton = function (value) {

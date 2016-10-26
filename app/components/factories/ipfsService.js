@@ -78,6 +78,37 @@ function ipfsService($q, $interval) {
       })
     })
   }
+  function rehashProject(filepath, fileVersionObject, fileName) {
+    //file or directory to be hashed.
+    // recursively hashes directory or file and adds to ipfs
+    let command = `ipfs add -r "${filepath}"`;
+
+    exec(command, function (error, stdout, stderr) {
+      //grabs just the filename from the absolute path of the added file
+
+      let hashArray = stdout.trim().split('\n');
+
+      let topHash = hashArray[hashArray.length - 1].split(' ')[1];
+      console.log(topHash)
+      fileVersionObject.hash = topHash;
+      fileVersionObject.url = `https://ipfs.io/ipfs/${topHash}${fileName}`;
+
+      let hashObj = {
+        "file": fileName,
+        "hash": topHash[1],
+        "url": "https://ipfs.io/ipfs/" + topHash[1] + fileName,
+      }
+      hashArray.forEach(function (hString, index) {
+        let tempArray = hString.split(' ');
+        var requestObj = {
+          [tempArray[1]]: {
+            "url": "https://ipfs.io/ipfs/" + tempArray[1]
+          }
+        }
+        requestHashes(requestObj)
+      })
+    })
+  }
 
   function requestHashes(requestObj) {
     for (let key in requestObj) {
@@ -113,8 +144,7 @@ function ipfsService($q, $interval) {
     console.log(projectName)
     console.log(publishObj)
     publishObj[0]['publish'] = true;
-    storage.set('currentlyPublished', projectName);
-    console.log('after changing publish key', publishObj)
+    console.log('publish obj 0', publishObj)
     hash = publishObj[0]['hash']
     let publishIt = 'ipfs name publish ' + hash;
     exec(publishIt, function (error, stdout, stderr) {
@@ -221,6 +251,7 @@ function ipfsService($q, $interval) {
     addPeer: addBootstrapPeer,
     peerID: getPeerID,
     getFileData: getFileData,
+    rehashProject: rehashProject,
     init: startDaemon,
     addFile: submitFile,
     saveToDisk: saveToDisk,

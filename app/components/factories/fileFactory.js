@@ -32,6 +32,8 @@ function fileFactory($q, IpfsService) {
     dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] }, function (selected) {
       if (selected) {
         IpfsService.addFile(selected[0]).then((addedHashObject) => {
+          addedHashObject.pathToFile = selected[0];
+          console.log('path on obj', addedHashObject.pathToFile);
           addToFileData(addedHashObject);
         });
       }

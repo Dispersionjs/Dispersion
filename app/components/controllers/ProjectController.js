@@ -11,7 +11,7 @@ function projectController($http, ProjectService, $scope) {
 
   self.filesList = ProjectService.selectedVersionFilesList;//function
   self.fileVersions = ProjectService.fileChangedVersions; //function
-  self.mediaContentUrl = ''
+  self.mediaContentUrl = '';
   self.showIframe = false;
   self.showEditor = false;
   self.showMedia = false;
@@ -57,6 +57,6 @@ function projectController($http, ProjectService, $scope) {
     return imageTester.test(file);
   }
   self.modalTrigger = function () {
-     $('#projectModal').openModal() 
-    }
+    $('#projectModal').openModal()
+  }
 }

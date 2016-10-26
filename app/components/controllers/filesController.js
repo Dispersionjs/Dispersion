@@ -1,9 +1,9 @@
 angular
   .module('FilesController', [])
   //passing $scope and UserFactory as dependencies to controller
-  .controller('FilesController', ['FileFactory', 'PublishService', 'DiskFactory', 'IpfsService', FilesController]);
+  .controller('FilesController', ['FileFactory', 'PublishService', 'DiskFactory', 'IpfsService', 'FileHistoryFactory', FilesController]);
 
-function FilesController(FileFactory, PublishService, DiskFactory, IpfsService) {
+function FilesController(FileFactory, PublishService, DiskFactory, IpfsService, FileHistoryFactory) {
 
   const self = this;
   self.sortBy = 'time';
@@ -20,12 +20,15 @@ function FilesController(FileFactory, PublishService, DiskFactory, IpfsService) 
 
   self.addHash = FileFactory.addHash;
 
-  self.deleteHash = function (hash,index) {
+
+  self.deleteHash = function (hash, index) {
     IpfsService.unPin(hash);
     FileFactory.removeFile(index);
   }
 
   self.addToPublish = function (value) {
+    console.log('in add to publish, value: ', value);
+    DiskFactory.addProject(value.pathToFile);
     PublishService.add({
       [value.file]: [{
         'date': value.date,
@@ -36,9 +39,14 @@ function FilesController(FileFactory, PublishService, DiskFactory, IpfsService) 
         'files': value.files
       }]
     });
+    //initial add of all files to FileVersionHistory
+    FileHistoryFactory.initialAdd(value.date, value.url, value.hash, value.files, value.file);
+
+    // date, url, hash, filesArray, projectName
+
   }
 
-  self.getIframeUrl = function(fileObj,fileName) {
+  self.getIframeUrl = function (fileObj, fileName) {
     return fileObj + fileName;
   }
 

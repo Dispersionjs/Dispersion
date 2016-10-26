@@ -1,25 +1,115 @@
+
+
+
+
+
+
 angular.module('FileHistoryFactory', [])
-  .factory('FileHistoryFactory', ['ProjectService', fileHistoryFactory])
+  .factory('FileHistoryFactory', ['ProjectService', '$q', 'IpfsService', '$timeout', fileHistoryFactory])
 
-function fileHistoryFactory(ProjectService) {
+function fileHistoryFactory(ProjectService, $q, IpfsService, $timeout) {
+  var historyData = {}
+  function init() {
+    return $q((resolve, reject) => {
+      storage.get('fileVersions', (error, data) => {
+        if (error) reject(error)
+        console.log('file version data from local storage in init', data);
+        for (let key in data) {
+          historyData[key] = data[key]
+        }
+        resolve(data)
+        // if (error) reject(error)
+        //update history array
 
-  //TODO: function to add to object to project service array, should hook into file controller to make effective save event. it should: pass editorcontent data and file name, projectname, save file to project path, overwriting if necessay, then rehash, contstruct what we have before rrefered to as a "publish object" with publish set to false, add that to  project service array. then save the project service array to disk, 
-  const historyArray = ProjectService.projectArray;
-  /** takes in a file string, returns array of event objects that were files changes, not publish events */
-  function fileVersionArray(file) {
-    return historyArray.filter((version) => {
-      if (file) {
-        if (file[0] !== '/') file = '/' + file;
-        return version.changed === file && version.files.includes(file);
-      }
+      })
     });
   }
-  function addFileVersion(obj) {
-    ProjectService.projectArray.push(obj);
+  function getFileHistory() {
+    return historyData
+  }
+
+  function updateLocalStorage() {
+    storage.set('fileVersions', historyData)
+  }
+
+
+  function addFileVersion(fileVersionObj, projectName) {
+    console.log('addFileVersion called in fileHistoryFactory, fileVersionObj, projectname: \n', fileVersionObj, projectName);
+    historyData[projectName].push(fileVersionObj);
+    $timeout((updateLocalStorage), 5000);
+  }
+  function addInitialFileVersionOnPublish(date, url, hash, filesArray, projectName) {
+    console.log('addintila file version on publish, passed in args: ', ...arguments)
+    if (!historyData[projectName]) {
+      historyData[projectName] = [];
+      filesArray.forEach((filename, index) => {
+        historyData[projectName].push({
+          date: date,
+          url: url + filename,
+          hash: hash,
+          file: filename
+        })
+        console.log(`item #${index} added: `, {
+          date: date,
+          url: url + filename,
+          hash: hash,
+          file: filename
+        });
+      })
+      updateLocalStorage()
+    }
+    // historyData[projectName].push(fileVersionObj);
+    // $timeout((updateLocalStorage), 2000);
   }
 
   return {
-    fileHistory: fileVersionArray,
-    add: addFileVersion
+    fileHistory: historyData,
+    getFileHistory: getFileHistory,
+    add: addFileVersion,
+    init: init,
+    initialAdd: addInitialFileVersionOnPublish
   };
+}
+
+
+
+
+
+
+
+const testFileData = {
+  "Dispersion": [
+    {
+      "date": "2016-10-18T18:22:23.133Z",
+      "hash": "QmT45exg6ZEiCBxC4LfoVZPvPkzdtQvNqWxbF9CJN3Xnec",
+      "file": "/index.html",
+      "url": "https://ipfs.io/ipfs/QmT45exg6ZEiCBxC4LfoVZPvPkzdtQvNqWxbF9CJN3Xnec/index.html",
+    },
+    {
+      "date": "2016-10-19T18:22:23.133Z",
+      "hash": "QmXtuj4RRhSNDxNpa2MKaea4sZ5GRprjvtrdaTH84pY9NC",
+      "file": "/index.html",
+      "url": "https://ipfs.io/ipfs/QmXtuj4RRhSNDxNpa2MKaea4sZ5GRprjvtrdaTH84pY9NC/index.html",
+    },
+    {
+      "date": "2016-10-20T18:22:23.133Z",
+      "hash": "QmWxnq9onYoNcsYjTpk1mcHTCU6bgmXBCALwkP7roP68HY",
+      "file": "/index.html",
+      "url": "https://ipfs.io/ipfs/QmWxnq9onYoNcsYjTpk1mcHTCU6bgmXBCALwkP7roP68HY/index.html",
+    }
+  ],
+  "yang": [
+    {
+      "date": "2016-10-18T18:22:23.133Z",
+      "hash": "QmT45exg6ZEiCBxC4LfoVZPvPkzdtQvNqWxbF9CJN3Xnec",
+      "file": "/index.html",
+      "url": "https://ipfs.io/ipfs/QmT45exg6ZEiCBxC4LfoVZPvPkzdtQvNqWxbF9CJN3Xnec/index.html",
+    },
+    {
+      "date": "2016-10-19T18:22:23.133Z",
+      "hash": "QmXtuj4RRhSNDxNpa2MKaea4sZ5GRprjvtrdaTH84pY9NC",
+      "file": "/index.html",
+      "url": "https://ipfs.io/ipfs/QmXtuj4RRhSNDxNpa2MKaea4sZ5GRprjvtrdaTH84pY9NC/index.html",
+    }
+  ]
 }
