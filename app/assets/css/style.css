@@ -20,6 +20,10 @@ h1 {
   cursor: pointer;
 }
 
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
 /*.material-icons {*/
   /*color: #ffa000;*/
 /*}*/
@@ -220,7 +224,7 @@ height: 180px;
   outline:none;
 }
 .projectView  .editor {
-  width: 60%;
+  width: 100%;
   min-height: 400px;
   max-height: 800px; 
 }
@@ -303,4 +307,13 @@ height: 180px;
 
 .pub-version-list {
   padding-right: 5px;
+}
+
+.ace-chaos .ace_print-margin {
+    border-left: none;
+    background: none;
+}
+
+div.ace_print-margin {
+    width: 0 !important;
 }

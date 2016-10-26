@@ -24,9 +24,9 @@ function projectService($http, $q, PublishService) {
   /** returns the url of the currently selected project version */
   self.currentUrl = (file) => {
     if (!file) {
-      return self.selectedVersion.url;
+      return self.selectedVersion().url;
     } else {
-      return self.selectedVersion.url
+      return self.selectedVersion().url
     }
   }
 
