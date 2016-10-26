@@ -41,4 +41,5 @@ function FilesController(FileFactory, PublishService, DiskFactory, IpfsService) 
   self.getIframeUrl = function(fileObj,fileName) {
     return fileObj + fileName;
   }
+
 }

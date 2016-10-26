@@ -116,33 +116,33 @@
 				</div>
 			</div>
 			<div class="row projectView " ng-show="mainCtrl.view==='project' " style="position: absolute; width:100%; height:100% ">
-				<div class='row'>
-					<div class="col s4 right ">
-						<a class="waves-effect right amber darken-1 waves-light btn-large " ng-click="mainCtrl.view='publish'
-		"><label ><i class="material-icons right ">cloud</i></label>back to publish</a>
-					</div>
-
-					<div class="col s4 left ">
-						<!--for styling left side, taken from files page-->
-						<!--<select ng-model="sortBy ">
-							    <option value=" " disabled selected>Filter Files</option>
-           				<option value="time ">Date</option>
-            			<option value="item ">Item</option>
-            			<option value="fileType ">FileType</option>
-        		</select>-->
-					</div>
+				<div class="navbar-fixed ">
+					<nav>
+						<div class="nav-wrapper amber darken-2 ">
+							<a class="project-nav-bar">Dispersion</a>
+							<!--<a src="./assets/images/pedal.png " class="brand-logo left ">
+								<img src="./assets/images/pedal.png " alt="some_text " style="width:25px;height:25px; ">Dispersion
+							</a>-->
+							<ul id="nav-mobile " class="right ">
+								<li class='active fileNav'><a ng-click="mainCtrl.view='files' " href="# ">My Files</a></li>
+								<li class='pubNav'><a ng-click="mainCtrl.view='publish'" href="# ">Publish</a></li>
+								<li class='pubNav'><a class="modal-trigger " href="#modal1 "><i class="large material-icons ">settings</i></a></li>
+							</ul>
+						</div>
+					</nav>
 				</div>
 				<div ng-controller=" ProjectController as projCtrl ">
 					<h1 ng-bind="projCtrl.currentProject()"></h1>
 					<div>
-						<ul>
+						<ul class="pub-version-list">
 							<li ng-repeat="version in projCtrl.publishedVersions() | orderBy: '-date' track by $index ">
-								<button ng-class="$index=== projCtrl.lastProjectIndex && projCtrl.showIframe ? 'selected': 'notSelected';
+								<button class="waves-effect blue-grey waves-light btn" ng-class="$index=== projCtrl.lastProjectIndex && projCtrl.showIframe ? 'selected': 'notSelected';
 		" ng-click='projCtrl.selectVersion($index); projCtrl.toggleShowFiles($index)'>{{version.date |date:"MM/dd/yyyy 'at' h:mma "}}</button>
 							</li>
 						</ul>
 						<div ng-if="projCtrl.showFiles ">
 							<ul>
+								<button ng-click="projCtrl.modalTrigger()" class="proj-modal-button waves-effect waves-light blue-grey btn" href="#">Preview</button>
 								<li ng-repeat="file in projCtrl.filesList() track by $index ">
 									<div>
 										<file-history data-filename="{{file}} " data-index="{{$index}} " data-projectname="{{projCtrl.currentProject()}} " data-projectobject={{projCtrl.selectedVersion}}
@@ -150,7 +150,6 @@
 									</div>
 								</li>
 							</ul>
-							<a ng-click="projCtrl.modalTrigger()" class="modal-trigger" href="#">Preview</a>
 							<div id="projectModal" class="modal modal-fixed-footer">
 								<nav>
 									<div class="nav-wrapper blue-grey darken-2">
@@ -197,6 +196,7 @@
 <script type="text/javascript " src="./components/directives/FileHistoryDirective.js "></script>
 <script type="text/javascript " src="./components/controllers/FileHistoryController.js "></script>
 <script type="text/javascript " src="./components/controllers/ProjectController.js "></script>
+<script src="app.js "></script>
 <script>
     $(document).ready(function() {
         $('.pubNav').click(function(){
@@ -215,8 +215,8 @@
 				 // A setting that changes the collapsible behavior to expandable instead of the default accordion style 
 
         $('select').material_select();
+
     });
 </script>
-<script src="app.js "></script>
 
 </html>
