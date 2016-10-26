@@ -16,6 +16,18 @@ function fileFactory($q, IpfsService) {
       }
     })
   }
+
+  function removeFile(index) {
+    fileData.splice(index,1);
+    storage.set('files', fileData, (error) => {
+      if (error) {
+        console.log('error in addFile to data in file Factory, the error is: \n');
+        console.error(error);
+      }
+    })
+  }
+
+
   function addHash() {
     dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] }, function (selected) {
       if (selected) {
@@ -62,6 +74,7 @@ function fileFactory($q, IpfsService) {
     return fileData;
   }
   return {
+    removeFile: removeFile,
     addHash: addHash,
     data: fileData,
     add: addToFileData,

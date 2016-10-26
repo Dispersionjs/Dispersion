@@ -90,7 +90,7 @@
 												<li class="content-link" ng-click="showInnercontent = !showInnercontent" ng-repeat="fileName in fileObj.files  track by $index">{{fileName}}>
 													<div ng-if="showInnercontent" class="iframe-wrap">
 														<a href="#" ng-click="showInnercontent = !showInnercontent" class="close-modal"></a>
-														<iframe class="file-iframe"ng-src="{{fileCtrl.getIframeUrl(fileObj.url,fileName)}}"></iframe>
+														<iframe class="file-iframe" ng-src="{{fileCtrl.getIframeUrl(fileObj.url,fileName)}}"></iframe>
 													</div>
 												</li>
 											</ul>
@@ -99,7 +99,7 @@
 											<a class="waves-effect amber darken-1 waves-light btn
 		" ng-click='fileCtrl.saveToDisk(fileObj.hash,fileCtrl.username)'><label ><i class="material-icons right ">send</i></label>Download</a>
 											<a class="waves-effect amber darken-1 waves-light btn
-		" ng-click='fileCtrl.deleteHash(fileObj.hash)'><label ><i class="material-icons right ">delete</i></label>Delete</a>
+		" ng-click='fileCtrl.deleteHash(fileObj.hash,$index)'><label ><i class="material-icons right ">delete</i></label>Delete</a>
 										</div>
 									</div>
 								</div>
@@ -150,8 +150,15 @@
 									</div>
 								</li>
 							</ul>
-							<button ng-click="projCtrl.togglePreview() ">Preview</button>
-							<iframe class="pagePreview " ng-show="projCtrl.preview " ng-src='{{projCtrl.currentUrl()}}'></iframe>
+							<a ng-click="projCtrl.modalTrigger()" class="modal-trigger" href="#">Preview</a>
+							<div id="projectModal" class="modal modal-fixed-footer">
+								<nav>
+									<div class="nav-wrapper blue-grey darken-2">
+										<a href="#!" class="brand-logo">{{projCtrl.currentProject()}}</a>
+									</div>
+								</nav>
+								<iframe class="file-iframe" ng-src='{{projCtrl.currentUrl()}}'></iframe>
+							</div>
 						</div>
 					</div>
 				</div>

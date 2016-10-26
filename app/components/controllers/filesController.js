@@ -20,10 +20,9 @@ function FilesController(FileFactory, PublishService, DiskFactory, IpfsService) 
 
   self.addHash = FileFactory.addHash;
 
-  self.deleteHash = function (hash) {
-    IpfsService.unPin(hash).then(() => {
-      // FileFactory.init();
-    });
+  self.deleteHash = function (hash,index) {
+    IpfsService.unPin(hash);
+    FileFactory.removeFile(index);
   }
 
   self.addToPublish = function (value) {
