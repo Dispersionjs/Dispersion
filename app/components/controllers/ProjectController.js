@@ -57,6 +57,7 @@ function projectController($http, ProjectService, $scope) {
     return imageTester.test(file);
   }
   self.modalTrigger = function () {
+    console.log('in modalTrigger')
     $('#projectModal').openModal()
   }
 }

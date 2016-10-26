@@ -13,18 +13,26 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JameyStiling/Dispersion.git"
+    "url": "git+https://github.com/dispersionjs/Dispersion.git"
   },
   "keywords": [
     "electron",
-    "ipfs"
+    "ipfs",
+    "ipns",
+    "dispersion",
+    "webhosting",
+    "p2p",
+    "peer-to-peer",
+    "distributed-web",
+    "dag",
+    "dht"
   ],
   "author": "Dispersion",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/JameyStiling/Dispersion/issues"
+    "url": "https://github.com/dispersionjs/Dispersion/issues"
   },
-  "homepage": "https://github.com/JameyStiling/Dispersion#readme",
+  "homepage": "http://dispersion.io",
   "dependencies": {
     "angular": "^1.5.8",
     "dialog": "^0.2.0",

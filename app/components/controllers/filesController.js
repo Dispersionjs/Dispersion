@@ -27,6 +27,7 @@ function FilesController(FileFactory, PublishService, DiskFactory, IpfsService, 
   }
 
   self.addToPublish = function (value) {
+    Materialize.toast("Staged for Publish!",3000);
     console.log('in add to publish, value: ', value);
     DiskFactory.addProject(value.pathToFile);
     PublishService.add({
