@@ -7,7 +7,7 @@ function fileFactory($q, IpfsService) {
   let fileData = [];
 
   function addToFileData(hashObj) {
-
+    hashObj.fileType = testFileType(hashObj);
     fileData.push(hashObj);
     storage.set('files', fileData, (error) => {
       if (error) {
@@ -16,6 +16,18 @@ function fileFactory($q, IpfsService) {
       }
     })
   }
+
+  function removeFile(index) {
+    fileData.splice(index,1);
+    storage.set('files', fileData, (error) => {
+      if (error) {
+        console.log('error in addFile to data in file Factory, the error is: \n');
+        console.error(error);
+      }
+    })
+  }
+
+
   function addHash() {
     dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] }, function (selected) {
       if (selected) {
@@ -44,26 +56,25 @@ function fileFactory($q, IpfsService) {
     })
   }
   function testFileType(item) {
-    //commented out all other lines to deal with error on empty file storage
-    return 'other'
-    // let fileName = item[Object.keys(item)].file
-    // // console.log(item)
-    // if (fileName.includes('.jpg') || fileName.includes('.png') || fileName.includes('.JPG') || fileName.includes('.PNG') || fileName.includes('.jpeg')) {
-    //   return 'image';
-    // } else if (!fileName.includes('.')) {
-    //   return 'folder';
-    // } else if (fileName.includes('.xl')) {
-    //   return 'excel';
-    // } else if (fileName.includes('.pdf') || fileName.includes('.txt') || fileName.includes('.doc')) {
-    //   return 'doc';
-    // } else {
-    //   return 'other';
-    // }
+    let fileName = item.file
+    if (fileName.includes('.jpg') || fileName.includes('.png') || fileName.includes('.JPG') || fileName.includes('.PNG') || fileName.includes('.jpeg')) {
+      return 'image';
+    } else if (!fileName.includes('.')) {
+      return 'folder';
+    } else if (fileName.includes('.xl')) {
+      return 'excel';
+    } else if (fileName.includes('.pdf') || fileName.includes('.txt') || fileName.includes('.doc')) {
+      return 'doc';
+    } else {
+      return 'other';
+    }
   }
+
   function getFileData() {
     return fileData;
   }
   return {
+    removeFile: removeFile,
     addHash: addHash,
     data: fileData,
     add: addToFileData,

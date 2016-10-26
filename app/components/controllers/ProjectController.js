@@ -21,10 +21,6 @@ function projectController($http, ProjectService, $scope) {
     self.showFiles = self.lastVersionIndex === undefined || index !== self.lastVersionIndex ? true : !self.showFiles;
     self.lastVersionIndex = index;
   }
-  self.preview = false;
-  self.togglePreview = () => {
-    self.preview = !self.preview;
-  }
   self.getMediaContentUrl = () => self.mediaContentUrl;
   self.currentProject = ProjectService.currentProject;//function
   //clean this function up
@@ -59,5 +55,8 @@ function projectController($http, ProjectService, $scope) {
   self.isImage = (file) => {
     let imageTester = /(\.jpeg$)|(\.jpg$)|(\.png$)|(\.gif$)|(\.json$)|(\.md$)|(\.log$)/i;
     return imageTester.test(file);
+  }
+  self.modalTrigger = function () {
+    $('#projectModal').openModal()
   }
 }

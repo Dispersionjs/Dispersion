@@ -20,12 +20,10 @@ function FilesController(FileFactory, PublishService, DiskFactory, IpfsService, 
 
   self.addHash = FileFactory.addHash;
 
-  ///investigae this, delete whereever neccessary  
-  self.deleteHash = function (hash) {
-    console.log('titties')
-    IpfsService.unPin(hash).then(() => {
-      // FileFactory.init();
-    });
+
+  self.deleteHash = function (hash, index) {
+    IpfsService.unPin(hash);
+    FileFactory.removeFile(index);
   }
 
   self.addToPublish = function (value) {
@@ -47,4 +45,9 @@ function FilesController(FileFactory, PublishService, DiskFactory, IpfsService, 
     // date, url, hash, filesArray, projectName
 
   }
+
+  self.getIframeUrl = function (fileObj, fileName) {
+    return fileObj + fileName;
+  }
+
 }

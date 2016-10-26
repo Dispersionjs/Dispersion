@@ -131,10 +131,8 @@ function ipfsService($q, $interval) {
     return $q(function (resolve, reject) {
       let pinRmCommand = 'ipfs pin rm ' + pinHash;
       exec(pinRmCommand, function (error, stdout, stderr) {
-        storage.remove(pinHash, function (error) {
-          if (error) reject(error);
-          resolve()
-        });
+        console.log(stdout)
+            resolve()
         if (error !== null) {
           reject(error);
         }
