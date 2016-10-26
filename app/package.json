@@ -7,6 +7,7 @@
     "test": "mocha test",
     "start": "electron .",
     "clean": "rm -rf ./dist",
+    "install:dispersion": "npm install && ./node_modules/bower/bin/bower install",
     "clean:osx": "rm -rf ./dist/osx",
     "pack": "npm run clean:osx && electron-packager . \"EA Todo\" --out=dist/osx --platform=darwin --arch=x64 --version=0.36.2 --icon=assets/osx/logo.icns --ignore=dist --ignore=assets --ignore=builder.json --ignore=bower.json --ignore=README.md --ignore=.gitignore --ignore=preview.png",
     "build": "npm run pack:osx && electron-builder \"dist/osx/EA Todo-darwin-x64/EA Todo.app\" --platform=osx --out=\"dist/osx\" --config=builder.json"
