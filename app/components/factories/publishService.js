@@ -44,9 +44,9 @@ function pubService($q) {
     if (snapshot) {
       // for (let key in pubObj) {
       // console.log('key in publishData', publishData[key])
-      // console.log('key in pobObj', pubObj[key])
+      console.log('unshifting after rehash of project', pubObj)
       console.log(publishData)
-      publishData[name].unshift(pubObj[0])
+      publishData[name].unshift(pubObj)
       // }
     } else {
       console.log('add to publish called in publish service');
@@ -70,7 +70,8 @@ function pubService($q) {
     add: addToPublish,
     init: init,
     currentlyPublished: getCurrentlyPublished,
-    setPublished: setCurrentlyPublished
+    setPublished: setCurrentlyPublished,
+    updatePublishData: updateStore
   }
 }
 

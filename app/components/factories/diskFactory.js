@@ -42,7 +42,7 @@ function diskFactory($q, PublishServic, IpfsService) {
     let pathToProjectFolder = path.resolve(__dirname + `/../projectFolder/` + projectName);
     fs.writeFile(pathToProjectFolder + fileName, data, (err) => {
       if (err) return console.error(err);
-      IpfsService.rehashProject(pathToProjectFolder, fileVersionObj, fileName)
+      IpfsService.rehashProject(pathToProjectFolder, fileVersionObj, fileName, projectName, true)
       // console.log('overwrote file at this path: \n', path.resolve(__dirname + `/../projectFolder` + projectFolderName + fileName))
     })
 
