@@ -11,8 +11,6 @@
 			<li class="fileVersionListItem"><button class="transparent"><i class="material-icons">skip_next</i></button></li>
 		</ul>
 
-		<select  class="input-field col s12" ng-options="theme as theme for theme in themes" ng-model="theme"></select>
-		<select ng-options="mode as mode for mode in modes" ng-model="mode"></select>
 		<div class="editor" ng-if="showEditor && !image" ng-model="editorContent" ui-ace="{
       useWrapMode: true,
       showGutter: true,
@@ -30,11 +28,36 @@
 		<div class="save-delete">
 			<button class="waves-effect waves-light btn" ng-click="saveFile()"><i class="material-icons left">done</i>Save</button>
 			<button class="waves-effect waves-light btn" ng-click="delete()"><i class="material-icons left">delete</i>Delete</button>
+			<select class="dropdown dropdown-button btn save-delete-buttons" ng-options="theme as theme for theme in themes" ng-model="theme"></select>
+			<select class="dropdown dropdown-button btn save-delete-buttons" ng-options="mode as mode for mode in modes" ng-model="mode"></select>
+			<!--<div class="dropdown">
+  				<a ng-click="dropdownfile()" class='dropdown-button btn' href='#' data-activates='dropdown1'>File Type</a>
+  				<div ng-show="showdropdownfile" id="myDropdown" class="dropdown-content1">
+    				<a href="#">Link 1</a>
+    				<a href="#">Link 2</a>
+    				<a href="#">Link 3</a>
+  				</div>
+			</div>
+			<div class="dropdown">
+  				<a ng-click="dropdownsettings()" class='dropdown-button btn' href='#' data-activates='dropdown1'>Settings</a>
+  				<div ng-show="showdropdownsettings" id="myDropdown" class="dropdown-content1">
+    				<a href="#">Link 1</a>
+    				<a href="#">Link 2</a>
+    				<a href="#">Link 3</a>
+  				</div>
+			</div>-->
 		</div>
+		
 	</div>
 	<div id="outer" ng-show="image">
 		<img ng-if="image" ng-src='{{projectobj.url + filename}}' />
 	</div>
+
+
+
+
+
+
 
 
 </div>
