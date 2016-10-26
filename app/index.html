@@ -133,7 +133,7 @@
 					</div>
 				</div>
 				<div ng-controller=" ProjectController as projCtrl ">
-					<h1 ng-bind="projCtrl.currentProject() "></h1>
+					<h1 ng-bind="projCtrl.currentProject()"></h1>
 					<div>
 						<ul>
 							<li ng-repeat="version in projCtrl.publishedVersions() | orderBy: '-date' track by $index ">
@@ -154,7 +154,7 @@
 							<div id="projectModal" class="modal modal-fixed-footer">
 								<nav>
 									<div class="nav-wrapper blue-grey darken-2">
-										<a href="#!" class="brand-logo">{{projCtrl.currentProject()}}</a>
+										<h4 class="project-modal-header">{{projCtrl.currentProject()}}</h4>
 									</div>
 								</nav>
 								<iframe class="file-iframe" ng-src='{{projCtrl.currentUrl()}}'></iframe>

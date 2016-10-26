@@ -244,7 +244,7 @@ border-radius: 2px;
 
 .file-iframe {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   }  
 
   .modal { 
@@ -256,3 +256,8 @@ border-radius: 2px;
       width: 90%;
     } 
   }
+
+.modal h4 {
+text-align: center;
+padding-top: 15px;
+}
