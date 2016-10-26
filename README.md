@@ -25,8 +25,12 @@ npm start
 ```
 
 
-##Usage
+## My Files
 
-Use the text box to enter file names either by typing them in or dragging and dropping the file. The plus symbol is used to add the file. 
+This page is used to add files to IPFS. These files can then be staged for publish, downloaded or deleted from Dispersion.
 
-Once the file is added it can be removed using the trashcan icon.
+## Publish 
+
+Publish pages on a fixed IPNS. Selecting the  + icon will publish to your IPNS. This can be mapped to a specific domain name.
+
+When selecting the pencil icon, the user can edit individual files and see a version history.
