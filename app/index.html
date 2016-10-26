@@ -119,22 +119,34 @@
 				</div>
 
 				<div class="project" ng-controller=" ProjectController as projCtrl ">
-					<h1 ng-bind="projCtrl.currentProject() "></h1>
+					<h1 ng-bind="projCtrl.currentProject()" class="amber"></h1>
 					<div>
 						<ul>
+							{{projCtrl.publishedVersions()}}
 							<li ng-repeat="version in projCtrl.publishedVersions() | orderBy: '-date' track by $index ">
 								<button class="waves-effect blue-grey waves-light btn" ng-class="$index=== projCtrl.lastProjectIndex && projCtrl.showIframe ? 'selected': 'notSelected';
 		" ng-click='projCtrl.selectVersion($index); projCtrl.toggleShowFiles($index)'>{{version.date |date:"MM/dd/yyyy 'at' h:mma "}}</button>
 							</li>
 						</ul>
-						<div ng-if="projCtrl.showFiles ">
+						<div ng-if="true">
+							{{projCtrl.filesList()}}
 							<ul>
 								<li ng-repeat="file in projCtrl.filesList() track by $index ">
 									<div>
-										{{file}}
+										<!--{{file}} {{projCtrl.filesList()}}
 
-										<file-history data-filename="{{file}} " data-index="{{$index}} " data-projectname="{{projCtrl.currentProject()}} " data-projectobject={{projCtrl.selectedVersion}}
-											data-mode="{{projCtrl.getMode(file)}} " data-image="{{projCtrl.isImage(file)}} "></file-history>
+										<hr>
+										<hr> {{$index}}
+										<hr>
+										<hr> {{projCtrl.currentProject()}}
+										<hr>
+										<hr> {{projCtrl.selectedVersion()}}
+										<hr>
+										<hr> {{projCtrl.publishedVersions()}}
+										<hr>
+										<hr> {{projCtrl.getMode(file)}} {{projCtrl.isImage(file)}}-->
+										<file-history data-filename="{{file}}" data-index="{{$index}}" data-projectname="{{'projCtrl.currentProject()'}}" data-projectobject="{{projCtrl.selectedVersion()}}"
+											data-mode="{{projCtrl.getMode(file)}}" data-image="{{projCtrl.isImage(file)}}"></file-history>
 									</div>
 								</li>
 							</ul>

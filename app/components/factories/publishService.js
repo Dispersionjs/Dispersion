@@ -29,6 +29,7 @@ function pubService($q) {
   }
   function setCurrentlyPublished(name) {
     currentlyPublished = name;
+    storage.set('currentlyPublished', name);
   }
   function updateStore() {
     // uncomment later, just for a check
@@ -37,17 +38,23 @@ function pubService($q) {
       currentlyPublished = data;
     })
   }
-  function addToPublish(pubObj) {
-    console.log('add to publish called in publish service');
-    console.log('pubObj in add to publish: \n', pubObj);
-    for (let key in pubObj) {
-      if (!publishData[key]) {
-        console.log('key, publishData');
-        console.log(key, publishData)
-        publishData[key] = pubObj[key];
-      } else {
-        console.log('this project has already been published')
-        //add more logic to maybe just append to array
+  function addToPublish(pubObj, snapshot = false) {
+    if (snapshot) {
+      for (let key in pubObj) {
+        publishData[key].push(pubObj[key][0])
+      }
+    } else {
+      console.log('add to publish called in publish service');
+      console.log('pubObj in add to publish: \n', pubObj);
+      for (let key in pubObj) {
+        if (!publishData[key]) {
+          console.log('key, publishData');
+          console.log(key, publishData)
+          publishData[key] = pubObj[key];
+        } else {
+          console.log('this project has already been published')
+          //add more logic to maybe just append to array
+        }
       }
     }
     updateStore()

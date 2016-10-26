@@ -15,8 +15,8 @@ function mainController($scope, PublishService, FileFactory, DiskFactory, IpfsSe
         return FileFactory.init()
       })
       .then(DiskFactory.init)
-      .then(FileHistoryFactory.init)
       .then(PublishService.init)
+      .then(FileHistoryFactory.init)
       .then(() => {
         $timeout(() => {
           self.view = 'files';

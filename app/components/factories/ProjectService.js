@@ -3,8 +3,6 @@ const testData = {
     {
       "date": "2016-10-14T18:22:23.133Z",
       "hash": "QmehudYxpxDW3egZraNvq7MKEXzky8GLRcxJ6VbmpUcbxV",
-      "publish": true,
-      "changed": "/smoke_trail.jpeg",
       "url": "https://ipfs.io/ipfs/QmehudYxpxDW3egZraNvq7MKEXzky8GLRcxJ6VbmpUcbxV",
       "files": [
         "/index.html",
@@ -15,8 +13,6 @@ const testData = {
     {
       "date": "2016-10-15T18:22:23.133Z",
       "hash": "QmPdqizZHVSKbCGkv6rXaotXwdwRC5jHQLUNy2niEfNg1o",
-      "publish": true,
-      "changed": "/styles.css",
       "url": "https://ipfs.io/ipfs/QmPdqizZHVSKbCGkv6rXaotXwdwRC5jHQLUNy2niEfNg1o",
       "files": [
         "/index.html",
@@ -28,8 +24,6 @@ const testData = {
     {
       "date": "2016-10-16T18:22:23.133Z",
       "hash": "QmXEib3wKC3ZnNQGyLJdZJ5iPpmgoqoJyqPfLNdTRbwtUg",
-      "publish": true,
-      "changed": "/main.js",
       "url": "https://ipfs.io/ipfs/QmXEib3wKC3ZnNQGyLJdZJ5iPpmgoqoJyqPfLNdTRbwtUg",
       "files": [
         "/index.html",
@@ -41,8 +35,6 @@ const testData = {
     {
       "date": "2016-10-17T18:22:23.133Z",
       "hash": "QmTG9nQUhYJdH5uraNyVdDftoTWDhBgPtTbdCp9x7Xawrx",
-      "publish": true,
-      "changed": "/index.html",
       "url": "https://ipfs.io/ipfs/QmTG9nQUhYJdH5uraNyVdDftoTWDhBgPtTbdCp9x7Xawrx",
       "files": [
         "/index.html",
@@ -54,8 +46,6 @@ const testData = {
     {
       "date": "2016-10-18T18:22:23.133Z",
       "hash": "QmT45exg6ZEiCBxC4LfoVZPvPkzdtQvNqWxbF9CJN3Xnec",
-      "publish": false,
-      "changed": "/index.html",
       "url": "https://ipfs.io/ipfs/QmT45exg6ZEiCBxC4LfoVZPvPkzdtQvNqWxbF9CJN3Xnec",
       "files": [
         "/index.html",
@@ -93,23 +83,25 @@ const testData = {
   ]
 }
 angular.module('ProjectService', [])
-  .service('ProjectService', ['$http', '$q', projectService]);
+  .service('ProjectService', ['$http', '$q', 'PublishService', projectService]);
 
 
-function projectService($http, $q) {
+function projectService($http, $q, PublishService) {
   /**returns length -1  of currently selected project data array */
   const self = this;
-  self.projectArrayLength = () => {
-    if (self.projectArray.length) {
-      return self.projectArray.length - 1;
-    } 
+  self.init = () => {
+    $q((resolve, reject) => {
+      storage.get('currentlyPublished', (error, data) => {
+        if (error) reject(error);
+        resolve(data);
+      })
+    })
   }
-  self.publishedArrayLength = () => self.publishedProjectVersions().length - 1;
+  // self.publishedArrayLength = () => self.publishedProjectVersions().length - 1;
   /** returns all published event objects from the projectArray history */
   self.publishedProjectVersions = () => {
-    return self.projectArray.filter((version) => {
-      return version.publish
-    });
+    if (!PublishService.data) return [];
+    return PublishService.data[self.selected]
   }
 
   /** returns the url of the currently selected project version */
@@ -124,14 +116,13 @@ function projectService($http, $q) {
 
   //should refactor self one \/  
   /** returns a string that was the last changed file of the publish event */
-  self.currentFile = () => self.selectedVersion.changed;
-
-  self.currentFileType = () => self.currentFile();
+  // self.currentFile = () => self.selectedVersion.changed;
+  // self.currentFileType = () => self.currentFile();
 
   self.changeSelectedVersion = (index) => {
     //will need to change to account for unpublished projects
     //
-    self.selectedVersion = self.publishedProjectVersions()[self.publishedArrayLength() - index];
+    self.currentIndex = index;
     // self.selectedVersion = self.publishedProjectVersions.length === 1 ? self.publishedProjectVersions()[self.publishedArrayLength() - index] : null;
 
   }
@@ -139,11 +130,12 @@ function projectService($http, $q) {
   self.getContentUrl = () => {
     return self.currentUrl() + self.currentFile();
   }
-  self.selectedVersionFilesList = () => self.selectedVersion.files;
-  self.data = testData;
-  self.publishedProject = 'Dispersion';
-  self.currentProject = () => self.publishedProject;
-  self.projectArray = self.data[self.publishedProject];
-  self.newestVersion = self.projectArray[self.projectArrayLength()];
-  self.selectedVersion = self.newestVersion;
+  self.currentIndex = 0;
+  self.selectedVersionFilesList = () => self.selectedVersion().files;
+  self.selected = 'test';
+  self.currentProject = () => self.selected;
+  self.selectedVersion = () => {
+    if (!self.publishedProjectVersions()) return [];
+    return self.publishedProjectVersions()[self.currentIndex];
+  }
 }
