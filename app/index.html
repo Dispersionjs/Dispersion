@@ -57,13 +57,13 @@
 						</div>
 					</div>
 
-					<div class="row ">
-						<ul class="collapsible col s12 " data-collapsible="accordion ">
+					<div class="row">
+						<ul class="collapsible col s12" data-collapsible="accordion ">
 							<!--LI HEADER CONTENT-->
-							<li class="collection-item grey lighten-2 avatar " ng-repeat='fileObj in fileCtrl.getFileData() | orderBy: sortBy track by $index '>
+							<li class="collection-item grey lighten-2 avatar" ng-repeat='fileObj in fileCtrl.getFileData() | orderBy: sortBy track by $index '>
 								<div class="collapsible-header ">
 									<!--Set Icon-->
-									<i ng-if="fileObj.fileType==='folder' " class="material-icons circle ">folder</i>
+									<i ng-if="fileObj.fileType==='folder'" class="material-icons circle ">folder</i>
 									<i ng-if="fileObj.fileType==='other' " class="material-icons circle ">web</i>
 									<i ng-if="fileObj.fileType==='image' " class="material-icons circle ">visibility</i>
 									<i ng-if="fileObj.fileType==='doc' " class="material-icons circle ">description</i>

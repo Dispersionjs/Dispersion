@@ -13,7 +13,7 @@
 			</li>
 			<li class="fileVersionListItem"><button class="transparent"><i class="material-icons">skip_next</i></button></li>
 		</ul>
-		<div class="editor" ng-if="showEditor && !image" ng-model="editorContent" ui-ace="{
+		<div class="editor" ng-show="showEditor && !image" ng-model="editorContent" ui-ace="{
       useWrapMode: true,
       showGutter: true,
       onLoad: aceLoaded,

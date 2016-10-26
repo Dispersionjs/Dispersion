@@ -81,6 +81,33 @@ function ipfsService($q, $interval, PublishService) {
   function rehashProject(filepath, fileVersionObject, fileName, projectName, addToPublishHistory = false) {
     //file or directory to be hashed.
     // recursively hashes directory or file and adds to ipfs
+    // let command = `ipfs add -r "${filepath}"`;
+
+    // exec(command, function (error, stdout, stderr) {
+    //   //grabs just the filename from the absolute path of the added file
+
+    //   let hashArray = stdout.trim().split('\n');
+
+    //   let topHash = hashArray[hashArray.length - 1].split(' ')[1];
+    //   console.log(topHash)
+    //   fileVersionObject.hash = topHash;
+    //   fileVersionObject.url = `https://ipfs.io/ipfs/${topHash}${fileName}`;
+
+    //   let hashObj = {
+    //     "file": fileName,
+    //     "hash": topHash[1],
+    //     "url": "https://ipfs.io/ipfs/" + topHash[1] + fileName,
+    //   }
+    //   hashArray.forEach(function (hString, index) {
+    //     let tempArray = hString.split(' ');
+    //     var requestObj = {
+    //       [tempArray[1]]: {
+    //         "url": "https://ipfs.io/ipfs/" + tempArray[1]
+    //       }
+    //     }
+    //     requestHashes(requestObj)
+    //   })
+    // })
     let command = `ipfs add -r "${filepath}"`;
 
     exec(command, function (error, stdout, stderr) {
@@ -94,19 +121,13 @@ function ipfsService($q, $interval, PublishService) {
       fileVersionObject.url = `https://ipfs.io/ipfs/${topHash}${fileName}`;
 
       let hashObj = {
-        "file": file,
         "hash": topHash,
         "date": new Date().toUTCString(),
         "url": "https://ipfs.io/ipfs/" + topHash,
         'files': [],
         'publish': false
       }
-      if ((/\./.test(tempArray[tempArray.length - 1])) && index < hashArray.length - 1) {
-        console.log('tempArray', tempArray)
-        // hashObj.files.push(`/${tempArray[2].split('/').slice(1).join('/')}`)
-        hashObj.files.push(`/${tempArray.slice(2).join('\ ').split('/').slice(1).join('/')}`)
-      }
-      PublishService.add(hashObj, true, projectName)
+
 
       hashArray.forEach(function (hString, index) {
         let tempArray = hString.split(' ');
@@ -115,24 +136,14 @@ function ipfsService($q, $interval, PublishService) {
             "url": "https://ipfs.io/ipfs/" + tempArray[1]
           }
         }
+        if ((/\./.test(tempArray[tempArray.length - 1])) && index < hashArray.length - 1) {
+          console.log('tempArray', tempArray)
+          // hashObj.files.push(`/${tempArray[2].split('/').slice(1).join('/')}`)
+          hashObj.files.push(`/${tempArray.slice(2).join('\ ').split('/').slice(1).join('/')}`)
+        }
+        requestHashes(requestObj)
       })
-
-      requestHashes(requestObj)
-
-      // let hashObj = {
-      //   "file": fileName,
-      //   "hash": topHash[1],
-      //   "url": "https://ipfs.io/ipfs/" + topHash[1] + fileName,
-      // }
-      // hashArray.forEach(function (hString, index) {
-      //   let tempArray = hString.split(' ');
-      //   var requestObj = {
-      //     [tempArray[1]]: {
-      //       "url": "https://ipfs.io/ipfs/" + tempArray[1]
-      //     }
-      //   }
-      //   requestHashes(requestObj)
-      // })
+      PublishService.add(hashObj, true, projectName)
     })
   }
 
@@ -289,6 +300,6 @@ function ipfsService($q, $interval, PublishService) {
     saveToDisk: saveToDisk,
     pin: addPin,
     unPin: unPin,
-    publish: publishHash,
+    publish: publishHash
   }
 }
