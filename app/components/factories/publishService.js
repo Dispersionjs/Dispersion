@@ -38,11 +38,15 @@ function pubService($q) {
       currentlyPublished = data;
     })
   }
-  function addToPublish(pubObj, snapshot = false) {
+  function addToPublish(pubObj, snapshot = false, name = '') {
+    console.log('publishData ', publishData)
+    console.log('pubObj ', pubObj)
     if (snapshot) {
-      for (let key in pubObj) {
-        publishData[key].push(pubObj[key][0])
-      }
+      // for (let key in pubObj) {
+      // console.log('key in publishData', publishData[key])
+      // console.log('key in pobObj', pubObj[key])
+      publishData[name].unshift(pubObj[0])
+      // }
     } else {
       console.log('add to publish called in publish service');
       console.log('pubObj in add to publish: \n', pubObj);

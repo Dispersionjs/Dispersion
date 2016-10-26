@@ -130,6 +130,7 @@ function projectService($http, $q, PublishService) {
   self.getContentUrl = () => {
     return self.currentUrl() + self.currentFile();
   }
+  self.changeSelectedProject = (projectName) => { self.selected = projectName }
   self.currentIndex = 0;
   self.selectedVersionFilesList = () => self.selectedVersion().files;
   self.selected = 'test';

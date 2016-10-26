@@ -122,7 +122,7 @@
 					<h1 ng-bind="projCtrl.currentProject()" class="amber"></h1>
 					<div>
 						<ul>
-							{{projCtrl.publishedVersions()}}
+							<!--{{projCtrl.publishedVersions()}}-->
 							<li ng-repeat="version in projCtrl.publishedVersions() | orderBy: '-date' track by $index ">
 								<button class="waves-effect blue-grey waves-light btn" ng-class="$index=== projCtrl.lastProjectIndex && projCtrl.showIframe ? 'selected': 'notSelected';
 		" ng-click='projCtrl.selectVersion($index); projCtrl.toggleShowFiles($index)'>{{version.date |date:"MM/dd/yyyy 'at' h:mma "}}</button>
