@@ -1,3 +1,7 @@
+<p align="left">
+  <img src="https://ipfs.io/ipfs/QmdjC7zjKi7pYoo3YatWL6pNvJqDxAZJhXBBeXzXhzhEwp" width="100"/>
+</p>
+
 #Dispersion
 
 A desktop application that allows users to save files on their IPFS local node. 
