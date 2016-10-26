@@ -17,8 +17,10 @@ function projectService($http, $q, PublishService) {
   // self.publishedArrayLength = () => self.publishedProjectVersions().length - 1;
   /** returns all published event objects from the projectArray history */
   self.publishedProjectVersions = () => {
-    if (!PublishService.data) return [];
-    return PublishService.data[self.selected]
+    if (!PublishService.data || !PublishService.data[self.selected]) return [];
+    return PublishService.data[self.selected].filter((pubObj) => {
+      return pubObj.publish === true;
+    })
   }
 
   /** returns the url of the currently selected project version */
