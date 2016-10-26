@@ -220,7 +220,7 @@ height: 180px;
   outline:none;
 }
 .projectView  .editor {
-  width: 60%;
+  width: 100%;
   min-height: 400px;
   max-height: 800px; 
 }
@@ -303,4 +303,13 @@ height: 180px;
 
 .pub-version-list {
   padding-right: 5px;
+}
+
+.ace-chaos .ace_print-margin {
+    border-left: none;
+    background: none;
+}
+
+div.ace_print-margin {
+    width: 0 !important;
 }

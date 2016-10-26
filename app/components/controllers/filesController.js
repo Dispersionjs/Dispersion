@@ -26,6 +26,7 @@ function FilesController(FileFactory, PublishService, DiskFactory, IpfsService) 
   }
 
   self.addToPublish = function (value) {
+    Materialize.toast("Staged for Publish!",3000);
     PublishService.add({
       [value.file]: [{
         'date': value.date,
