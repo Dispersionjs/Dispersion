@@ -1,7 +1,25 @@
+@font-face {
+  font-family: "Julius Sans One";
+  src: url("./../fonts/Julius_Sans_One/JuliusSansOne-Regular.ttf");
+}
+
 
 h1 {
   font-size: 32px;
   text-align: center;
+}
+
+.brand-logo {
+  font-family: "Julius Sans One";
+  font-weight: 200;
+  letter-spacing: .15em;
+}
+
+i {
+  color: white;
+}
+.file-icon-images i {
+  color: #ffc107;
 }
 
 .sel-box{
@@ -321,3 +339,12 @@ div.ace_print-margin {
  .backdrop{
    background-color: #455a64;
  }
+ .collection-item>.collapsible-header {
+  transition: 400ms ease;
+}
+.collection-item>.collapsible-header:hover {
+  background-color: rgba(255,255,255,0.7) !important;
+}
+.body-wrapper {
+  padding: 5px;
+}
