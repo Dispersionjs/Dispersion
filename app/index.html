@@ -67,11 +67,11 @@
 									<i ng-if="fileObj.fileType==='excel' " class="material-icons  ">insert_chart</i>
 									<i ng-if="fileObj.fileType==='video' " class="material-icons ">play_arrow</i>
 									<!--Header Li TEXT-->
-									<span class="title text-darken-3 " ng-bind="fileObj.file"></span>
+									<span class="title blue-grey-text" ng-bind="fileObj.file"></span>
 									<span class="right ">
 										<!--<span class="left ">{{fileObj.date | date:'shortDate'}}</span>-->
 									<!--<note> fix this by adding custom filter funciton</note>-->
-									<span class="left ">{{fileObj.date}}</span>
+									<span class="left " ng-bind="fileCtrl.formatDate(fileObj.date) |  date:'MM/dd/yyyy'"></span>
 									<!--<i class="material-icons ">info_outline</i>-->
 									</span>
 								</div>

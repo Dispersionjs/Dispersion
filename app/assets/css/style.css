@@ -3,6 +3,9 @@
   src: url("./../fonts/Julius_Sans_One/JuliusSansOne-Regular.ttf");
 }
 
+html {
+  font-weight: 300;
+}
 
 h1 {
   font-size: 32px;
