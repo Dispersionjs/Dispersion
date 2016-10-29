@@ -317,3 +317,7 @@ height: 180px;
 div.ace_print-margin {
     width: 0 !important;
 }
+
+ .backdrop{
+   background-color: #455a64;
+ }

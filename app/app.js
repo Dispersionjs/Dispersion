@@ -30,7 +30,8 @@ angular.module('myApp', [
   'ProjectController',
   'FileHistoryDirective',
   'FileHistoryController',
-  'FileHistoryFactory'
+  'FileHistoryFactory',
+  'ui.materialize'
 ])
   .config(['$sceProvider', function ($sceProvider) {
     $sceProvider.enabled(false);
