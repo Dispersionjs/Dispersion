@@ -25,6 +25,7 @@ function FilesController(FileFactory, PublishService, DiskFactory, IpfsService, 
   };
 
   self.deleteHash = function (hash, index) {
+    Materialize.toast("File Deleted!", 3000);
     IpfsService.unPin(hash);
     FileFactory.removeFile(index);
   }
