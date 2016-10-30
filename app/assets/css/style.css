@@ -7,6 +7,7 @@ html {
   font-weight: 300;
 }
 
+
 h1 {
   font-size: 32px;
   text-align: center;
@@ -17,6 +18,12 @@ h1 {
   font-weight: 200;
   letter-spacing: .15em;
 }
+
+.tabs .indicator {
+    /*color: #4db6ac;*/
+    background-color: #607d8b ;
+}
+
 
 i {
   color: white;
