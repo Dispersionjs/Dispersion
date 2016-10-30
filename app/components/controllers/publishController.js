@@ -14,8 +14,16 @@ function PublishController(PublishService, IpfsService, DiskFactory, ProjectServ
     return self.currentlyPublished() === projectName;
   }
   self.setProjectView = function (projectName) {
+    console.log('setting project view for: ', projectName)
     ProjectService.changeSelectedProject(projectName)
   }
+
+  // self.addPubDataOnEdit = function (pubObj, projectName) {
+  //   console.log('when clicked edit, adding this to published:', pubObj)
+  //   pubObj[0].publish = true;
+  //   PublishService.unshiftForEditFix(pubObj[0], projectName)
+  //   ProjectService.changeSelectedProject(projectName)
+  // }
 
 
 

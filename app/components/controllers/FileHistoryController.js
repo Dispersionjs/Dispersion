@@ -304,6 +304,9 @@ function fileHistoryController(ProjectService, $scope, $http, DiskFactory, FileH
     "twilight",
     "vibrant_ink"
   ];
+  $scope.updateEditorContent();
+  $scope.recordIndex();
+  $scope.toggleShowInfo();
 }
 
 
