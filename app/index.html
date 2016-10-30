@@ -182,24 +182,28 @@
 						<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>-->
 						<!--SIDE NAV-->
 						<!--SIDE NAV-->
-						<div ng-controller=" FileHistoryController as histCtrl ">
-						<ul class="side-nav fixed" style="margin-top:112px">
+						
+						<!--<ul class="side-nav fixed" style="margin-top:112px">
 							<button ng-click="projCtrl.modalTrigger()" class="proj-modal-button waves-effect waves-light blue-grey btn" href="#">Preview</button>
 							<li ng-repeat="file in projCtrl.filesList() track by $index ">
+
+								<div ng-controller=" FileHistoryController as histCtrl ">
 								<a ng-click="histCtrl.updateEditorContent(); histCtrl.recordIndex(); histCtrl.toggleShowInfo();">{{filename.slice(1)}}</a>
+								</div>
+								
 							</li>
 						</ul>
-						</div>
+						-->
 
 
-						<!--<ul>
+						<ul>
 							<li ng-repeat="file in projCtrl.filesList() track by $index ">
 								<div>
 									<file-history data-filename="{{file}}" data-index="{{$index}}" data-projectname="{{projCtrl.currentProject()}}" data-projectobject="{{projCtrl.selectedVersion()}}"
 										data-mode="{{projCtrl.getMode(file)}}" data-image="{{projCtrl.isImage(file)}}"></file-history>
 								</div>
 							</li>
-						</ul>-->
+						</ul>
 						<!--SIDE NAV-->
 
 						<div id="projectModal" class="modal modal-fixed-footer">
