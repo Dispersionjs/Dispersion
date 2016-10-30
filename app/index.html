@@ -118,7 +118,7 @@
 		<div class="row projectView " ng-show="mainCtrl.view==='project' " style="position: absolute; width:100%; height:100% ">
 
 			<div ng-controller=" ProjectController as projCtrl ">
-				<!--NavBar in Project Edit Page-->
+				<!--NAVBAR in Project Edit Page-->
 				<div class="navbar-fixed ">
 					<nav>
 						<div class="nav-wrapper amber darken-2 ">
@@ -133,9 +133,7 @@
 						</div>
 					</nav>
 				</div>
-
-
-
+				<!--NAVBAR in Project Edit Page-->
 				<div>
 					<!--VERSION TABS HERE-->
 					<div class="row">
@@ -154,48 +152,17 @@
 					<div ng-if="projCtrl.showFiles ">
 
 						<!--SIDE NAV-->
-						<!--<div class = "row">
-						<ul id="slide-out" class="side-nav fixed" style="margin-top:112px">
-							<li><a href="#!">First Sidebar Link</a></li>
-							<li><a href="#!">Second Sidebar Link</a></li>
-						</ul>
-						<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
-						</div>-->
-
-						<!--<ul id="slide-out" class="side-nav">
-							<li>
-								<div class="userView">
-									<img class="background" src="images/office.jpg">
-									<a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
-									<a href="#!name"><span class="white-text name">John Doe</span></a>
-									<a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
-								</div>
-							</li>
-							<li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-							<li><a href="#!">Second Link</a></li>
-							<li>
-								<div class="divider"></div>
-							</li>
-							<li><a class="subheader">Subheader</a></li>
-							<li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-						</ul>
-						<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>-->
-						<!--SIDE NAV-->
-						<!--SIDE NAV-->
-						
 						<!--<ul class="side-nav fixed" style="margin-top:112px">
 							<button ng-click="projCtrl.modalTrigger()" class="proj-modal-button waves-effect waves-light blue-grey btn" href="#">Preview</button>
 							<li ng-repeat="file in projCtrl.filesList() track by $index ">
-
-								<div ng-controller=" FileHistoryController as histCtrl ">
-								<a ng-click="histCtrl.updateEditorContent(); histCtrl.recordIndex(); histCtrl.toggleShowInfo();">{{filename.slice(1)}}</a>
-								</div>
-								
+								<file-history data-filename="{{file}}" data-index="{{$index}}" data-projectname="{{projCtrl.currentProject()}}" data-projectobject="{{projCtrl.selectedVersion()}}"
+										data-mode="{{projCtrl.getMode(file)}}" data-image="{{projCtrl.isImage(file)}}"></file-history>
 							</li>
-						</ul>
-						-->
+						</ul>-->
+						<!--SIDE NAV-->
 
-
+						
+						<!--ORIGINAL - NO SIDE NAV-->
 						<ul>
 							<li ng-repeat="file in projCtrl.filesList() track by $index ">
 								<div>
@@ -204,7 +171,7 @@
 								</div>
 							</li>
 						</ul>
-						<!--SIDE NAV-->
+						<!--ORIGINAL - NO SIDE NAV-->
 
 						<div id="projectModal" class="modal modal-fixed-footer">
 							<nav>

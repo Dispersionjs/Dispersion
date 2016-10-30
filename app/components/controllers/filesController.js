@@ -38,7 +38,7 @@ function FilesController(FileFactory, PublishService, DiskFactory, IpfsService, 
       [value.file]: [{
         'date': value.date,
         'hash': value.hash,
-        'publish': false,
+        'publish': true,
         'changed': null,
         'url': value.url,
         'files': value.files

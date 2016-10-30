@@ -1,6 +1,11 @@
 
 <div class="individual-file-partial">
-	<a ng-click="updateEditorContent(); recordIndex(); toggleShowInfo();">{{filename.slice(1)}}</a>
+	<buttn class = "btn" ng-click="updateEditorContent(); recordIndex(); toggleShowInfo();">{{filename.slice(1)}}</button>
+	
+	<!--FOR SIDENAV switch the BTNS to A's below-->
+	<!--<a ng-click="updateEditorContent(); recordIndex(); toggleShowInfo();">{{filename.slice(1)}}</a>-->
+	<!--FOR SIDENAV BTNS are A's below-->
+
 	<div class="filediv" ng-show="showInfo" ng-if="!image" >
 		<!--<div class="filediv" ng-show="showInfo" ng-if="!image">-->
 		<ul class="fileVersionList">
