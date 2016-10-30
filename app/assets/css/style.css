@@ -95,8 +95,11 @@ blockquote{
 }
 
 .project-nav-bar{
-  font-size: 2.3em; 
+  font-size: 2.1rem; 
   margin-left: 30px;
+  font-family: "Julius Sans One";
+  font-weight: 200;
+  letter-spacing: .15em;
 }
 
 .collection-item {
