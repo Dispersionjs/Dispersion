@@ -38,6 +38,13 @@ function pubService($q) {
       currentlyPublished = data;
     })
   }
+  // //unshift for edit fix is here, add an unhashed object for edit purposes//
+  // function unshiftForEditFix(pubObj, name) {
+  //   console.log('unshifting pubObj  ', pubObj, "onto  ",name )
+  //   publishData[name].unshift(pubObj)
+  //   updateStore()
+  // }
+
   function addToPublish(pubObj, snapshot = false, name = '') {
     console.log('publishData ', publishData)
     console.log('pubObj ', pubObj)
@@ -46,6 +53,7 @@ function pubService($q) {
       // console.log('key in publishData', publishData[key])
       console.log('unshifting after rehash of project', pubObj)
       console.log(publishData)
+      //THIS LINE RIGHT HERE
       publishData[name].unshift(pubObj)
       // }
     } else {
@@ -71,6 +79,7 @@ function pubService($q) {
     init: init,
     currentlyPublished: getCurrentlyPublished,
     setPublished: setCurrentlyPublished,
+    // unshiftForEditFix: unshiftForEditFix,
     updatePublishData: updateStore
   }
 }

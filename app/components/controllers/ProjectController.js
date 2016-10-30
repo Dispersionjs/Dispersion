@@ -17,6 +17,23 @@ function projectController($http, ProjectService, $scope) {
   self.showMedia = false;
   self.showFiles = false;
   self.lastProjectIndex = null;
+  self.fileContentViewIndex = null;
+  self.currentlySelectedFile = null;
+
+  self.setFileContentViewIndex = (index) => {
+    self.fileContentViewIndex = index;
+  }
+  self.changeCurrentlySelectedFile = (fileName, index = 0) => {
+
+    if (self.fileContentViewIndex === null || self.currentlySelectedFile !== fileName) {
+      self.showEditor = true;
+    } else {
+      self.showEditor = false;
+    }
+    self.setFileContentViewIndex(index);
+    return self.currentlySelectedFile = fileName;
+  }
+
   self.toggleShowFiles = (index) => {
     self.showFiles = self.lastVersionIndex === undefined || index !== self.lastVersionIndex ? true : !self.showFiles;
     self.lastVersionIndex = index;
@@ -26,11 +43,12 @@ function projectController($http, ProjectService, $scope) {
   //clean this function up
   self.selectVersion = function (index) {
     ProjectService.changeSelectedVersion(index);
-    if (self.showIframe && self.lastProjectIndex !== null && index === self.lastProjectIndex) {
-      self.showIframe = false;
-    } else {
-      self.showIframe = true;
-    }
+    // if (self.showIframe && self.lastProjectIndex !== null && index === self.lastProjectIndex) {
+    //   // if (self.showIframe && self.lastProjectIndex !== null && index === self.lastProjectIndex) {
+    //   self.showIframe = false;
+    // } else {
+    //   self.showIframe = true;
+    // }
     self.lastProjectIndex = index;
   }
   self.getMode = function (filename) {
