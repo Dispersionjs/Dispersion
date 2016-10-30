@@ -116,40 +116,92 @@
 			</div>
 		</div>
 		<div class="row projectView " ng-show="mainCtrl.view==='project' " style="position: absolute; width:100%; height:100% ">
-			<div class="navbar-fixed ">
-				<nav>
-					<div class="nav-wrapper amber darken-2 ">
-						<a class="project-nav-bar">Dispersion</a>
-						<!--<a src="./assets/images/pedal.png " class="brand-logo left ">
-								<img src="./assets/images/pedal.png " alt="some_text " style="width:25px;height:25px; ">Dispersion
-							</a>-->
-						<ul id="nav-mobile " class="right ">
-							<li class='active fileNav'><a ng-click="mainCtrl.view='files' " href="# ">My Files</a></li>
-							<li class='pubNav'><a ng-click="mainCtrl.view='publish'" href="# ">Publish</a></li>
-							<li class='pubNav'><a class="modal-trigger " href="#modal1 "><i class="large material-icons ">settings</i></a></li>
-						</ul>
-					</div>
-				</nav>
-			</div>
+
 			<div ng-controller=" ProjectController as projCtrl ">
-				<h1 ng-bind="projCtrl.currentProject()"></h1>
+				<!--NavBar in Project Edit Page-->
+				<div class="navbar-fixed ">
+					<nav>
+						<div class="nav-wrapper amber darken-2 ">
+							<div class="brand-logo center">Editing: <span ng-bind="projCtrl.currentProject()"></span></div>
+							<a src="./assets/images/pedal.png " class="brand-logo left ">
+								<img src="./assets/images/pedal.png " alt="some_text " style="width:30px;height:30px;margin-right:10px; margin-left:10px;">
+							</a>
+
+							<ul id="nav-mobile " class="right ">
+								<li class='pubNav'><a class="btn blue-grey" ng-click="mainCtrl.view='publish'">Back to Publish</a></li>
+							</ul>
+						</div>
+					</nav>
+				</div>
+
+
+
 				<div>
-					<ul class="pub-version-list">
-						<li ng-repeat="version in projCtrl.publishedVersions() | orderBy: '-date' track by $index ">
-							<button class="waves-effect blue-grey waves-light btn" ng-class="$index=== projCtrl.lastProjectIndex && projCtrl.showIframe ? 'selected': 'notSelected';
-		" ng-click='projCtrl.selectVersion($index); projCtrl.toggleShowFiles($index)'>{{version.date |date:"MM/dd/yyyy 'at' h:mma "}}</button>
-						</li>
-					</ul>
+					<!--VERSION TABS HERE-->
+					<div class="row">
+						<div class="col s12">
+							<ul tabs reload="allTabContentLoaded">
+								<li class="tab col s3" ng-repeat="version in projCtrl.publishedVersions() | orderBy: '-date' track by $index ">
+									<a class="waves-effect waves-light" ng-class="$index=== projCtrl.lastProjectIndex && projCtrl.showIframe ? 'selected': 'notSelected';
+		" ng-click='projCtrl.selectVersion($index); projCtrl.toggleShowFiles($index)'><span class="blue-grey-text lighten-2 " ng-bind= 'version.date | date:"MM/dd/yyyy" '></span></a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<!--VERSION TABS HERE-->
+
+
 					<div ng-if="projCtrl.showFiles ">
-						<ul>
+
+						<!--SIDE NAV-->
+						<!--<div class = "row">
+						<ul id="slide-out" class="side-nav fixed" style="margin-top:112px">
+							<li><a href="#!">First Sidebar Link</a></li>
+							<li><a href="#!">Second Sidebar Link</a></li>
+						</ul>
+						<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+						</div>-->
+
+						<!--<ul id="slide-out" class="side-nav">
+							<li>
+								<div class="userView">
+									<img class="background" src="images/office.jpg">
+									<a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
+									<a href="#!name"><span class="white-text name">John Doe</span></a>
+									<a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+								</div>
+							</li>
+							<li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+							<li><a href="#!">Second Link</a></li>
+							<li>
+								<div class="divider"></div>
+							</li>
+							<li><a class="subheader">Subheader</a></li>
+							<li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+						</ul>
+						<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>-->
+						<!--SIDE NAV-->
+						<!--SIDE NAV-->
+						<div ng-controller=" FileHistoryController as histCtrl ">
+						<ul class="side-nav fixed" style="margin-top:112px">
 							<button ng-click="projCtrl.modalTrigger()" class="proj-modal-button waves-effect waves-light blue-grey btn" href="#">Preview</button>
+							<li ng-repeat="file in projCtrl.filesList() track by $index ">
+								<a ng-click="histCtrl.updateEditorContent(); histCtrl.recordIndex(); histCtrl.toggleShowInfo();">{{filename.slice(1)}}</a>
+							</li>
+						</ul>
+						</div>
+
+
+						<!--<ul>
 							<li ng-repeat="file in projCtrl.filesList() track by $index ">
 								<div>
 									<file-history data-filename="{{file}}" data-index="{{$index}}" data-projectname="{{projCtrl.currentProject()}}" data-projectobject="{{projCtrl.selectedVersion()}}"
 										data-mode="{{projCtrl.getMode(file)}}" data-image="{{projCtrl.isImage(file)}}"></file-history>
 								</div>
 							</li>
-						</ul>
+						</ul>-->
+						<!--SIDE NAV-->
+
 						<div id="projectModal" class="modal modal-fixed-footer">
 							<nav>
 								<div class="nav-wrapper blue-grey darken-2">
@@ -211,10 +263,10 @@
         })
         // the "href " attribute of .modal-trigger must specify the modal ID that wants to be triggered
          $('.modal-trigger').leanModal();
-
 				 $('.collapsible').collapsible({ accordion : false });
 				 // A setting that changes the collapsible behavior to expandable instead of the default accordion style 
         $('select').material_select();
+				 $(".button-collapse").sideNav();
 
     });
 </script>

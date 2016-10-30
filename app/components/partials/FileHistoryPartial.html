@@ -1,6 +1,7 @@
+
 <div class="individual-file-partial">
-	<button class="waves-effect waves-light grey btn" ng-click="updateEditorContent(); recordIndex(); toggleShowInfo();">{{filename.slice(1)}}</button>
-	<div class="filediv" ng-show="showInfo" ng-if="!image">
+	<!--<a ng-click="updateEditorContent(); recordIndex(); toggleShowInfo();">{{filename.slice(1)}}</a>-->
+	<div class="filediv" ng-show="showInfo" ng-if="!image" >
 		<!--<div class="filediv" ng-show="showInfo" ng-if="!image">-->
 		<ul class="fileVersionList">
 
@@ -32,22 +33,6 @@
 			<button class="waves-effect waves-light btn" ng-click="delete()"><i class="material-icons left">delete</i>Delete</button>
 			<select class="dropdown dropdown-button btn save-delete-buttons" ng-options="theme as theme for theme in themes" ng-model="theme"></select>
 			<select class="dropdown dropdown-button btn save-delete-buttons" ng-options="mode as mode for mode in modes" ng-model="mode"></select>
-			<!--<div class="dropdown">
-  				<a ng-click="dropdownfile()" class='dropdown-button btn' href='#' data-activates='dropdown1'>File Type</a>
-  				<div ng-show="showdropdownfile" id="myDropdown" class="dropdown-content1">
-    				<a href="#">Link 1</a>
-    				<a href="#">Link 2</a>
-    				<a href="#">Link 3</a>
-  				</div>
-			</div>
-			<div class="dropdown">
-  				<a ng-click="dropdownsettings()" class='dropdown-button btn' href='#' data-activates='dropdown1'>Settings</a>
-  				<div ng-show="showdropdownsettings" id="myDropdown" class="dropdown-content1">
-    				<a href="#">Link 1</a>
-    				<a href="#">Link 2</a>
-    				<a href="#">Link 3</a>
-  				</div>
-			</div>-->
 		</div>
 
 
