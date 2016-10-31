@@ -12,7 +12,6 @@ function projectController($http, ProjectService, $scope) {
   self.filesList = ProjectService.selectedVersionFilesList;//function
   self.fileVersions = ProjectService.fileChangedVersions; //function
   self.mediaContentUrl = '';
-  self.showIframe = false;
   self.showEditor = false;
   self.showMedia = false;
   self.showFiles = false;
@@ -25,13 +24,15 @@ function projectController($http, ProjectService, $scope) {
   }
   self.changeCurrentlySelectedFile = (fileName, index = 0) => {
 
-    if (self.fileContentViewIndex === null || self.currentlySelectedFile !== fileName) {
+
+    if (!self.isImage(fileName) && (self.fileContentViewIndex === null || self.currentlySelectedFile !== fileName)) {
       self.showEditor = true;
     } else {
       self.showEditor = false;
+      self.fileContentViewIndex = null;
     }
     self.setFileContentViewIndex(index);
-    return self.currentlySelectedFile = fileName;
+    self.currentlySelectedFile = fileName;
   }
 
   self.toggleShowFiles = (index) => {
