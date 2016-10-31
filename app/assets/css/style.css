@@ -102,8 +102,11 @@ blockquote{
 }
 
 .project-nav-bar{
-  font-size: 2.3em; 
+  font-size: 2.1rem; 
   margin-left: 30px;
+  font-family: "Julius Sans One";
+  font-weight: 200;
+  letter-spacing: .15em;
 }
 
 .collection-item {
@@ -357,4 +360,10 @@ div.ace_print-margin {
 }
 .body-wrapper {
   padding: 5px;
+}
+
+.ipfs-version {
+  position: absolute;
+  right: 20px;
+  top: 10px;
 }
