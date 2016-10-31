@@ -22,6 +22,7 @@ function fileHistoryFactory(ProjectService, $q, IpfsService, $timeout) {
         //update history array
 
       })
+
     });
   }
   function getFileHistory() {
@@ -69,47 +70,4 @@ function fileHistoryFactory(ProjectService, $q, IpfsService, $timeout) {
     init: init,
     initialAdd: addInitialFileVersionOnPublish
   };
-}
-
-
-
-
-
-
-
-const testFileData = {
-  "Dispersion": [
-    {
-      "date": "2016-10-18T18:22:23.133Z",
-      "hash": "QmT45exg6ZEiCBxC4LfoVZPvPkzdtQvNqWxbF9CJN3Xnec",
-      "file": "/index.html",
-      "url": "https://ipfs.io/ipfs/QmT45exg6ZEiCBxC4LfoVZPvPkzdtQvNqWxbF9CJN3Xnec/index.html",
-    },
-    {
-      "date": "2016-10-19T18:22:23.133Z",
-      "hash": "QmXtuj4RRhSNDxNpa2MKaea4sZ5GRprjvtrdaTH84pY9NC",
-      "file": "/index.html",
-      "url": "https://ipfs.io/ipfs/QmXtuj4RRhSNDxNpa2MKaea4sZ5GRprjvtrdaTH84pY9NC/index.html",
-    },
-    {
-      "date": "2016-10-20T18:22:23.133Z",
-      "hash": "QmWxnq9onYoNcsYjTpk1mcHTCU6bgmXBCALwkP7roP68HY",
-      "file": "/index.html",
-      "url": "https://ipfs.io/ipfs/QmWxnq9onYoNcsYjTpk1mcHTCU6bgmXBCALwkP7roP68HY/index.html",
-    }
-  ],
-  "yang": [
-    {
-      "date": "2016-10-18T18:22:23.133Z",
-      "hash": "QmT45exg6ZEiCBxC4LfoVZPvPkzdtQvNqWxbF9CJN3Xnec",
-      "file": "/index.html",
-      "url": "https://ipfs.io/ipfs/QmT45exg6ZEiCBxC4LfoVZPvPkzdtQvNqWxbF9CJN3Xnec/index.html",
-    },
-    {
-      "date": "2016-10-19T18:22:23.133Z",
-      "hash": "QmXtuj4RRhSNDxNpa2MKaea4sZ5GRprjvtrdaTH84pY9NC",
-      "file": "/index.html",
-      "url": "https://ipfs.io/ipfs/QmXtuj4RRhSNDxNpa2MKaea4sZ5GRprjvtrdaTH84pY9NC/index.html",
-    }
-  ]
 }

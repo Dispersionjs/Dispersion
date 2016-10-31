@@ -2,7 +2,9 @@ angular.module('FileHistoryController', [])
   .controller('FileHistoryController', ['ProjectService', '$scope', '$http', 'DiskFactory', 'FileHistoryFactory', fileHistoryController]);
 function fileHistoryController(ProjectService, $scope, $http, DiskFactory, FileHistoryFactory) {
   //TODO: 
+
   FileHistoryFactory.init()
+
   $scope.showInfo = false;
   $scope.showEditor = false;
   $scope.showMedia = false;

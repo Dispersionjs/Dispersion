@@ -1,6 +1,5 @@
-<p align="left">
-  <img src="https://ipfs.io/ipfs/QmdjC7zjKi7pYoo3YatWL6pNvJqDxAZJhXBBeXzXhzhEwp" width="100"/>
-</p>
+<img src="https://ipfs.io/ipfs/QmdjC7zjKi7pYoo3YatWL6pNvJqDxAZJhXBBeXzXhzhEwp" width="100"/>
+
 
 #Dispersion
 

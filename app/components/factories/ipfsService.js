@@ -57,6 +57,7 @@ function ipfsService($q, $interval, PublishService) {
           "hash": topHash[1],
           "date": new Date().toUTCString(),
           "url": "https://ipfs.io/ipfs/" + topHash[1],
+          // "url": "http://ipfs.io/ipfs/" + topHash[1],
           'files': []
         }
         hashArray.forEach(function (hString, index) {
@@ -64,6 +65,7 @@ function ipfsService($q, $interval, PublishService) {
           var requestObj = {
             [tempArray[1]]: {
               "url": "https://ipfs.io/ipfs/" + tempArray[1]
+              // "url": "http://ipfs.io/ipfs/" + tempArray[1]
             }
           }
           if ((/\./.test(tempArray[tempArray.length - 1])) && index < hashArray.length - 1) {
@@ -119,11 +121,13 @@ function ipfsService($q, $interval, PublishService) {
       console.log(topHash)
       fileVersionObject.hash = topHash;
       fileVersionObject.url = `https://ipfs.io/ipfs/${topHash}${fileName}`;
+      // fileVersionObject.url = `http://ipfs.io/ipfs/${topHash}${fileName}`;
 
       let hashObj = {
         "hash": topHash,
         "date": new Date().toUTCString(),
         "url": "https://ipfs.io/ipfs/" + topHash,
+        // "url": "http://ipfs.io/ipfs/" + topHash,
         'files': [],
         'publish': false
       }
@@ -134,6 +138,7 @@ function ipfsService($q, $interval, PublishService) {
         var requestObj = {
           [tempArray[1]]: {
             "url": "https://ipfs.io/ipfs/" + tempArray[1]
+            // "url": "http://ipfs.io/ipfs/" + tempArray[1]
           }
         }
         if ((/\./.test(tempArray[tempArray.length - 1])) && index < hashArray.length - 1) {
@@ -207,6 +212,7 @@ function ipfsService($q, $interval, PublishService) {
       "pinnedBy": 'someone else',
       "pinDate": new Date(),
       "url": "https://ipfs.io/ipfs/" + pinHash
+      // "url": "http://ipfs.io/ipfs/" + pinHash
     };
     exec(pinCommand, function (error, stdout, stderr) {
       //saves pinned hash to Electron App storage
