@@ -167,14 +167,14 @@
 
 
 							<div class="col s10 right">
-								<div>
+								<div ng-if="projCtrl.showEditor">
 									<!--remove later -->
 									<!--index: {{projCtrl.fileContentViewIndex}}
 									<h4>{{projCtrl.currentlySelectedFile.slice(1)}}</h4>-->
 
 
 									<br/>
-									<div ng-if="projCtrl.showEditor" class="fade-element-in">
+									<div ng-if="projCtrl.showEditor">
 										<file-history fadeInEffect data-filename="{{projCtrl.currentlySelectedFile}}" data-index="{{$index}}" data-projectname="{{projCtrl.currentProject()}}"
 											data-projectobject="{{projCtrl.selectedVersion()}}" data-mode="{{projCtrl.getMode(projCtrl.currentlySelectedFile)}}"
 											data-image="{{projCtrl.isImage(projCtrl.currentlySelectedFile)}}"></file-history>

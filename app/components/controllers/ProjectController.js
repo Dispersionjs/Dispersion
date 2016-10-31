@@ -36,19 +36,6 @@ function projectController($http, ProjectService, $scope, $timeout) {
         self.currentlySelectedFile = null;
       }
     }, 0);
-
-
-
-
-    if (!self.isImage(fileName) && (self.fileContentViewIndex === null || self.currentlySelectedFile !== fileName)) {
-      self.showEditor = true;
-    } else {
-      self.showEditor = false;
-      self.fileContentViewIndex = null;
-    }
-    self.setFileContentViewIndex(index);
-    self.currentlySelectedFile = fileName;
-
   }
 
   self.toggleShowFiles = (index) => {
