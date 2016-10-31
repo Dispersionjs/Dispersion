@@ -279,6 +279,31 @@ function ipfsService($q, $interval, PublishService) {
     })
   }
 
+  function findProviders(hash) {
+    return $q(function (resolve, reject) {
+      let provs = `ipfs dht findprovs ${hash}`;
+      exec(provs, function (error, stdout, stderr) {
+        if (error !== null) console.log('exec error: ' + error);
+        resolve(stdout.split('\n'))
+      })
+    })
+  }
+
+  function getSettingsInfo() {
+    return $q(function (resolve, reject) {
+      getPeerID().then(function (data) {
+        let idCommand = 'ipfs id';
+        exec(idCommand, function (error, stdout, stderr) {
+          if (error !== null) console.log('exec error: ' + error);
+          let multiAddr = JSON.parse(stdout)['Addresses'][3];
+          let version = JSON.parse(stdout)["ProtocolVersion"].split('/')[1]
+          data.push(multiAddr, version)
+          resolve(data)
+        })
+      })
+    })
+  }
+
   function addBootstrapPeer(peerAddress) {
     return $q(function (resolve, reject) {
       let idCommand = `ipfs bootstrap add ${peerAddress}`;
@@ -291,8 +316,9 @@ function ipfsService($q, $interval, PublishService) {
   }
 
   return {
+    findProviders: findProviders,
     addPeer: addBootstrapPeer,
-    peerID: getPeerID,
+    getSettingsInfo: getSettingsInfo,
     getFileData: getFileData,
     rehashProject: rehashProject,
     init: startDaemon,

@@ -18,7 +18,6 @@ function projectController($http, ProjectService, $scope, $timeout) {
   self.lastProjectIndex = null;
   self.fileContentViewIndex = null;
   self.currentlySelectedFile = null;
-  // self.getSelectedFileIndex = (index) => self.fileContentViewIndex === index;
 
   self.setFileContentViewIndex = (index) => {
     self.fileContentViewIndex = index;
@@ -38,6 +37,17 @@ function projectController($http, ProjectService, $scope, $timeout) {
       }
     }, 0);
 
+
+
+
+    if (!self.isImage(fileName) && (self.fileContentViewIndex === null || self.currentlySelectedFile !== fileName)) {
+      self.showEditor = true;
+    } else {
+      self.showEditor = false;
+      self.fileContentViewIndex = null;
+    }
+    self.setFileContentViewIndex(index);
+    self.currentlySelectedFile = fileName;
 
   }
 

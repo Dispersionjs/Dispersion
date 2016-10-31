@@ -4,10 +4,28 @@
 	<!--FOR SIDENAV switch the BTNS to A's below-->
 	<!--<a ng-click="updateEditorContent(); recordIndex(); toggleShowInfo();">{{filename.slice(1)}}</a>-->
 	<!--FOR SIDENAV BTNS are A's below-->
-	{{openVersionIndex}}
 	<div class="filediv" ng-show="showInfo" ng-if="!image">
+
+		<nav>
+			<div class="nav-wrapper">
+
+				<a class="transparent left"><i class="material-icons">skip_previous</i></a>
+				<ul id="nav-mobile" class="hide-on-med-and-down">
+					<!--<li class="fileVersionListItem"><a>Previous Versions</a></li>-->
+					<!--<div class = "row">-->
+					<!--<li class="fileVersionListItem col s2"></li>-->
+					<li class="fileVersionListItem  col s3" ng-repeat="item in versions().slice(0,3) track by $index">
+						<a href="#" class="fileVersion" ng-click="updateEditorContent($index); recordIndex($index)">{{item.date | date:"MM/dd/yy"}}</a>
+					</li>
+					<!--</div>-->
+				</ul>
+				<a class="transparent right"><i class="material-icons">skip_next</i></a>
+			</div>
+		</nav>
+
 		<!--<div class="filediv" ng-show="showInfo" ng-if="!image">-->
-		<ul class="fileVersionList">
+		<!--<div class="nav-wrapper">-->
+		<!--<ul class="fileVersionList">
 
 
 			<li class="fileVersionListItem">Previous Versions</li>
@@ -16,7 +34,8 @@
 				<a href="#" class="fileVersion" ng-click="updateEditorContent($index); recordIndex($index)">{{item.date | date:"MM/dd/yy h:mma"}}</a>
 			</li>
 			<li class="fileVersionListItem"><button class="transparent"><i class="material-icons">skip_next</i></button></li>
-		</ul>
+		</ul>-->
+		<!--</div>-->
 		<div class="editor" ng-show="showEditor && !image" ng-model="editorContent" ui-ace="{
       useWrapMode: true,
       showGutter: true,

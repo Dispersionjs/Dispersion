@@ -152,9 +152,10 @@
 					<div ng-if="projCtrl.showFiles">
 
 						<div class="row">
-							<div class="">
+
+							<div class="col s2">
 								<!--SIDE NAV-->
-								<ul class="side-nav fixed" style="margin-top:112px">
+								<ul class="side-nav fixed" style="margin-top:112px; width:16.7%">
 									<a class="btn" ng-click="projCtrl.modalTrigger()" class="proj-modal-button waves-effect waves-light blue-grey btn" href="#">Preview</a>
 									<li ng-repeat="file in projCtrl.filesList() track by $index">
 										<a ng-class="{amber: $index === projCtrl.fileContentViewIndex}" ng-click="projCtrl.changeCurrentlySelectedFile(file, $index)">{{file.slice(1)}}</a>
@@ -164,11 +165,13 @@
 								</ul>
 							</div>
 
-							<div class="col s9 right">
+
+							<div class="col s10 right">
 								<div>
 									<!--remove later -->
-									index: {{projCtrl.fileContentViewIndex}}
-									<h4>{{projCtrl.currentlySelectedFile.slice(1)}}</h4>
+									<!--index: {{projCtrl.fileContentViewIndex}}
+									<h4>{{projCtrl.currentlySelectedFile.slice(1)}}</h4>-->
+
 
 									<br/>
 									<div ng-if="projCtrl.showEditor" class="fade-element-in">
@@ -230,7 +233,12 @@
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js "></script>
 <!--<script src="./assets/js/dispersion.js "></script>-->
+<!-- Angular Material requires Angular.js Libraries -->
+
 <script type="text/javascript " src="./bower_components/angular/angular.min.js "></script>
+<script type="text/javascript " src="./bower_components/angular-messages/angular-messages.min.js"></script>
+<script type="text/javascript " src="./bower_components/angular-aria/angular-aria.min.js"></script>
+<script type="text/javascript " src="./bower_components/angular-animate/angular-animate.min.js"></script>
 <script type="text/javascript" src="./bower_components/angular-materialize/src/angular-materialize.js"></script>
 <script type="text/javascript " src="./components/directives/project-directive.js "></script>
 <script type="text/javascript " src="./components/factories/fileFactory.js "></script>
