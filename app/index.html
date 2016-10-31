@@ -152,9 +152,9 @@
 					<div ng-if="projCtrl.showFiles">
 
 						<div class="row">
-							<div class="">
+							<div class="col s2">
 								<!--SIDE NAV-->
-								<ul class="side-nav fixed" style="margin-top:112px">
+								<ul class="side-nav fixed" style="margin-top:112px; width:16.7%">
 									<a class="btn" ng-click="projCtrl.modalTrigger()" class="proj-modal-button waves-effect waves-light blue-grey btn" href="#">Preview</a>
 									<li ng-repeat="file in projCtrl.filesList() track by $index">
 										<a ng-class="{amber: $index === projCtrl.fileContentViewIndex}" ng-click="projCtrl.changeCurrentlySelectedFile(file, $index)">{{file.slice(1)}}</a>
@@ -164,11 +164,11 @@
 								</ul>
 							</div>
 
-							<div class="col s9 right">
+							<div class="col s10 right">
 								<div>
 									<!--remove later -->
-									index: {{projCtrl.fileContentViewIndex}}
-									<h4>{{projCtrl.currentlySelectedFile.slice(1)}}</h4>
+									<!--index: {{projCtrl.fileContentViewIndex}}
+									<h4>{{projCtrl.currentlySelectedFile.slice(1)}}</h4>-->
 
 									<br/>
 									<div ng-if="projCtrl.showEditor">
