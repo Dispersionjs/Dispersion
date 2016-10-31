@@ -1,7 +1,7 @@
 angular.module('ProjectController', [])
-  .controller('ProjectController', ['$http', 'ProjectService', '$scope', projectController]);
+  .controller('ProjectController', ['$http', 'ProjectService', '$scope', '$timeout', projectController]);
 
-function projectController($http, ProjectService, $scope) {
+function projectController($http, ProjectService, $scope, $timeout) {
   const self = this;
   self.projectArray = ProjectService.projectArray;
   self.publishedVersions = ProjectService.publishedProjectVersions;
@@ -24,15 +24,21 @@ function projectController($http, ProjectService, $scope) {
     self.fileContentViewIndex = index;
   }
   self.changeCurrentlySelectedFile = (fileName, index = 0) => {
+    self.showEditor = false;
+    $timeout(() => {
+      if (!self.isImage(fileName) && (self.fileContentViewIndex === null || self.currentlySelectedFile !== fileName)) {
+        self.showEditor = true;
+        self.setFileContentViewIndex(index);
+        self.currentlySelectedFile = fileName;
 
-    if (!self.isImage(fileName) && (self.fileContentViewIndex === null || self.currentlySelectedFile !== fileName)) {
-      self.showEditor = true;
-    } else {
-      self.showEditor = false;
-      self.fileContentViewIndex = null;
-    }
-    self.setFileContentViewIndex(index);
-    self.currentlySelectedFile = fileName;
+      } else {
+        self.showEditor = false;
+        self.fileContentViewIndex = null;
+        self.currentlySelectedFile = null;
+      }
+    }, 0);
+
+
   }
 
   self.toggleShowFiles = (index) => {
@@ -50,7 +56,13 @@ function projectController($http, ProjectService, $scope) {
     // } else {
     //   self.showIframe = true;
     // }
-    self.lastProjectIndex = index;
+    if (self.lastProjectIndex === index) {
+      self.lastProjectIndex = index;
+
+    } else {
+      self.lastProjectIndex = index;
+    }
+
   }
   self.getMode = function (filename) {
     let textTester = /(\.html$)|(\.js$)|(\.css$)|(\.txt$)|(\.json$)|(\.md$)|(\.log$)/gmi;

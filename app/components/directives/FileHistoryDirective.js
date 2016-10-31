@@ -12,12 +12,11 @@ angular.module('FileHistoryDirective', ['FileHistoryController'])
         projectobject: '@',
         mode: '@'
       },
-      link: function (scope) {
-        // scope.updateEditorContent();
-        // scope.recordIndex();
-        // scope.toggleShowInfo();
-      },
-
+      // link: function (scope) {
+      // scope.updateEditorContent();
+      // scope.recordIndex();
+      // scope.toggleShowInfo();
+      // },
       controller: 'FileHistoryController',
       templateUrl: 'components/partials/FileHistoryPartial.html',
       replace: true

@@ -29,6 +29,7 @@ angular.module('myApp', [
   'ProjectService',
   'ProjectController',
   'FileHistoryDirective',
+  'FadeInEffect',
   'FileHistoryController',
   'FileHistoryFactory',
   'ui.materialize'

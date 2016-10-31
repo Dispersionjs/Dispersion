@@ -171,8 +171,8 @@
 									<h4>{{projCtrl.currentlySelectedFile.slice(1)}}</h4>
 
 									<br/>
-									<div ng-if="projCtrl.showEditor">
-										<file-history data-filename="{{projCtrl.currentlySelectedFile}}" data-index="{{$index}}" data-projectname="{{projCtrl.currentProject()}}"
+									<div ng-if="projCtrl.showEditor" class="fade-element-in">
+										<file-history fadeInEffect data-filename="{{projCtrl.currentlySelectedFile}}" data-index="{{$index}}" data-projectname="{{projCtrl.currentProject()}}"
 											data-projectobject="{{projCtrl.selectedVersion()}}" data-mode="{{projCtrl.getMode(projCtrl.currentlySelectedFile)}}"
 											data-image="{{projCtrl.isImage(projCtrl.currentlySelectedFile)}}"></file-history>
 									</div>
@@ -251,6 +251,7 @@
 <script type="text/javascript " src="./components/factories/ProjectService.js "></script>
 <script type="text/javascript " src="./components/factories/FileHistoryFactory.js "></script>
 <script type="text/javascript " src="./components/directives/FileHistoryDirective.js "></script>
+<script type="text/javascript " src="./components/directives/FadeInDirective.js "></script>
 <script type="text/javascript " src="./components/controllers/FileHistoryController.js "></script>
 <script type="text/javascript " src="./components/controllers/ProjectController.js "></script>
 <script src="app.js "></script>

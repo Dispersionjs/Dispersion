@@ -40,6 +40,7 @@ bower_components
 
 #files saved locally from electron apllication by user.
 savedfiles
+projectFolder
 
 #Apple files
 .DS_Store
@@ -49,3 +50,5 @@ savedfiles
 
 #from build
 app/appe-darwin-x64/
+
+
