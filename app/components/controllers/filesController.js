@@ -25,13 +25,13 @@ function FilesController(FileFactory, PublishService, DiskFactory, IpfsService, 
   };
 
   self.deleteHash = function (hash, index) {
-    Materialize.toast("File Deleted!", 3000);
+    Materialize.toast("File Deleted!", 2000);
     IpfsService.unPin(hash);
     FileFactory.removeFile(index);
   }
 
   self.addToPublish = function (value) {
-    Materialize.toast("Staged for Publish!", 3000);
+    Materialize.toast("Staged for Publish!", 2000);
     console.log('in add to publish, value: ', value);
     DiskFactory.addProject(value.pathToFile);
     PublishService.add({

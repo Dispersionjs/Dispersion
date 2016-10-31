@@ -367,3 +367,7 @@ div.ace_print-margin {
   right: 20px;
   top: 10px;
 }
+
+.side-nav a, .material-icons {
+  cursor: pointer;
+}

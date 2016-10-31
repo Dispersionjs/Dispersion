@@ -158,6 +158,7 @@ function fileHistoryController(ProjectService, $scope, $http, DiskFactory, FileH
 
   //make new history, need to add to file history factroy data store 
   $scope.saveFile = function () {
+    Materialize.toast("New Version Saved", 2000);
     console.log('$scope.editorcontent in saveFile', $scope.editorContent);
     let fileDataSaveArray = $scope.makeNewHistoryObj();
     console.log('save clicked, historyoobj generated: \n', fileDataSaveArray);
@@ -173,6 +174,7 @@ function fileHistoryController(ProjectService, $scope, $http, DiskFactory, FileH
   // delete item from file factroy array
   $scope.delete = function () {
     //update to change in extended full app data store model
+    Materialize.toast("Version deleted", 2000);
     console.log('filehistoryversions:', $scope.fileHistoryVersions)
     console.log($scope.openVersionIndex);
     console.log('deleteitem:', $scope.fileHistoryVersions[$scope.openVersionIndex])
