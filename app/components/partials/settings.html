@@ -1,13 +1,22 @@
 <div id="modal1" class="modal modal-fixed-footer">
 	<div class="modal-content">
 		<ul class="collection with-header">
-			<li class="collection-header">
-				<h4>IPFS Configuration</h4>
+			<li class=" nav-wrapper blue-grey darken-2 brand-logo collection-header">
+				<h4>Settings</h4>
+				<div class='ipfs-version'>
+					<p>IPFS Version: {{settingsCtrl.ipfsVersion}}</p>
+				</div>
 			</li>
 			<li class="collection-item">
 				<div class='settings-item'>
 					<h5>Peer ID:</h5>
 					{{settingsCtrl.peerID}}
+				</div>
+			</li>
+			<li class="collection-item">
+				<div class='settings-item'>
+					<h5>MultAddr address (used to allow peers to add you to their bootstrap list):</h5>
+					{{settingsCtrl.multiAddr}}
 				</div>
 			</li>
 			<li class="collection-item">
@@ -26,18 +35,36 @@
 			<li class="collection-item">
 				<div class='settings-item'>
 					<h5>Add trusted Bootstrap peer:</h5>
-						<form class="col s12">
-							<div class="row">
-								<div class="input-field col s6">
-									<input type="text" ng-model="settingsCtrl.inputAddr" ng-keyup="$event.keyCode == 13 ? settingsCtrl.addPeer(settingsCtrl.inputAddr) : null"
-										ng-enter="" id="peerAddress" type="text" class="validate">
-									<label for="peerAddress">format: &#60;multiaddr&#62;/&#60;peerID&#62;</label>
-								</div>
+					<form class="col s12">
+						<div class="row">
+							<div class="input-field col s6">
+								<input type="text" ng-model="settingsCtrl.inputAddr" ng-keyup="$event.keyCode == 13 ? settingsCtrl.addPeer(settingsCtrl.inputAddr) : null"
+									ng-enter="" id="peerAddress" type="text" class="validate">
+								<label for="peerAddress">format: &#60;multiaddr&#62;/&#60;peerID&#62;</label>
 							</div>
-						</form>
+						</div>
+					</form>
+				</div>
+			</li>
+			<li class="collection-item">
+				<div class='settings-item'>
+					<h5>Check IPFS Content Health:</h5>
+					<form class="col s12">
+						<div class="row">
+							<div class="input-field col s6">
+								<input type="text" ng-model="settingsCtrl.inputHash" ng-keyup="$event.keyCode == 13 ? settingsCtrl.checkHealth(settingsCtrl.inputHash) : null"
+									ng-enter="" id="peerAddress" type="text" class="validate">
+								<label for="peerAddress">Hash</label>
+							</div>
+						</div>
+					</form>
+					<p ng-if="settingsCtrl.hashPeers">This hash is pinned by {{settingsCtrl.health}} peers </p>
 				</div>
 			</li>
 		</ul>
+	</div>
+	<div layout="row" layout-sm="column" layout-align="space-around">
+		<md-progress-circular md-mode="indeterminate"></md-progress-circular>
 	</div>
 	<div class="modal-footer">
 		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close Settings</a>

@@ -9,6 +9,8 @@
 				</div>
 				<div class="card-action">
 					<a tooltipped ng-click="mainCtrl.view= 'project'; pubCtrl.setProjectView(projectName)" class="btn-floating btn-large amber darken-2 waves-effect waves-light red" data-position="bottom" data-delay="300" data-tooltip="edit"><i class="material-icons">mode_edit</i></a>
+					<!--<a tooltipped ng-click="mainCtrl.view= 'project'; pubCtrl.addPubDataOnEdit(value, projectName)" class="btn-floating btn-large amber darken-2 waves-effect waves-light red" data-position="bottom" data-delay="300" data-tooltip="edit"><i class="material-icons">mode_edit</i></a>-->
+
 					<div ng-show='pubCtrl.isPublished(projectName)'><i class="material-icons">done_all</i><span>currently published</span></div>
 					<a tooltipped ng-click="pubCtrl.publishToIpfs(value, projectName)" class="btn-floating btn-large amber darken-2 waves-effect waves-light red" data-position="bottom" data-delay="300" data-tooltip="publish"><i class="material-icons">add</i></a>
 				</div>
