@@ -371,3 +371,14 @@ div.ace_print-margin {
 .side-nav a, .material-icons {
   cursor: pointer;
 }
+
+
+.file-headers {
+    border-top: none; 
+    border-right: none; 
+    border-left: none;
+    margin: none; 
+}
+ .file-headers {
+    box-shadow: none;
+}
