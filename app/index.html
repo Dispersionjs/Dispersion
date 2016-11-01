@@ -86,7 +86,7 @@
 												<iframe class="file-iframe" ng-src="{{fileObj.url}}"></iframe>
 											</div>
 											<ul>
-												<li class="content-link" ng-click="showInnercontent = !showInnercontent" ng-repeat="fileName in fileObj.files  track by $index">{{fileName}}>
+												<li class="content-link chip" ng-click="showInnercontent = !showInnercontent" ng-repeat="fileName in fileObj.files  track by $index">{{fileName}}>
 													<div ng-if="showInnercontent" class="iframe-wrap">
 														<a href="#" ng-click="showInnercontent = !showInnercontent" class="close-modal"></a>
 														<iframe class="file-iframe" ng-src="{{fileCtrl.getIframeUrl(fileObj.url,fileName)}}"></iframe>
