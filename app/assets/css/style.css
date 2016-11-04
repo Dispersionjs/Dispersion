@@ -7,10 +7,21 @@ html {
   font-weight: 300;
 }
 
+body {
+  background: #eeeeee; 
+}
+
+a {
+  text-decoration:none;
+}
 
 h1 {
   font-size: 32px;
   text-align: center;
+  color: #eeeeee;
+  margin:0;
+  padding-top: 8px;
+  padding-bottom: 8px
 }
 
 .brand-logo {
@@ -27,19 +38,13 @@ h1 {
 i {
   color: white;
 }
+
 .file-icon-images i {
   color: #ffc107;
 }
 
 .sel-box{
   position:relative;
-}
-
-h1 {
-  color: #eeeeee;
-  margin:0;
-  padding-top: 8px;
-  padding-bottom: 8px
 }
 
 .add-icon {
@@ -49,14 +54,6 @@ h1 {
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
-}
-
-body {
-  background: #eeeeee; 
-}
-
-a {
-  text-decoration:none;
 }
 
 .title {
@@ -347,8 +344,5 @@ div.ace_print-margin {
   border-right: none; 
   border-left: none;
   margin: none; 
-}
-
- .file-headers {
   box-shadow: none;
 }
