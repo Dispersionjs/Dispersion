@@ -24,7 +24,6 @@ h1 {
     background-color: #607d8b ;
 }
 
-
 i {
   color: white;
 }
@@ -33,7 +32,7 @@ i {
 }
 
 .sel-box{
-    position:relative;
+  position:relative;
 }
 
 h1 {
@@ -52,20 +51,12 @@ h1 {
   display: none !important;
 }
 
-/*.material-icons {*/
-  /*color: #ffa000;*/
-/*}*/
-/*$button-active: #FF735C;*/
-/*.active {
-  background: #ffa000;
-}*/
-
 body {
   background: #eeeeee; 
 }
 
-a{
-    text-decoration:none;
+a {
+  text-decoration:none;
 }
 
 .title {
@@ -73,7 +64,7 @@ a{
   color:#4db6ac;
 }
 
-blockquote{
+blockquote {
   margin: 20px 0;
   padding-left: 1.5rem;
   border-left: 5px solid #ffb300; /* Just change the color value and that's it*/
@@ -107,12 +98,6 @@ blockquote{
   font-family: "Julius Sans One";
   font-weight: 200;
   letter-spacing: .15em;
-}
-
-.collection-item {
-    /*border-bottom:5px solid #eeeeee;  */
-   /*margin-top:10px; */
-  /*border: 1px solid #eeeeee;*/
 }
 
 /*CSS for Daemon Load*/
@@ -173,8 +158,6 @@ blockquote{
   font-weight: thin;
 }
 
-
-
 .projectView  .ace_editor { 
   min-height: 200px; 
   }
@@ -182,27 +165,12 @@ blockquote{
 .projectView  ul li {
   display: inline;
 }
-  /*iframe {
-    display:block;
-    width:100%;
-    height: 100%;
-}*/
-/*#outer{
-max-width: 320px;
-max-height: 180px;
-width: 100%;
-height: 100%;
-}*/
+
 .projectView  #outer{
 width: 320px;
 height: 180px;
 
 }
-
-/*#inner{
-    height: 0px;
-    padding-bottom: 56.25%;
-}*/
 
 .projectView  img{
  max-width:100%;
@@ -225,7 +193,6 @@ height: 180px;
   margin: 0;
   font-size: 15px;
   text-decoration: none;
-
 }
 
 .save-delete {
@@ -245,8 +212,7 @@ height: 180px;
    display: flex;
 }
 
-.transparent {
-  
+.transparent { 
   background-color: transparent;
   background-repeat:no-repeat;
   border: none;
@@ -254,6 +220,7 @@ height: 180px;
   overflow: hidden;
   outline:none;
 }
+
 .projectView  .editor {
   width: 100%;
   min-height: 400px;
@@ -301,25 +268,26 @@ height: 180px;
   height: 100%;
 }  
 
-  .modal { 
-    width: 90%;
-    max-height: 85%;
-  }
-
-  .modal.modal-fixed-footer {
-    height: 85%;
+.modal { 
+  width: 90%;
+  max-height: 85%;
 }
 
-  @media only screen and (max-width: 992px) {
-    .modal {
-      width: 90%;
-    } 
-  }
+.modal.modal-fixed-footer {
+  height: 85%;
+}
+
+@media only screen and (max-width: 992px) {
+  .modal {
+    width: 90%;
+  } 
+}
 
 .modal h4 {
   text-align: center;
   padding-top: 15px;
 }
+
 .project {
   margin-left: 25px;
 }
@@ -341,23 +309,25 @@ height: 180px;
 }
 
 .ace-chaos .ace_print-margin {
-    border-left: none;
-    background: none;
+  border-left: none;
+  background: none;
 }
 
 div.ace_print-margin {
-    width: 0 !important;
+  width: 0 !important;
 }
 
- .backdrop{
-   background-color: #455a64;
+.backdrop {
+  background-color: #455a64;
  }
- .collection-item>.collapsible-header {
+
+.collection-item > .collapsible-header {
   transition: 400ms ease;
 }
-.collection-item>.collapsible-header:hover {
+.collection-item > .collapsible-header:hover {
   background-color: rgba(255,255,255,0.7) !important;
 }
+
 .body-wrapper {
   padding: 5px;
 }
@@ -372,13 +342,13 @@ div.ace_print-margin {
   cursor: pointer;
 }
 
-
 .file-headers {
-    border-top: none; 
-    border-right: none; 
-    border-left: none;
-    margin: none; 
+  border-top: none; 
+  border-right: none; 
+  border-left: none;
+  margin: none; 
 }
+
  .file-headers {
-    box-shadow: none;
+  box-shadow: none;
 }
