@@ -57,4 +57,4 @@ The settings can be accessed by clicking the gear icon in the top right corner o
 <p align="center">
   <img src="https://ipfs.io/ipfs/QmbyaPRa4swXqwzMR41cUqSiNx6fiSG4csDbRVehEVAiUL" width="400"/>
 </p>
-The settings displays the users peerID, MultAddr address(used to allow peers to add you to their trusted bootstrap list). It also allows you to add peers to your list as well as check the health of any content on ipfs, by displaying the number of nodes have pinned the content.
+The settings displays the users peerID, and MultAddr address(used to allow peers to add you to their trusted bootstrap list). It also allows you to add peers to your list as well as check the health of any content on ipfs, by displaying the number of nodes that have pinned the content.
