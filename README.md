@@ -24,12 +24,29 @@ npm start
 ```
 
 
-## My Files
+## Dashboard Page
 
-This page is used to add files to IPFS. These files can then be staged for publish, downloaded or deleted from Dispersion.
+This page is used to view and add files or entire applications to IPFS.
+<p align="center">
+  <img src="https://ipfs.io/ipfs/QmQ4j8mLAToanvJygoQYFuL5orU7zw8ecMRYKxjcdME6sJ" width="400"/>
+</p>
+
+These files can then be staged for publish, downloaded or deleted from Dispersion.
+<p align="center">
+  <img src="https://ipfs.io/ipfs/QmWjsFCNnFaZDPCSApKtZR5PVMtmvapbVLmyCXgRGNaCts" width="400"/>
+</p>
 
 ## Publish 
 
-Publish pages on a fixed IPNS. Selecting the  + icon will publish to your IPNS. This can be mapped to a specific domain name.
+Once a file is staged it appears on the publish page, where it can then be publish to your ipfs node's fixed IPNS.
+<p align="center">
+  <img src="https://ipfs.io/ipfs/QmXYuv7d3cAYZpRQTB86jTSoEKKyHpjJYr9hRYJxDwVM7j" width="400"/>
+</p>
 
-When selecting the pencil icon, the user can edit individual files and see a version history.
+Selecting the  + icon will publish to your IPNS. This can be mapped to a specific domain name.
+
+When selecting the pencil icon, the user can edit and save individual project files as well as manage a complete version history.
+
+<p align="center">
+  <img src="https://ipfs.io/ipfs/QmcMT2yRntrwNaYhKvMVBSZ653xD9uFhNqQTq7MmAad88M" width="400"/>
+</p>
