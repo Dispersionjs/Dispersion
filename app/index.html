@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<title>Dispersion</title>
 	<!--Import Google Icon Font-->
-	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="./bower_components/material-design-icons/iconfont/material-icons.css" rel="stylesheet">
 	<!--Import materialize.css-->
 	<link type="text/css" rel="stylesheet" href="./bower_components/materialize/dist/css/materialize.min.css" media="screen,projection"
 	/>
@@ -38,13 +38,11 @@
 		<div>
 			<div ng-controller='FilesController as fileCtrl'>
 				<div ng-show="mainCtrl.view==='files' ">
-
 					<div class='row body-wrapper'>
 						<div class="col s4 right ">
 							<a class="waves-effect right amber darken-1 waves-light btn-large
 		" ng-click='fileCtrl.addHash()'><label ><i class="material-icons right ">note_add</i></label>Add to IPFS</a>
 						</div>
-
 						<div class="col s4 left ">
 							<select ng-model="sortBy">
 							    <option value=" " disabled selected>Filter Files</option>
@@ -66,18 +64,12 @@
 									<i ng-if="fileObj.fileType==='doc' " class="material-icons   ">description</i>
 									<i ng-if="fileObj.fileType==='excel' " class="material-icons  ">insert_chart</i>
 									<i ng-if="fileObj.fileType==='video' " class="material-icons ">play_arrow</i>
-									<!--Header Li TEXT-->
 									<span class="title blue-grey-text" ng-bind="fileObj.file"></span>
 									<span class="right ">
-										<!--<span class="left ">{{fileObj.date | date:'shortDate'}}</span>-->
-									<!--<note> fix this by adding custom filter funciton</note>-->
 									<span class="left " ng-bind="fileCtrl.formatDate(fileObj.date) |  date:'MM/dd/yyyy'"></span>
-									<!--<i class="material-icons ">info_outline</i>-->
 									</span>
 								</div>
-								<!--LI BODY CONTENT-->
 								<div class="collapsible-body ">
-									<!--<p></p>-->
 									<div class="row ">
 										<div class="col s10 ">
 											<h6><a class="content-link" ng-click="showcontent = !showcontent">{{fileObj.url}}</a></h6>
@@ -86,7 +78,7 @@
 												<iframe class="file-iframe" ng-src="{{fileObj.url}}"></iframe>
 											</div>
 											<ul>
-												<li class="content-link" ng-click="showInnercontent = !showInnercontent" ng-repeat="fileName in fileObj.files  track by $index">{{fileName}}>
+												<li class="content-link chip" ng-click="showInnercontent = !showInnercontent" ng-repeat="fileName in fileObj.files  track by $index">{{fileName}}>
 													<div ng-if="showInnercontent" class="iframe-wrap">
 														<a href="#" ng-click="showInnercontent = !showInnercontent" class="close-modal"></a>
 														<iframe class="file-iframe" ng-src="{{fileCtrl.getIframeUrl(fileObj.url,fileName)}}"></iframe>
@@ -116,9 +108,7 @@
 			</div>
 		</div>
 		<div class="row projectView " ng-show="mainCtrl.view==='project' " style="position: absolute; width:100%; height:100% ">
-
 			<div ng-controller=" ProjectController as projCtrl ">
-				<!--NAVBAR in Project Edit Page-->
 				<div class="navbar-fixed ">
 					<nav>
 						<div class="nav-wrapper amber darken-2 ">
@@ -126,7 +116,6 @@
 							<a src="./assets/images/pedal.png " class="brand-logo left ">
 								<img src="./assets/images/pedal.png " alt="some_text " style="width:30px;height:30px;margin-right:10px; margin-left:10px;">
 							</a>
-
 							<ul id="nav-mobile " class="right ">
 								<li class='pubNav'><a class="btn blue-grey" ng-click="mainCtrl.view='publish'">Back to Publish</a></li>
 							</ul>
@@ -147,12 +136,8 @@
 						</div>
 					</div>
 					<!--VERSION TABS HERE-->
-
-
 					<div ng-if="projCtrl.showFiles">
-
 						<div class="row">
-
 							<div class="col s2">
 								<!--SIDE NAV-->
 								<ul class="side-nav fixed" style="margin-top:112px; width:16.7%">
@@ -161,54 +146,19 @@
 										<a ng-class="{amber: $index === projCtrl.fileContentViewIndex}" ng-click="projCtrl.changeCurrentlySelectedFile(file, $index)">{{file.slice(1)}}</a>
 										<!--<button class="btn" ng-click="projCtrl.changeSelectedFile($index)">{{file}}</button>-->
 									</li>
-
 								</ul>
 							</div>
-
-
 							<div class="col s10 right">
 								<div ng-if="projCtrl.showEditor">
-									<!--remove later -->
-									<!--index: {{projCtrl.fileContentViewIndex}}
-									<h4>{{projCtrl.currentlySelectedFile.slice(1)}}</h4>-->
-
-
 									<br/>
 									<div ng-if="projCtrl.showEditor">
 										<file-history fadeInEffect data-filename="{{projCtrl.currentlySelectedFile}}" data-index="{{$index}}" data-projectname="{{projCtrl.currentProject()}}"
 											data-projectobject="{{projCtrl.selectedVersion()}}" data-mode="{{projCtrl.getMode(projCtrl.currentlySelectedFile)}}"
 											data-image="{{projCtrl.isImage(projCtrl.currentlySelectedFile)}}"></file-history>
 									</div>
-
 								</div>
 							</div>
 						</div>
-						<!--<li ng-repeat="file in projCtrl.filesList() track by $index ">
-							<file-history data-filename="{{file}}" data-index="{{$index}}" data-projectname="{{projCtrl.currentProject()}}" data-projectobject="{{projCtrl.selectedVersion()}}"
-								data-mode="{{projCtrl.getMode(file)}}" data-image="{{projCtrl.isImage(file)}}"></file-history>
-						</li>-->
-						<!--</ul>-->
-
-						<!--SIDE NAV-->
-
-
-						<!--ORIGINAL - NO SIDE NAV-->
-						<!--<ul class="side-nav fixed" style="margin-top:112px">
-							<li ng-repeat="file in projCtrl.filesList() track by $index ">
-								<button class="btn" ng-click="">{{file}}</button>
-							</li>
-						</ul>
-						<ul>
-							<li ng-repeat="file in projCtrl.filesList() track by $index ">
-								<div>
-									<buttn class="btn" ng-click="updateEditorContent(); recordIndex(); toggleShowInfo();">{{file}}</button>
-									<file-history data-filename="{{file}}" data-index="{{$index}}" data-projectname="{{projCtrl.currentProject()}}" data-projectobject="{{projCtrl.selectedVersion()}}"
-										data-mode="{{projCtrl.getMode(file)}}" data-image="{{projCtrl.isImage(file)}}"></file-history>
-								</div>
-							</li>
-						</ul>-->
-						<!--ORIGINAL - NO SIDE NAV-->
-
 						<div id="projectModal" class="modal modal-fixed-footer">
 							<nav>
 								<div class="nav-wrapper blue-grey darken-2">
@@ -220,11 +170,9 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
 </body>
-
 
 <script>
     // require other files to run in this process
@@ -234,7 +182,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js "></script>
 <!--<script src="./assets/js/dispersion.js "></script>-->
 <!-- Angular Material requires Angular.js Libraries -->
-
 <script type="text/javascript" src="./bower_components/angular/angular.min.js "></script>
 <script type="text/javascript " src="./bower_components/angular-messages/angular-messages.min.js"></script>
 <script type="text/javascript" src="./bower_components/angular-aria/angular-aria.min.js"></script>
