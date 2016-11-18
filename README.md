@@ -50,3 +50,11 @@ When selecting the pencil icon, the user can edit and save individual project fi
 <p align="center">
   <img src="https://ipfs.io/ipfs/QmcMT2yRntrwNaYhKvMVBSZ653xD9uFhNqQTq7MmAad88M" width="400"/>
 </p>
+
+## Settings
+
+The settings can be accessed by clicking the gear icon in the top right corner of the application.
+<p align="center">
+  <img src="https://ipfs.io/ipfs/QmbyaPRa4swXqwzMR41cUqSiNx6fiSG4csDbRVehEVAiUL" width="400"/>
+</p>
+The settings displays the users peerID, MultAddr address(used to allow peers to add you to their trusted bootstrap list). It also allows you to add peers to your list as well as check the health of any content on ipfs, by displaying the number of nodes have pinned the content.
