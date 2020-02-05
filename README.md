@@ -1,7 +1,7 @@
-<img src="https://images.prismic.io/dot-online/2db5f64f-a9d4-44b2-a614-50dc9fba5165_dispersion_min.jpg?auto=compress,format" width="100"/>
+<img src="https://images.prismic.io/dot-online/2db5f64f-a9d4-44b2-a614-50dc9fba5165_dispersion_min.jpg?auto=compress,format" width="400"/>
 
 
-#Dispersion
+## Dispersion
 
 A desktop application that allows users to save files on their IPFS local node. 
 
